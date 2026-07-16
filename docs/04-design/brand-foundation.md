@@ -37,6 +37,38 @@ uppercase "MIAMI ROOTS" wordmark stacked between the tree and the icon. The comp
 literally illustrates the brand name and its WhatsApp-first, community-rooted concept in
 one mark.
 
+### Parent banner concept
+
+`public/brand/banners/miami-roots-community-banner.png` (received 2026-07-16) — a
+horizontal (1376×768) banner concept: the palm-tree/WhatsApp/roots mark centered, flanked
+by community-network, handshake, and subgroup-themed iconography (meditation, cocktail,
+bottle glyphs echoing the group marks), over the tagline "TOGETHER WE RISE", the
+positioning line "Miami's trusted local graph of people, businesses, and ideas.", and the
+CTA "Join the WhatsApp Community". It demonstrates how the identity extends to wide-format
+surfaces (site hero, WhatsApp Community cover, social headers). The copy on it is
+**candidate copy, not ratified** (see `docs/01-product/community-content-requirements.md`).
+
+### Brand moodboard
+
+`public/brand/moodboards/miami-roots-brand-moodboard.png` (received 2026-07-16) — a 3:4
+visual-direction reference collaging the master mark, the sub-brand system (Daytime Roots,
+Sober Social, Nightlife Roots — matching the committed logos), banyan-tree and community
+photography, WhatsApp positioning ("Low-Friction Local Network Layer", "Trusted local
+graph layer for discovery & collaboration"), and stated brand principles ("Local First",
+"Community Before Clout", "Clear Purpose", "Give Before You Take"). Treat it as
+inspiration for color, typography, imagery, sub-brand structure, and tone — **individual
+elements are not final or approved** unless backed by canonical brand documentation.
+
+### Secondary artistic mark (concept)
+
+`public/brand/logos/concepts/miami-roots-artistic-tree-logo.png` (received 2026-07-16) —
+a detailed illustrated tree with interwoven trunk and exposed roots enclosing a gold Miami
+skyline, sun in the canopy, "MIAMI ROOTS" wordmark below. An expressive secondary concept
+for merchandise, posters, editorial artwork, storytelling, special events, and murals —
+**not a replacement for the primary logo**, and not for small avatars, navigation bars, or
+favicons where the simpler primary mark reproduces more clearly. It also introduces
+gold/cream tones beyond the two-color system; treat that extension as unratified.
+
 ### Sub-brand pattern
 
 Each community group has (or is expected to eventually have) its own mark following a
@@ -80,6 +112,13 @@ measured observations, not brand decisions — whoever owns brand/design should 
 ratify canonical values (e.g. background near `#7FC3B7`, ink near `#02392A`) and record
 that as a decision. Do not hard-code any of these values into product UI as "the brand
 color" before that happens.
+
+The brand moodboard (see above) **states** explicit values — "MINT: `#96D2C9`" and
+"FOREST GREEN: `#003F2C`" — which are close to, but not identical with, the values sampled
+from the committed logo files (the banner concept's background samples at ~`#97D0C1`,
+essentially the moodboard mint). These stated values are the strongest candidate for
+ratification so far, but they remain **concept-stage until the owner ratifies a canonical
+pair** and it is recorded in the decision log.
 
 ### Typography
 

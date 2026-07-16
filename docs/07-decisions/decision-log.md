@@ -114,6 +114,35 @@ baseline for planning and sequencing.
 **Status:** Active. Implementation may not begin until the owner explicitly authorizes
 Milestone 1.
 
+### 2026-07-16 — Banner, moodboard, and artistic-logo concepts committed as classified references
+
+**Decision:** Commit the three owner-supplied images of 2026-07-16 with the owner's
+classifications: the horizontal community banner as a *parent-brand community banner
+concept* (`public/brand/banners/miami-roots-community-banner.png`), the brand moodboard as
+a *visual-direction reference* (`public/brand/moodboards/miami-roots-brand-moodboard.png`),
+and the artistic tree illustration as a *secondary artistic logo concept*
+(`public/brand/logos/concepts/miami-roots-artistic-tree-logo.png`) that does not replace
+the approved primary logo. This extends the canonical asset layout with
+`public/brand/moodboards/` and `public/brand/logos/concepts/`, and establishes the
+convention that generated/exploratory artwork always lives in a `concepts/` subfolder (or
+`moodboards/`), never alongside approved source assets — future banner concepts go in
+`public/brand/banners/concepts/`, future moodboard explorations in
+`public/brand/moodboards/concepts/` (created when first needed).
+
+Two implementation notes: the files were committed **byte-identical** to the uploads
+(checksums verified, no re-encoding), and the moodboard/artistic-logo filenames use
+`.png` — not the `.jpg` the owner's instruction suggested — because the supplied files are
+PNG and the standing rule is to preserve actual formats rather than convert.
+
+**Rationale:** These are owner-classified official visual references; committing them with
+their classification explicit (concept/reference vs. approved production) keeps the
+distinction from eroding, and a hard folder boundary between approved assets and concepts
+prevents accidental production use of unapproved artwork.
+
+**Status:** Active. The palette stated on the moodboard (`#96D2C9` mint / `#003F2C`
+forest green) remains **unratified** — see `docs/04-design/brand-foundation.md`; banner
+production use awaits owner sign-off.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here

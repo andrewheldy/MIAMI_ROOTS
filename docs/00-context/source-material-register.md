@@ -39,6 +39,12 @@ additional subgroup assets and banner variants; none were present when the asset
 organization pass ran. The `inputs/` directory structure is prepared and its Git exclusion
 is verified (`inputs/*` ignored, only `inputs/README.md` tracked).
 
+Later on 2026-07-16 the announced **Miami Roots banner arrived** — along with a brand
+moodboard and an artistic tree-logo concept — as owner-classified public reference assets,
+not private material, so they live under `public/brand/` and are registered in
+[`../04-design/asset-register.md`](../04-design/asset-register.md). The WhatsApp group
+screenshots remain outstanding and will be registered here when they arrive.
+
 | Received | Local path (untracked) | Type | Subject | Reviewed? | Findings recorded in |
 |---|---|---|---|---|---|
 | — | — | — | — | — | — |

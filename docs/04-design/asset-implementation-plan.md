@@ -32,7 +32,7 @@ planning** — this document sequences that work.
 
 | Surface | Asset | Fallback until available |
 |---|---|---|
-| Landing hero | Parent banner (`public/brand/banners/…`) — **not yet received** | Brand-colored hero using sampled palette (`brand-foundation.md`) + parent logo |
+| Landing hero | Parent banner concept received (`public/brand/banners/miami-roots-community-banner.png`, 1376×768) — a **concept**: hero use needs owner sign-off + copy ratification | Brand-colored hero using sampled palette (`brand-foundation.md`) + parent logo |
 | Site header / favicon | Parent logo (+ favicon derivative, produced at bootstrap milestone) | — |
 | Group cards & detail pages | Subgroup logo | **Three groups lack logos**: parent-mark tile tinted per brand, group name prominent — a designed fallback, not a broken image |
 | Group page header | Subgroup banner — none exist | Solid brand background; layout reserves the slot |
@@ -55,11 +55,13 @@ planning** — this document sequences that work.
 
 ## Derivative pipeline (deferred until sources arrive)
 
-When the parent banner lands (registered per
-[`asset-register.md`](asset-register.md)), produce in order: website hero crop → OG
-1200×630 → WhatsApp Community banner crop → Instagram Story 1080×1920 → square card
+The parent banner concept has landed (`brand-banner-parent`, 1376×768 — registered per
+[`asset-register.md`](asset-register.md)). Once the owner signs off on using it (it is
+classified as a concept and its copy is unratified), produce in order: website hero crop →
+OG 1200×630 → WhatsApp Community banner crop → Instagram Story 1080×1920 → square card
 1080×1080. Each derivative is a new file with a descriptive suffix, registered on
-creation; sources are never modified. When the three missing group logos arrive, the
+creation; sources are never modified, and generated banner explorations go in
+`public/brand/banners/concepts/`, never alongside the source. When the three missing group logos arrive, the
 group-card fallback retires group by group — the UI reads `logo_path` nullability, so no
 code change is needed.
 
