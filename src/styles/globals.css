@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/*
+ * ─────────────────────────────────────────────────────────────────────────
+ * PROVISIONAL DESIGN TOKENS — Miami Roots
+ * ─────────────────────────────────────────────────────────────────────────
+ * These values are NOT ratified brand decisions. They are the single, central
+ * definition point for the app's visual language during Milestone 1.
+ *
+ * Palette status: the mint (#96D2C9) / forest (#003F2C) pair below is the
+ * strongest CANDIDATE — it is stated on the owner-supplied brand moodboard —
+ * but it has NOT been ratified as the canonical brand palette. See:
+ *   - docs/04-design/brand-foundation.md   (sampled vs. stated values, open Q#9)
+ *   - docs/07-decisions/decision-log.md    (palette explicitly unratified)
+ *
+ * Typography status: a branded typeface has not been chosen or licensed
+ * (open Q#9). We intentionally use a neutral system font stack until then.
+ *
+ * When the brand is ratified, change the values HERE, in one place — do not
+ * hard-code brand colors, radii, or fonts throughout components.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+@theme {
+  /* Provisional brand palette (candidate — not ratified) */
+  --color-forest: #003f2c;
+  --color-forest-600: #0a5138;
+  --color-mint: #96d2c9;
+  --color-mint-100: #e7f4f1;
+  --color-cream: #f8f8f3;
+
+  /* Semantic surface tokens (provisional) */
+  --color-background: #ffffff;
+  --color-foreground: #12211c;
+  --color-muted: #55655f;
+  --color-surface: #f2faf7;
+  --color-border: #d8e8e3;
+
+  /* Typography (neutral placeholder — no branded face chosen yet) */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+/* Consistent, visible keyboard focus across interactive elements. */
+:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

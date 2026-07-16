@@ -22,31 +22,38 @@ for the current chat structure.
 ## What this repository will contain
 
 - **`docs/`** — product, design, architecture, operations, and decision documentation
-- **`src/`** — the Next.js application (App Router, TypeScript) — **not yet built**
+- **`src/`** — the Next.js application (App Router, TypeScript) — **foundation shell built (M1)**
 - **`public/`** — brand assets, community group logos, social share images, generated QR codes
 - **`supabase/`** — database migrations, seed data, and edge functions — **not yet built**
 - **`scripts/`** — operational and developer scripts — **not yet built**
-- **`tests/`** — unit, integration, and end-to-end tests — **not yet built**
+- **`tests/`** — unit, integration, and end-to-end tests — **unit runner set up (M1); more added per milestone**
 
 ## Current project stage
 
-**Repository foundation only.** This repository currently contains project documentation,
-brand context, and a directory structure intended to make future implementation work
-predictable for both human contributors and coding agents. **No application code, database
-schema, or dependencies have been installed or written yet.** Do not assume any part of the
-product described in these docs is live.
+**Application foundation (Milestone 1) in place.** This repository contains the project
+documentation, brand context, and — as of Milestone 1 — a bootstrapped Next.js application
+shell with quality tooling. **No product features, database schema, authentication, or
+backend integration exist yet.** The app is a deliberately minimal, branded shell that
+future milestones build on. Do not assume any part of the product described in these docs
+is live.
 
-## Expected stack
+## Stack
 
-- **Next.js** (App Router) with **TypeScript**
-- **Tailwind CSS**
+Installed and in use as of Milestone 1:
+
+- **Next.js 15** (App Router) with **TypeScript 5** (strict)
+- **React 19**
+- **Tailwind CSS 4** (CSS-first, provisional design tokens)
+- **ESLint 9** (flat config) + **Prettier 3**
+- **Vitest 3** — unit-test runner
+
+Intended for later milestones (not yet installed or wired):
+
 - **Supabase** — Postgres, authentication, storage, row-level security
 - **Vercel** — deployment
-- **GitHub** — source control
-- Mobile-first, responsive web application
 - **WhatsApp** as the initial community communication layer
 
-Nothing here is installed yet — this section documents intent, not current state.
+Mobile-first, responsive web application throughout.
 
 ## Documentation map
 
@@ -64,11 +71,59 @@ Start at [`docs/README.md`](docs/README.md) for the full documentation index. Ro
 | `docs/07-decisions/` | Architectural/product decision log |
 | `docs/08-delivery/` | Implementation plan, testing strategy, release checklist |
 
-## Future development setup (placeholder)
+## Local development
 
-The application has not been scaffolded yet. Once it exists, this section will document
-how to install dependencies, configure `.env.local` from [`.env.example`](.env.example),
-run the dev server, and run tests. For now there is nothing to install or run.
+Requirements: **Node.js ≥ 18.18** and **npm**.
+
+```bash
+npm install                 # install dependencies
+cp .env.example .env.local  # create local env (values are placeholders for now)
+npm run dev                 # start the dev server at http://localhost:3000
+```
+
+### Available scripts
+
+| Script | What it does |
+|---|---|
+| `npm run dev` | Start the Next.js dev server |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | ESLint over the project |
+| `npm run typecheck` | TypeScript type check (`tsc --noEmit`) |
+| `npm run test` | Run the Vitest unit suite once |
+| `npm run test:watch` | Run Vitest in watch mode |
+| `npm run format` | Format app code with Prettier |
+| `npm run format:check` | Verify formatting without writing |
+| `npm run validate` | `format:check` → `lint` → `typecheck` → `test` → `build` |
+
+### Environment variables
+
+Copy [`.env.example`](.env.example) to `.env.local`. Only `NEXT_PUBLIC_SITE_URL` is used by
+the current shell; the Supabase variables are placeholders reserved for the milestone that
+introduces the database and are intentionally left blank. Never commit real secrets — see
+[`CLAUDE.md`](CLAUDE.md).
+
+### Project structure
+
+```
+src/
+├── app/            App Router: layout, homepage, loading/error/not-found
+├── components/
+│   └── layout/     Header, footer, and the Container layout primitive
+├── config/         Central site configuration (provisional copy)
+├── lib/            Small shared utilities
+├── styles/         Global stylesheet + provisional design tokens
+├── features/       (empty) one directory per domain feature, added as built
+└── types/          (empty) cross-feature shared types
+tests/
+└── unit/           Vitest unit tests
+```
+
+Design tokens (colors, typography, radii) live in
+[`src/styles/globals.css`](src/styles/globals.css) as **provisional** values — the palette
+is a strong candidate but is not yet a ratified brand decision (see
+[`docs/04-design/brand-foundation.md`](docs/04-design/brand-foundation.md) and the decision
+log). Change them there, in one place, rather than hard-coding colors in components.
 
 ## Contribution expectations
 
@@ -84,7 +139,7 @@ run the dev server, and run tests. For now there is nothing to install or run.
 
 ## Current non-goals
 
-- No application code exists yet — this is not a working product.
+- Only the application foundation shell exists (M1) — no product features yet.
 - No database schema or migrations exist yet.
 - Ticket resale/exchange is explicitly **out of scope** for the initial community groups
   (see [`docs/00-context/community-groups.md`](docs/00-context/community-groups.md)); it is

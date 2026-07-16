@@ -12,6 +12,9 @@ out/
 next-env.d.ts
 build/
 
+# --- TypeScript ---
+*.tsbuildinfo
+
 # --- Environment files ---
 .env
 .env.local

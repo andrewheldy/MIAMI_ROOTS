@@ -1,0 +1,22 @@
+# Build output and dependencies
+.next/
+node_modules/
+coverage/
+next-env.d.ts
+
+# Lockfiles
+package-lock.json
+
+# Binary / asset directories
+public/
+
+# Pre-existing documentation and repository scaffolding are owned by their
+# authors and formatted by hand; Prettier only governs application code and
+# config added from Milestone 1 onward.
+docs/
+supabase/
+scripts/
+inputs/
+.github/
+*.md
+LICENSE

@@ -143,6 +143,38 @@ prevents accidental production use of unapproved artwork.
 forest green) remains **unratified** — see `docs/04-design/brand-foundation.md`; banner
 production use awaits owner sign-off.
 
+### 2026-07-16 — Milestone 1 stack ratified and application foundation bootstrapped
+
+**Decision:** Ratify the Milestone 1 application stack and bootstrap the Next.js
+application foundation at the repository root (App Router under `src/app`). Ratified
+versions: **Next.js 15, React 19, TypeScript 5 (strict), Tailwind CSS 4, ESLint 9 (flat
+config), Prettier 3**, with **npm** as the package manager. This resolves the M1 "ratify
+stack versions" decision gate in `docs/08-delivery/implementation-plan.md`.
+
+Two supporting choices worth recording:
+
+- **Vitest** was selected as the unit-test runner. The testing strategy and implementation
+  plan called for "a unit-test runner + one trivial test" at M1 but named no specific tool;
+  Vitest was chosen for its speed, native ESM/TypeScript support, and minimal configuration.
+  One smoke test covers the `cn` class-name utility.
+- **ESLint is run directly** (`eslint .` via flat config), not through the deprecated
+  `next lint` wrapper, keeping the setup forward-compatible with newer Next.js.
+
+**Rationale:** These are the current mutually-compatible stable versions of exactly the
+stack the founding brief and architecture docs already committed to — no framework or UI
+library was added beyond it. Bootstrapping the shell (layout, homepage, header/footer,
+`Container` primitive, loading/error/not-found foundations, design tokens, quality scripts)
+gives later milestones a validated base without pre-building any product feature.
+
+**Explicitly NOT decided by this entry:** the brand palette remains **unratified** — the
+mint `#96D2C9` / forest `#003F2C` pair is used only as **provisional** design tokens
+centralized in `src/styles/globals.css` (see open question #9 and the 2026-07-16
+banner/moodboard entry above). No product feature, database schema, authentication, or
+Supabase wiring was implemented. CI (`.github/workflows`) and the Vercel preview deploy
+named in M1's acceptance criteria remain owner/infra tasks.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here
