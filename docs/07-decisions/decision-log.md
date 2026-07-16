@@ -87,6 +87,33 @@ private material.
 
 **Status:** Active.
 
+### 2026-07-16 — MVP architecture plan adopted as the planning baseline
+
+**Decision:** Adopt the 2026-07-16 MVP architecture and implementation plan as the
+baseline for Phase 1: the document set under `docs/03-architecture/` (identity &
+authorization, data model, referral system, analytics & events, application
+architecture, plus updated system context / data principles / privacy & safety /
+integrations), the product specifications (`onboarding-specification.md`,
+`community-content-requirements.md`, updated referral/rewards concept), the operational
+workflows (`docs/05-operations/`), and the 16-milestone delivery plan
+(`docs/08-delivery/implementation-plan.md`) with MVP boundary M1–M12 + M14–M15 and
+reward *redemption* deliberately post-MVP.
+
+**Rationale:** The plan is internally consistent, assumes the pessimistic WhatsApp
+reality (no programmatic join signals; manual verification), keeps invite links
+server-only with gated, audited reveal, and preserves the founding data principles
+(append-only ledger, correctable attribution, deny-by-default RLS, manual operability).
+
+**Explicitly NOT decided by this entry:** every item marked *recommended default* in
+`docs/02-planning/open-questions.md` (auth model, onboarding fields, verification
+procedure, point values, attribution/retention windows, analytics vendor, naming
+question #10). Those remain proposals until the owner ratifies them at the decision
+gates named in the implementation plan; this entry only establishes them as the working
+baseline for planning and sequencing.
+
+**Status:** Active. Implementation may not begin until the owner explicitly authorizes
+Milestone 1.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here

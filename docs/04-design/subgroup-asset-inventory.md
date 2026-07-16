@@ -55,7 +55,7 @@ Parent brand coverage:
 2. **No banners exist at all** (parent or subgroup). The landing-page hero and any group
    headers need a design fallback until banners arrive.
 3. **No social graphics exist.** Referral sharing cards will need to be generated or
-   designed later (see `asset-implementation-plan.md`, planned).
+   designed later (see [`asset-implementation-plan.md`](asset-implementation-plan.md)).
 4. **Two logos display names that differ from group operating names** ("Daytime Roots" vs
    Daytime Events; "Nightlife Roots" vs Nightlife & Event Marketing). Whether logos or
    operating names change is an owner decision — recorded in

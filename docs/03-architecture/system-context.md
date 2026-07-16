@@ -1,63 +1,110 @@
 ---
 title: System Context
 type: architecture
-status: draft
+status: proposed
 owner: unassigned
 created: 2026-07-16
 updated: 2026-07-16
-tags: [architecture, system-context]
+tags: [architecture, system-context, whatsapp]
 ---
 
 ## Purpose
 
-Describes, at a high level, how the Miami Roots web application relates to WhatsApp and to
-the people using it — the boundary of the system, before any internal design.
+Describes how the Miami Roots gateway relates to WhatsApp and to the people using it —
+the system boundary, what the app can and cannot know, and the funnel of observable
+events the whole architecture is built around. Updated 2026-07-16 with the MVP planning
+pass; statements about WhatsApp's capabilities are **assumptions requiring validation**
+against current WhatsApp behavior (see `docs/06-research/research-backlog.md` #1) held
+pessimistically on purpose.
 
 ## What belongs here
 
-- The actors and systems involved and how they connect
-- What the web app owns vs. what WhatsApp owns
-- High-level data flow between them
+- Actors, systems, and the boundary between them
+- The WhatsApp reality: what the app can observe vs. must be told
+- The canonical funnel chain
 
 ## What does not belong here
 
-- Database schema (not yet designed)
-- Specific integration mechanics/API detail (see `docs/03-architecture/integrations.md`)
+- Table design (see [`data-model.md`](data-model.md))
+- Integration specifics (see [`integrations.md`](integrations.md))
 
-## Known initial information
-
-Miami Roots' community actually *lives* in WhatsApp — the web application is a front door
-and coordination layer around it, not a replacement for it.
+## System boundary
 
 ```
-Visitor / Member (browser)
+Visitor / Applicant / Member (mobile browser)
         │
         ▼
-  Miami Roots Gateway (Next.js on Vercel)
-        │  ├─ reads/writes: members, referrals, points, verification (Supabase Postgres)
-        │  ├─ auth (Supabase Auth) — scope TBD, see open questions
-        │  └─ generates: referral links, QR codes
+Miami Roots Gateway (Next.js on Vercel)
+        │ ├─ Supabase Postgres: members, groups, memberships, referrals,
+        │ │   points ledger, consent, events, audit (RLS everywhere)
+        │ ├─ Supabase Auth: magic-link sessions for activated members + admins
+        │ └─ generates: referral URLs, QR codes, sharing cards, OG images
+        │
+        ▼  (controlled, audited reveal — one gated hop)
+WhatsApp invite links (WhatsApp-owned, rotatable, stored server-only)
         │
         ▼
-  WhatsApp invite links (external, WhatsApp-owned)
-        │
-        ▼
-  WhatsApp Groups (General Chat, Business & Connections, Nightlife & Event Marketing,
-                    Daytime Events, Community Organizing, Sober Social)
+WhatsApp Community & Groups  ←— Admins (humans) observe reality here
+  General Chat · Business & Connections · Nightlife & Event Marketing
+  Daytime Events · Community Organizing · Sober Social
 ```
 
-Key boundary: **the web app does not control WhatsApp group membership directly.** It can
-surface invite links and, depending on how question #3 in
-`docs/02-planning/open-questions.md` is resolved, may or may not be able to programmatically
-confirm someone joined. Until that's resolved, assume verification requires some manual or
-semi-manual admin step.
+**The community lives in WhatsApp; the gateway is the front door and the ledger of
+record around it.** The gateway never controls WhatsApp membership — it controls access
+to invite links and records what it can observe plus what admins attest.
 
-The public Miami Roots URL (and per-group/per-referrer URLs derived from it) is the stable
-surface visitors interact with; the underlying WhatsApp invite link behind each group can
-change without breaking those URLs — see `docs/03-architecture/data-principles.md`.
+## The WhatsApp reality (planning constraint)
+
+The ordinary WhatsApp Community used by Miami Roots gives this application **no
+dependable automatic access** to: member joins or join confirmations, group activity,
+invite-link attribution, member retention, chat contents, or participant webhooks. The
+architecture therefore assumes:
+
+- The app's **last directly observable event** is the invite-link click-through
+  (`/out/[membershipId]` redirect). Everything after that happens inside WhatsApp,
+  invisible to the app.
+- **Humans re-enter the loop as sensors:** an admin looking at the WhatsApp participant
+  list is the verification mechanism. The product's job is to make that manual step
+  cheap (phone number to match, one-tap verify, a queue).
+- **Nothing may depend on WhatsApp pushing data to us.** Any future WhatsApp Business
+  API integration is an optimization documented in
+  [`integrations.md`](integrations.md) — explicitly **not** an MVP requirement or
+  assumption.
+
+## The canonical funnel chain
+
+Every feature hangs off this observable/attested chain (states in
+[`data-model.md`](data-model.md), events in
+[`analytics-and-events.md`](analytics-and-events.md)):
+
+```
+referral landing-page visit          (observed: /r/<slug>)
+  → attribution captured             (cookie / manual code)
+  → onboarding started               (observed)
+  → onboarding submitted             (observed, consent recorded)
+  → subgroup selected                (observed, part of submission)
+  → invite link revealed             (observed, gated + audited)
+  → invite link clicked              (observed, last automatic signal)
+  → membership manually verified     (attested by admin against WhatsApp)
+  → membership retained (+14d)       (attested by admin)
+  → referral matured                 (derived from verified + retained)
+  → points made available            (ledger entry, idempotent)
+```
+
+The seam between **observed** and **attested** (invite click → verified) is the
+architectural center of gravity: it is where manual workflow, audit, reversal, and
+anti-gaming all concentrate.
+
+## Stable URLs vs rotating links
+
+The public Miami Roots URL space (`/`, `/groups/<slug>`, `/r/<slug>`, printed QR codes)
+is permanent; WhatsApp invite links behind it rotate freely (see
+[`../05-operations/chat-link-management.md`](../05-operations/chat-link-management.md)).
+Nothing public ever embeds a raw invite link.
 
 ## Relationship to other documents
 
-- `docs/00-context/community-groups.md` — the groups this diagram routes to
-- `docs/03-architecture/integrations.md` — WhatsApp and Supabase integration specifics
-- `docs/03-architecture/data-principles.md` — the stable-URL-vs-rotating-link principle
+- [`data-model.md`](data-model.md) — the state machines behind the chain
+- [`identity-and-authorization.md`](identity-and-authorization.md) — who the actors are
+- [`integrations.md`](integrations.md) — WhatsApp/Supabase/Vercel specifics
+- [`../05-operations/membership-verification.md`](../05-operations/membership-verification.md) — the human verification workflow

@@ -10,45 +10,77 @@ tags: [architecture, data]
 
 ## Purpose
 
-States principles the eventual data model and schema must respect, agreed before any
-schema exists, so early implementation choices don't quietly violate them.
+States principles the data model and schema must respect, agreed before any schema
+exists, so implementation choices don't quietly violate them. Expanded 2026-07-16 with
+the MVP planning pass; the concrete model applying these principles is
+[`data-model.md`](data-model.md).
 
 ## What belongs here
 
-- Durable principles about how data should be structured or handled
-- Rationale, where it isn't obvious
+- Durable principles about how data is structured and handled, with rationale
 
 ## What does not belong here
 
-- Actual table/column design (belongs in `supabase/migrations/` once real, and should be
-  summarized here only after the fact if it clarifies a principle)
-- Product-level referral/rewards concepts (see
-  `docs/01-product/referral-and-rewards-concept.md` — this doc is the architectural
-  counterpart)
+- Actual table design (see [`data-model.md`](data-model.md); migrations in
+  `supabase/migrations/` once real)
+- Product-level referral/rewards policy (see
+  `docs/01-product/referral-and-rewards-concept.md`)
 
-## Known initial information
+## Principles
 
-- **The public Miami Roots URL must remain stable even if individual WhatsApp invite links
-  change.** Invite links should be stored as data the app resolves at request time, not
-  baked into shared URLs, marketing materials, or QR codes.
-- **Raw WhatsApp invite links are not permanent public assets.** They should be treated as
-  operational, rotatable data — access to them should go through the app, not by
-  distributing the raw link directly wherever avoidable.
-- **Referral attribution and membership verification are separate events** and must be
-  separate records, not a single status field — the timeline between them matters (see
-  `docs/00-context/glossary.md`).
-- **Referral attribution must be correctable by an administrator.** The data model should
-  support an audit trail of corrections, not just an overwritable field with no history.
-- **Points should eventually be backed by an append-only ledger**, not only a mutable
-  running total. A denormalized/cached total is fine for read performance as long as the
-  ledger remains the source of truth.
-- **Design for manual operability while the community is small.** Early on, an admin
-  should be able to inspect and reason about the data (e.g. via Supabase's dashboard)
-  without bespoke tooling. Don't over-engineer for a scale the community isn't at yet.
+1. **Stable public URLs over rotatable secrets.** The public Miami Roots URL space
+   (site, group pages, referral URLs, QR codes) must remain stable even as WhatsApp
+   invite links change. Invite links are operational data resolved server-side at
+   request time — never baked into shared URLs, marketing material, QR codes, client
+   bundles, or seed files.
+
+2. **Referral attribution and membership verification are separate records, separated in
+   time.** Attribution is captured early (visit/onboarding); reward-relevant status waits
+   for verification and retention. One status field can't represent this — the timeline
+   matters.
+
+3. **Corrections supersede; they never overwrite.** Admin corrections (attribution
+   reassignment, un-verification) create new records or audited transitions with the
+   prior state preserved. If it was worth recording, it's worth keeping when it changes.
+
+4. **Append-only where money-like or trust-like:** the points ledger, consent events, and
+   the audit log take inserts only — enforced mechanically (revoked UPDATE/DELETE), not
+   by convention. Mistakes are fixed with compensating entries.
+
+5. **Canonical vs derived is explicit for every value.** Balances, counts, funnel
+   metrics, and leaderboards are projections; domain tables and the ledger are truth.
+   When they disagree, the projection is rebuilt — never patched by hand.
+
+6. **Idempotency at every seam that can fire twice.** Event dedup keys, unique
+   constraints on side effects (one maturation payout, one redemption debit), and
+   guarded state transitions (`WHERE status = expected`) make retries and concurrent
+   admins safe by construction.
+
+7. **Deny-by-default access.** Every table has RLS enabled from creation; policies grant
+   the minimum per the role matrix
+   ([`identity-and-authorization.md`](identity-and-authorization.md)). Tables with no
+   client-facing purpose get no client policies at all.
+
+8. **Data minimization as a schema property.** Collect only fields with a stated purpose
+   (see [`../01-product/onboarding-specification.md`](../01-product/onboarding-specification.md));
+   sensitive fields are isolated in tables that public queries never touch; events and
+   logs reference UUIDs, not identities. Notably: **group selection (including Sober
+   Social) is stored as interest in a group, never as a health or lifestyle attribute.**
+
+9. **Retention is designed, not accidental.** Unverified submissions purge at 90 days;
+   network metadata hashes at 30; member deletion anonymizes identity while preserving
+   ledger/audit integrity via surviving UUIDs. Every table states its retention rule in
+   [`data-model.md`](data-model.md).
+
+10. **Design for manual operability while small.** An admin must be able to read and
+    reason about the data through the Supabase dashboard without bespoke tooling —
+    plain-language status values, human-readable reason codes, no clever encodings.
+    Don't over-engineer for scale the community isn't at.
 
 ## Relationship to other documents
 
-- `docs/01-product/referral-and-rewards-concept.md` — the product-level version of these
-  principles
-- `docs/03-architecture/privacy-and-safety.md` — data handling from a privacy angle
-- `docs/07-decisions/decision-log.md` — where the actual schema decisions will be recorded
+- [`data-model.md`](data-model.md) — the concrete model implementing these principles
+- [`privacy-and-safety.md`](privacy-and-safety.md) — the privacy side of minimization and
+  retention
+- `docs/01-product/referral-and-rewards-concept.md` — product-level counterpart
+- `docs/07-decisions/decision-log.md` — where schema decisions get recorded when made

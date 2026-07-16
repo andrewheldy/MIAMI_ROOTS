@@ -1,7 +1,7 @@
 ---
 title: Integrations
 type: architecture
-status: draft
+status: proposed
 owner: unassigned
 created: 2026-07-16
 updated: 2026-07-16
@@ -10,38 +10,76 @@ tags: [architecture, integrations]
 
 ## Purpose
 
-Lists the external systems Miami Roots is expected to integrate with and their expected
-role, before any integration is actually built.
+External systems the gateway integrates with, their exact role, and their limits.
+Updated 2026-07-16: the MVP integration surface is deliberately tiny — Supabase, Vercel,
+and WhatsApp-via-links. Everything else is either in-process or deferred.
 
 ## What belongs here
 
-- Each external system, why it's needed, and what it's responsible for
-- Known constraints or open questions specific to that integration
+- Each external system: role, constraints, failure posture
+- Deferred integrations and the conditions that would justify them
 
 ## What does not belong here
 
-- Implementation code or API client detail (belongs in `src/lib/` once it exists)
-- General architecture principles not tied to a specific external system (see
-  `docs/03-architecture/data-principles.md`)
+- Client code detail (future `src/lib/`)
+- General principles (see [`data-principles.md`](data-principles.md))
 
-## Known initial information
+## MVP integrations
 
-- **WhatsApp.** The primary communication layer and where the actual community lives.
-  Integration is currently expected to be link-based (surfacing invite links) rather than
-  a deep API integration — whether a WhatsApp Business API integration is used for
-  automated join verification is an open question (`docs/02-planning/open-questions.md`,
-  #3).
-- **Supabase.** Postgres database, authentication, storage (for brand/group assets and
-  possibly QR codes), and row-level security. Expected to be the sole backend — no separate
-  custom server is currently planned.
-- **Vercel.** Deployment target for the Next.js application.
-- **QR code generation.** Referral links need a QR code representation. Whether this is
-  generated client-side, server-side, or via a third-party service is not yet decided.
-- **Analytics.** `.env.example` includes `NEXT_PUBLIC_ANALYTICS_ENABLED` as a placeholder
-  flag; no specific analytics provider has been chosen.
+### WhatsApp (link-based only)
+
+The community's home, integrated **only** through invite links that the app stores
+server-side, reveals in a gated flow, and rotates operationally. Planning assumption
+(held pessimistically): **no** webhooks, join confirmations, membership reads, or
+invite-link attribution are available to us — see
+[`system-context.md`](system-context.md). Human admins bridge the gap
+(verification workflow). WhatsApp's terms around any automation remain an open research
+item (`docs/06-research/research-backlog.md` #1) — nothing in MVP scope touches
+automation, which keeps that risk at zero for launch.
+
+**Future option (explicitly not MVP):** WhatsApp Business Platform / Cloud API for
+onboarding messages or semi-automated join confirmation. Justified only if manual
+verification workload demonstrably breaks down; requires the ToS research first;
+recorded as future exploration in the decision log.
+
+### Supabase
+
+Postgres (sole database, RLS everywhere), Auth (magic links for activated members and
+admins), and Storage only if/when runtime-generated sharing assets need persistence
+(MVP generates them on demand instead). Sole backend — no separate server. Environments:
+separate staging and production projects
+([`application-architecture.md`](application-architecture.md)); backups per
+[`../08-delivery/release-checklist.md`](../08-delivery/release-checklist.md).
+
+### Vercel
+
+Hosting, preview deployments, Cron for scheduled jobs (retention reminders, purges,
+expiries), structured logs. Preview environments point at staging Supabase only and are
+non-indexable.
+
+## In-process (not external services)
+
+- **QR generation:** an npm library at request time (`/api/qr/<slug>.png`) — encodes only
+  the stable referral URL; no third-party QR service, nothing stored.
+- **OG/sharing images:** Next.js image-generation (`next/og`) at runtime from brand
+  assets — see [`../04-design/asset-implementation-plan.md`](../04-design/asset-implementation-plan.md).
+- **Rate limiting:** Postgres counters for MVP; a hosted limiter (e.g. Upstash) only if
+  scale demands (decision-gate, not default).
+
+## Deferred / rejected for MVP
+
+| Integration | Status | Condition to revisit |
+|---|---|---|
+| WhatsApp Business API | Future exploration | Manual verification breaks down **and** ToS research clears it |
+| SMS/OTP provider | Rejected for MVP | Email activation proves insufficient (see [`identity-and-authorization.md`](identity-and-authorization.md)) |
+| Third-party analytics | Optional, flag-gated | Never load-bearing; first-party events are canonical ([`analytics-and-events.md`](analytics-and-events.md)) |
+| Email service beyond Supabase Auth mail | Deferred | Transactional email needs beyond magic links (e.g. digests) |
+| Error-tracking SaaS (Sentry-class) | Decide at launch-hardening milestone | Include only with PII-scrubbing configured |
 
 ## Relationship to other documents
 
-- `docs/03-architecture/system-context.md` — how these integrations fit the overall system
-- `docs/02-planning/open-questions.md` — unresolved integration questions
-- `.env.example` — the environment variables integrations will eventually need
+- [`system-context.md`](system-context.md) — the boundary these integrations sit on
+- [`application-architecture.md`](application-architecture.md) — where each integration
+  is touched in code
+- `.env.example` — variable names integrations require (kept authoritative at each
+  milestone)

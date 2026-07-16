@@ -81,5 +81,5 @@ what the gateway should display. Recorded as an open question in
   inventory verifies (or corrects)
 - [`source-material-register.md`](source-material-register.md) — file-level register of
   private source material
-- `whatsapp-community-findings.md` (planned) — conclusions drawn from this inventory for
-  product planning
+- [`whatsapp-community-findings.md`](whatsapp-community-findings.md) — conclusions drawn
+  from this inventory for product planning

@@ -38,10 +38,15 @@ permissions can be reasoned about per user type instead of a vague single "user.
 - **Administrator** — manages members, referral attribution, chat invite links,
   verification, and points/rewards. See `docs/05-operations/` for the operational
   procedures admins follow.
+- **Owner** — an administrator who additionally manages who the administrators are, the
+  rewards catalog, and group creation/archival.
 
-Exact authentication requirements for each type (e.g. does a Visitor need an account at
-all, does a Member need to log in to see their referral link) are not yet decided — see
-`docs/02-planning/open-questions.md`.
+Authentication per type (recommended default, 2026-07-16 — see
+`docs/03-architecture/identity-and-authorization.md`): Visitors and prospective members
+need no account; members gain an account via email magic link at **activation**, after
+verification; admin/owner accounts are created by the owner. "Connector" is the
+activated member exercising their referral capability — a capability, not a separate
+user type.
 
 ## Relationship to other documents
 

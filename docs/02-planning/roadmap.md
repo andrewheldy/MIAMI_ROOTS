@@ -1,7 +1,7 @@
 ---
 title: Roadmap
 type: planning
-status: draft
+status: active
 owner: unassigned
 created: 2026-07-16
 updated: 2026-07-16
@@ -10,54 +10,67 @@ tags: [planning, roadmap]
 
 ## Purpose
 
-A rough, phase-level view of how Miami Roots is expected to grow beyond the initial
-gateway, so near-term implementation decisions don't foreclose reasonable future
-direction. This is directional, not a committed schedule.
+The phase-level view of how Miami Roots grows, with an explicit MVP boundary. Updated
+2026-07-16 to align with the MVP architecture plan. Directional, not a committed
+schedule; the milestone-level detail for the active phase lives in
+[`../08-delivery/implementation-plan.md`](../08-delivery/implementation-plan.md).
 
 ## What belongs here
 
-- Phase-level groupings of future capability, roughly ordered
-- Explicit non-commitment to dates unless a decision has actually set one
+- Phase groupings, ordered, with the MVP/post-MVP boundary explicit
+- No dates unless actually decided
 
 ## What does not belong here
 
-- Detailed task breakdown for the current phase (see
-  `docs/08-delivery/implementation-plan.md`)
-- Anything already ruled out (see `docs/01-product/out-of-scope.md`)
+- Milestone detail (implementation plan)
+- Excluded-entirely items (see `docs/01-product/out-of-scope.md`)
 
-## Known initial information
+## Phases
 
-### Phase 0 — Repository foundation (current)
+### Phase 0 — Repository foundation ✅ (complete 2026-07-16)
 
-Documentation, brand context, and directory structure. No application code yet.
+Documentation, brand context, directory structure.
 
-### Phase 1 — Community gateway (initial product)
+### Phase 0.5 — Asset organization & MVP planning ✅ (complete 2026-07-16)
 
-The branded gateway described in `docs/01-product/product-scope.md`: introduction,
-group display/selection, onboarding capture, referral attribution, referral links and QR
-codes, funnel tracking, and basic admin tooling for members/referrals/links/verification/
-points/rewards.
+Canonical asset layout, private-inputs convention, and the full MVP architecture and
+implementation plan (this planning pass).
 
-### Phase 2 — Engagement and retention
+### Phase 1 — Community gateway MVP (next; milestones M1–M12, M14, M15)
 
-Deeper retention tracking, refined points/rewards mechanics (append-only ledger, real
-reward catalog), and improved admin tooling as the community and manual workload grow.
+The branded gateway end to end: public pages, referral capture (`/r/<slug>`), lightweight
+onboarding, gated invite-link access, manual admin verification, referral maturation,
+points **earning** (append-only ledger), connector dashboard with QR/sharing, first-party
+analytics, launch hardening. Boundary decisions of note: reward **redemption** is
+deliberately just outside MVP; moderation tooling, leaderboards, and any WhatsApp API
+automation are out.
+
+### Phase 2 — Engagement and retention (starts with M13 + M16 items)
+
+Reward redemption + catalog, refined retention definition (open question #7), improved
+admin tooling as workload data arrives, member-facing polish informed by real funnel
+metrics.
 
 ### Phase 3 — Events and participation
 
-Events, RSVPs, and attendance tracking, connected to the same member and points system.
+Events, RSVPs, attendance tracking wired to the same member/points system.
 
 ### Phase 4 — Directory and partnerships
 
-Member directory (member-facing, not public) and partner offers.
+Member-facing (not public) directory; partner offers — under the no-data-sharing posture
+in [`../03-architecture/privacy-and-safety.md`](../03-architecture/privacy-and-safety.md).
 
 ### Phase 5 — Community projects
 
-Structured support for community-organized projects (beyond ad hoc coordination in the
-Community Organizing group).
+Structured support for community-organized projects.
+
+### Unscheduled, decision-gated
+
+Ticket Exchange group (explicit owner decision required); WhatsApp Business API
+integration (requires research backlog #1 and demonstrated manual-workload pain).
 
 ## Relationship to other documents
 
-- `docs/01-product/product-scope.md` — Phase 1 in functional detail
-- `docs/01-product/out-of-scope.md` — what's excluded even from this roadmap
-- `docs/08-delivery/implementation-plan.md` — concrete plan for the active phase
+- [`../08-delivery/implementation-plan.md`](../08-delivery/implementation-plan.md) — Phase 1 in executable detail
+- `docs/01-product/out-of-scope.md` — excluded items
+- [`open-questions.md`](open-questions.md) — the decisions gating phase content

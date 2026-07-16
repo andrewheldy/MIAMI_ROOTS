@@ -1,7 +1,7 @@
 ---
 title: Rewards Operations
 type: operations
-status: draft
+status: proposed
 owner: unassigned
 created: 2026-07-16
 updated: 2026-07-16
@@ -10,33 +10,54 @@ tags: [operations, rewards, points]
 
 ## Purpose
 
-Describes how points and rewards are expected to be administered day to day, distinct from
-the product-level concept behind them.
+How admins operate points day to day under the recommended policy in
+[`../01-product/referral-and-rewards-concept.md`](../01-product/referral-and-rewards-concept.md):
+granting contribution points, reading the ledger, handling reversals, and (post-MVP)
+fulfilling redemptions.
 
 ## What belongs here
 
-- Operational steps for granting, correcting, and redeeming points/rewards
-- How admins are expected to review and act on the points ledger
+- Admin procedures around the ledger and (later) redemptions
+- Reason-code discipline
 
 ## What does not belong here
 
-- The underlying principles (see `docs/01-product/referral-and-rewards-concept.md`)
-- Ledger data-model detail (see `docs/03-architecture/data-principles.md`)
+- Policy and point values (product doc above)
+- Ledger mechanics (see [`../03-architecture/data-model.md`](../03-architecture/data-model.md))
 
-## Known initial information
+## Operating the ledger
 
-No rewards mechanics are decided yet (see `docs/02-planning/open-questions.md`, #4 and
-#5), so this document currently holds operating principles only:
+- **Referral points post themselves** at maturation — no admin action, no double-post
+  possible (idempotent by constraint). The admin's lever is upstream: verification and
+  retention confirmation.
+- **Contribution grants** are manual adjustments: amount + reason code
+  (`event_organizing`, `community_help`, `other` + required note) recorded via the admin
+  surface. The reason note should let a member understand the entry a year later.
+- **Reading a member's ledger** is designed to need no tooling: entries are
+  plain-language, signed integers, in order; the balance is the sum. If a balance looks
+  wrong, the ledger is right and the projection gets rebuilt — never a "fix-up" entry
+  without an explanation.
+- **Reversals** (fraud, mistaken verification): triggered from the membership/referral
+  surfaces, which post the compensating entries automatically with linkage. Manual
+  compensating entries are a last resort and must reference what they compensate.
 
-- Points should be **grantable and correctable by an administrator**, with a visible
-  history of why a point event was recorded (append-only ledger — see
-  `docs/03-architecture/data-principles.md`) rather than a single editable total.
-- Rewards should be tied to **verified participation**, not raw click/referral counts —
-  see `docs/01-product/referral-and-rewards-concept.md`.
-- Until the community and reward catalog are both small, redemption can reasonably be
-  handled manually by an admin rather than through an automated redemption flow.
+## Redemptions (activates post-MVP)
+
+When the catalog launches: member requests → admin approves (balance re-checked, debit
+posts) → admin fulfills (hands over the reward) → marked fulfilled. Cancel at any
+pre-fulfillment point credits back automatically. Two admins can't double-approve
+(guarded transitions); a member can't double-redeem (idempotency key + balance check).
+Until then, the surfaces stay dark — no manual IOUs; if the owner wants to give someone
+a reward early, that's a contribution grant with a note, not a shadow redemption.
+
+## Discipline
+
+Every manual entry is audited with the acting admin; the owner reviews adjustments in
+the audit log periodically. No admin adjusts their own balance (owner does it, or a
+second admin) — recommended default, enforceable socially now, mechanically later.
 
 ## Relationship to other documents
 
-- `docs/01-product/referral-and-rewards-concept.md` — the concept this operationalizes
-- `docs/03-architecture/data-principles.md` — the ledger principle
+- [`../01-product/referral-and-rewards-concept.md`](../01-product/referral-and-rewards-concept.md) — the policy
+- [`../03-architecture/data-model.md`](../03-architecture/data-model.md) — ledger + redemption machines
+- [`membership-verification.md`](membership-verification.md) — the upstream admin lever
