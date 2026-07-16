@@ -1,0 +1,44 @@
+# Continuous integration for the Miami Roots gateway.
+#
+# Runs the repository's own combined quality gate (`npm run validate`:
+# format check → lint → typecheck → tests → build) on every pull request and
+# on pushes to main. Kept intentionally minimal — no deployment logic and no
+# third-party actions beyond the official checkout/setup-node pair, which also
+# provides npm dependency caching.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel superseded runs on the same ref so a fast follow-up push doesn't
+# queue behind an already-stale run.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate (format, lint, typecheck, test, build)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Matches the repository's supported Node version (package.json engines
+          # requires >=18.18.0); 20 LTS is the current baseline Vercel also uses.
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate
+        # `validate` = format:check → lint → typecheck → test → build. Any stage
+        # failing fails the job, so the reason (formatting, lint, types, tests, or
+        # build) is clear from the failing step's log.
+        run: npm run validate

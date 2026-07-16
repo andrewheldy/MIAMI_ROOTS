@@ -31,7 +31,9 @@ aligned; this one is the shorter, portable version.
 
 ## Current phase
 
-Milestone 1 complete — the Next.js application foundation (App Router shell + quality
-tooling) is in place. No product features, database schema, or Supabase wiring exist yet.
-Do not begin Milestone 2 (or any later) work without explicit instruction. See
+Milestone 2 complete — the public branded gateway (landing, `/groups`, `/groups/[slug]`,
+`/guidelines`) is in place, rendered from a typed in-code content module
+(`src/content/groups/`), plus CI (`.github/workflows/ci.yml`). No database schema,
+authentication, Supabase wiring, analytics, or private WhatsApp data exist yet. Do not begin
+Milestone 3 (or any later) work without explicit instruction. See
 `docs/08-delivery/implementation-plan.md` for the authoritative current phase.

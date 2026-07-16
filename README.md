@@ -30,12 +30,15 @@ for the current chat structure.
 
 ## Current project stage
 
-**Application foundation (Milestone 1) in place.** This repository contains the project
-documentation, brand context, and — as of Milestone 1 — a bootstrapped Next.js application
-shell with quality tooling. **No product features, database schema, authentication, or
-backend integration exist yet.** The app is a deliberately minimal, branded shell that
-future milestones build on. Do not assume any part of the product described in these docs
-is live.
+**Public gateway (Milestone 2) in place.** On top of the Milestone 1 foundation, the
+repository now contains the public branded gateway: a landing page, a community group
+directory (`/groups`), statically generated group detail pages (`/groups/[slug]`), and a
+community guidelines page (`/guidelines`). Public group content comes from a typed in-code
+module (`src/content/groups/`) — a deliberate interim before the database milestone.
+Continuous integration (`.github/workflows/ci.yml`) runs the full validation gate on every
+PR. **No database schema, authentication, Supabase wiring, analytics, or private WhatsApp
+data exist yet.** Brand palette and all copy remain provisional. Do not assume any part of
+the product beyond this public gateway is live.
 
 ## Stack
 
@@ -107,10 +110,12 @@ introduces the database and are intentionally left blank. Never commit real secr
 
 ```
 src/
-├── app/            App Router: layout, homepage, loading/error/not-found
+├── app/            App Router: /, /groups, /groups/[slug], /guidelines, error/not-found
 ├── components/
-│   └── layout/     Header, footer, and the Container layout primitive
+│   ├── layout/     Header, footer, and the Container layout primitive
+│   └── ui/         Reusable Server-Component primitives (Section, Card, Badge, …)
 ├── config/         Central site configuration (provisional copy)
+├── content/        Typed public content model (groups/) — canonical for M2
 ├── lib/            Small shared utilities
 ├── styles/         Global stylesheet + provisional design tokens
 ├── features/       (empty) one directory per domain feature, added as built
