@@ -31,6 +31,7 @@ aligned; this one is the shorter, portable version.
 
 ## Current phase
 
-Repository foundation only — documentation and directory structure. No application code,
-dependencies, or database schema exist yet. Do not begin implementation without explicit
-instruction to move into that phase.
+Milestone 1 complete — the Next.js application foundation (App Router shell + quality
+tooling) is in place. No product features, database schema, or Supabase wiring exist yet.
+Do not begin Milestone 2 (or any later) work without explicit instruction. See
+`docs/08-delivery/implementation-plan.md` for the authoritative current phase.

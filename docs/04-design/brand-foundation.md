@@ -120,6 +120,11 @@ essentially the moodboard mint). These stated values are the strongest candidate
 ratification so far, but they remain **concept-stage until the owner ratifies a canonical
 pair** and it is recorded in the decision log.
 
+As of Milestone 1, the application consumes the candidate mint/forest pair as
+**provisional design tokens** centralized in `src/styles/globals.css` (a documented,
+single definition point) — not as ratified brand values. When a canonical palette is
+ratified, update those tokens in that one place.
+
 ### Typography
 
 Wordmarks use a **bold, rounded, geometric sans-serif in all caps** — consistent with the

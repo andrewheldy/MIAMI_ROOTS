@@ -62,8 +62,14 @@ file adds Claude-specific detail without repeating all of it.
 
 ## Scope for this current phase
 
-At the time this file was written, the project is in **repository-foundation** stage: no
-application code, schema, or dependencies exist yet. Do not scaffold the Next.js app,
-install packages, design the database, or otherwise begin implementation unless explicitly
-asked to move into that phase — check `docs/08-delivery/implementation-plan.md` for the
-current phase before assuming otherwise.
+**Milestone 1 (application foundation) is complete:** the Next.js App Router app, quality
+tooling (ESLint, Prettier, TypeScript strict, Vitest), and a minimal branded shell exist
+at the repository root. There is still **no database schema, authentication, Supabase
+wiring, or any product feature** — those belong to later milestones. Do not build
+Milestone 2 (the public branded gateway) or anything beyond it unless explicitly asked to
+move into that phase — check `docs/08-delivery/implementation-plan.md` for the current
+phase before assuming otherwise.
+
+When extending the app: design tokens are provisional and centralized in
+`src/styles/globals.css` — change brand values there, not inline. Keep user-facing copy
+provisional and minimal until an owner voice pass happens (M2).

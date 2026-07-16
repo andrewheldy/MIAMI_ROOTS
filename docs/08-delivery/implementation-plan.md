@@ -14,20 +14,30 @@ The authoritative statement of the current phase and the milestone-by-milestone 
 building the MVP gateway. Work outside the active milestone is out of bounds per
 `CLAUDE.md`/`AGENTS.md`.
 
-## Current phase: MVP planning complete — implementation not started
+## Current phase: Milestone 1 complete — Milestone 2 not started
 
-As of 2026-07-16 the repository contains foundation + organized assets + this
-architecture/implementation plan. **No application code, dependencies, or schema exist.**
-The next authorized work is **Milestone 1 only**, and it requires explicit owner
-go-ahead.
+As of 2026-07-16 the repository contains foundation + organized assets + the
+architecture/implementation plan, **and the Milestone 1 application foundation** (a
+bootstrapped Next.js App Router app with quality tooling and a minimal branded shell).
+**No product features, database, or Supabase wiring exist** beyond the pre-existing env
+name scaffolding. The next authorized work is **Milestone 2**, and it requires explicit
+owner go-ahead.
 
-### The first implementation assignment (bounded)
+### Milestone 1 — delivered
 
 > **M1 — Bootstrap the Next.js application and quality tooling, without implementing any
-> product feature or any part of the Supabase domain schema.**
+> product feature or any part of the Supabase domain schema.** ✅
 
-Nothing beyond M1's acceptance criteria may be built in that pass — no landing content
-beyond a placeholder, no database, no Supabase project wiring beyond env scaffolding.
+Ratified stack (this pass): **Next.js 15, React 19, TypeScript 5 (strict), Tailwind CSS 4,
+ESLint 9 (flat config), Prettier 3, Vitest 3**, npm. See the decision log entry
+"Milestone 1 stack ratified and application foundation bootstrapped" (2026-07-16). Local
+scripts: `dev`, `build`, `start`, `lint`, `typecheck`, `test`, `format`, `format:check`,
+`validate`. CI wiring (`.github/workflows`) and the Vercel preview deploy remain to be set
+up by the owner — see M1 **Human** / **Deferred** below.
+
+Nothing beyond M1's acceptance criteria was built — no product content beyond a minimal
+placeholder shell, no database, no Supabase project wiring beyond the pre-existing env
+name scaffolding.
 
 ## MVP boundary (summary)
 
@@ -46,8 +56,12 @@ Format per milestone: **Goal · Outcome** (user-visible) · **Deps** · **Areas*
 **Risks** · **Human** (actions needed from owner/admins) · **Deferred** (explicitly not
 in this milestone).
 
-### M1 — Application and quality-tooling bootstrap 〔critical path〕
+### M1 — Application and quality-tooling bootstrap 〔critical path〕 — ✅ delivered 2026-07-16
 
+- **Status:** App shell, tooling, and local quality gates delivered and passing
+  (`format:check`, `lint`, `typecheck`, `test`, `build`). **Still owner/infra work:** the
+  `.github/workflows` CI pipeline and the Vercel project/preview deploy (the two **Human**
+  items below).
 - **Goal:** A running, deployable, empty Next.js app with quality gates.
 - **Outcome:** Placeholder page renders locally and on a Vercel preview.
 - **Deps:** Owner go-ahead. **Decision gate:** ratify stack versions (Next.js/TS/Tailwind
