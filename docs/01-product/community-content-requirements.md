@@ -34,7 +34,7 @@ defaults from the 2026-07-16 planning pass.
 | Tagline | ❌ to write | "Together we rise" is the load-bearing theme (`docs/00-context/vision-and-ethos.md`) — candidate, not ratified copy |
 | Intro/ethos copy | ❌ to write | Derived from vision-and-ethos; needs owner voice pass |
 | Parent logo | ✅ `public/brand/logos/miami-roots-logo.png` | |
-| Parent banner | ⏳ announced, not received | Hero fallback needed until then (see [`../04-design/asset-implementation-plan.md`](../04-design/asset-implementation-plan.md)) |
+| Parent banner | ◐ concept received (`public/brand/banners/miami-roots-community-banner.png`) | Classified as a **concept** — hero use needs owner sign-off; its baked-in tagline/CTA copy is unratified. Fallback stays available (see [`../04-design/asset-implementation-plan.md`](../04-design/asset-implementation-plan.md)) |
 | Community guidelines (versioned) | ◐ principles exist (`community-guidelines.md`) | Needs member-facing versioned copy — consent references the version |
 | Privacy/data-use copy | ❌ to write | Plain-language; legal review pending (research backlog #2–3) |
 

@@ -44,7 +44,9 @@ Parent brand coverage:
 | Parent asset | Status |
 |---|---|
 | Miami Roots logo | ✅ `public/brand/logos/miami-roots-logo.png` |
-| Miami Roots community banner | ⏳ announced by owner, **not received** — destination `public/brand/banners/` is ready |
+| Miami Roots community banner | ✅ `public/brand/banners/miami-roots-community-banner.png` — received 2026-07-16, classified as a **banner concept** (design reference; production use needs owner sign-off) |
+| Miami Roots brand moodboard | ✅ `public/brand/moodboards/miami-roots-brand-moodboard.png` — reference only, never a display asset |
+| Miami Roots artistic tree logo | ✅ `public/brand/logos/concepts/miami-roots-artistic-tree-logo.png` — secondary concept; not for avatars/favicons |
 
 ## Gaps that matter for the MVP
 
@@ -52,8 +54,10 @@ Parent brand coverage:
    Community Organizing). Until dedicated marks arrive, the gateway should fall back to
    the parent mark or a neutral treatment — the group-card design must not assume every
    group has a logo.
-2. **No banners exist at all** (parent or subgroup). The landing-page hero and any group
-   headers need a design fallback until banners arrive.
+2. **No subgroup banners exist.** A parent banner *concept* now exists
+   (`public/brand/banners/miami-roots-community-banner.png`) and can inform the
+   landing-page hero, but its copy is not ratified and no subgroup has a banner — group
+   headers still need a design fallback.
 3. **No social graphics exist.** Referral sharing cards will need to be generated or
    designed later (see [`asset-implementation-plan.md`](asset-implementation-plan.md)).
 4. **Two logos display names that differ from group operating names** ("Daytime Roots" vs

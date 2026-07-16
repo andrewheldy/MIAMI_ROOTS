@@ -19,6 +19,8 @@ separately in [`docs/00-context/source-material-register.md`](../00-context/sour
 
 - Every production asset under `public/` (`brand/`, `group-logos/`, `group-banners/`,
   `social/`, `qr/`), with full technical and status detail
+- Tracked **concept and reference assets** (moodboards, concept marks, banner concepts) —
+  registered with the same detail but clearly separated from approved production assets
 - Recommended future derivatives (documented, not yet produced)
 
 ## What does not belong here
@@ -34,12 +36,20 @@ separately in [`docs/00-context/source-material-register.md`](../00-context/sour
 public/
 ├── brand/
 │   ├── logos/          ← parent Miami Roots logos
-│   └── banners/        ← parent Miami Roots banners (empty — none received yet)
+│   │   └── concepts/   ← secondary/concept marks (not the approved primary)
+│   ├── banners/        ← parent Miami Roots banners
+│   │   └── concepts/   ← (future) generated banner concepts — create when first needed
+│   └── moodboards/     ← brand moodboards / visual-direction references
+│       └── concepts/   ← (future) generated moodboard explorations — create when first needed
 ├── group-logos/        ← subgroup logos (incl. future-scoped Ticket Exchange)
 ├── group-banners/      ← subgroup banners (empty — none received yet)
 ├── social/             ← finished social graphics (empty — none received yet)
 └── qr/                 ← runtime-generated QR output only; stays empty in the repo
 ```
+
+Approved production assets and concept/reference material are never mixed in one folder:
+generated or exploratory artwork goes in a `concepts/` subfolder (or `moodboards/`), never
+alongside approved source assets.
 
 ## Production assets
 
@@ -144,15 +154,87 @@ formal brand guide. Shared technical properties: **PNG, 8-bit RGB, no alpha chan
 | Source / approval status | Owner-supplied at founding; approved as an asset, but its **group is explicitly out of scope** — organized here for safekeeping, not for display |
 | Recommended future derivatives | 1:1 avatar crop (only if/when the group is launched by explicit decision) |
 
+## Concept and reference assets
+
+The three assets below arrived on 2026-07-16 (after the founding five) and were placed and
+classified per the owner's instruction. They are **official visual references**, not
+approved primary production assets: use them to inform design work, do not ship them as
+final UI branding without an explicit decision. Files are committed byte-identical to the
+originals (checksums verified; no recompression, cropping, recoloring, or metadata
+changes). All three are PNG, 8-bit RGB, no alpha channel. The owner's instruction
+suggested `.jpg` filenames for the moodboard and artistic logo, but both source files are
+PNG — extensions follow the actual format per the no-conversion rule.
+
+### brand-banner-parent — Miami Roots community banner (concept)
+
+| Field | Value |
+|---|---|
+| Canonical asset ID | `brand-banner-parent` |
+| Current filename | `miami-roots-community-banner.png` |
+| Repository path | `public/brand/banners/miami-roots-community-banner.png` |
+| Parent brand / subgroup | Miami Roots (parent brand) |
+| Asset type | **Parent-brand community banner concept** (horizontal) |
+| File format | PNG (8-bit RGB) |
+| Dimensions | 1376 × 768 |
+| Aspect ratio | ~1.79:1 (close to 16:9) |
+| Transparency | None (opaque mint background, sampled ~`#97D0C1`) |
+| Displayed content | Palm-tree mark rooted through a WhatsApp icon, community-network / handshake / subgroup iconography, wordmark "MIAMI ROOTS", tagline "TOGETHER WE RISE", subline "Miami's trusted local graph of people, businesses, and ideas.", CTA "Join the WhatsApp Community" |
+| Intended uses | Visual **reference** for future website headers, WhatsApp Community covers, social headers, and campaign graphics |
+| Production readiness | Concept — usable as design reference now; direct production use needs owner sign-off and copy ratification (tagline/subline are candidate copy, not ratified — see [`../01-product/community-content-requirements.md`](../01-product/community-content-requirements.md)) |
+| Known limitations | Raster only; opaque background; 1376×768 requires crops/re-composition for standard targets (OG 1200×630, Story 1080×1920, WhatsApp cover); baked-in English copy limits reuse |
+| Source / approval status | Owner-supplied 2026-07-16; classified by owner as *parent-brand community banner concept* |
+| Recommended future derivatives | Website hero banner, WhatsApp Community banner crop, Open Graph 1200×630, Instagram Story 1080×1920, square sharing card 1080×1080 (see below) |
+
+### brand-moodboard — Miami Roots brand moodboard (reference)
+
+| Field | Value |
+|---|---|
+| Canonical asset ID | `brand-moodboard` |
+| Current filename | `miami-roots-brand-moodboard.png` |
+| Repository path | `public/brand/moodboards/miami-roots-brand-moodboard.png` |
+| Parent brand / subgroup | Miami Roots (parent brand + sub-brand system) |
+| Asset type | **Brand moodboard / visual-direction reference** |
+| File format | PNG (8-bit RGB) |
+| Dimensions | 896 × 1195 |
+| Aspect ratio | 3:4 (portrait) |
+| Transparency | None (opaque) |
+| Displayed content | Master mark with stated palette ("MINT: #96D2C9", "FOREST GREEN: #003F2C"); "TOGETHER WE RISE — MIAMI / SOUTH FLORIDA"; vertical identity examples (Daytime Roots, Sober Social, Nightlife Roots); community photography; banyan-tree roots imagery; "WHATSAPP COMMUNITIES: Low-Friction Local Network Layer"; principles "LOCAL FIRST / COMMUNITY BEFORE CLOUT / CLEAR PURPOSE / GIVE BEFORE YOU TAKE"; "TRUSTED LOCAL GRAPH LAYER FOR DISCOVERY & COLLABORATION" |
+| Intended uses | Inspiration source for color, typography, imagery, sub-brand structure, graphic language, and brand tone |
+| Production readiness | **Never a production display asset** — reference only. Individual elements are not final/approved unless supported by canonical brand documentation (see [`brand-foundation.md`](brand-foundation.md)) |
+| Known limitations | Composite reference (includes photography of people not cleared for production use); stated hex values are concept-stage, not ratified; raster only |
+| Source / approval status | Owner-supplied 2026-07-16; classified by owner as *brand moodboard and visual-direction reference* |
+| Recommended future derivatives | None as artwork; ratified palette/typography decisions should be extracted into `brand-foundation.md` and the decision log |
+
+### brand-logo-artistic-tree — artistic tree logo (secondary concept)
+
+| Field | Value |
+|---|---|
+| Canonical asset ID | `brand-logo-artistic-tree` |
+| Current filename | `miami-roots-artistic-tree-logo.png` |
+| Repository path | `public/brand/logos/concepts/miami-roots-artistic-tree-logo.png` |
+| Parent brand / subgroup | Miami Roots (parent brand) |
+| Asset type | **Secondary artistic logo concept** — not a replacement for the approved primary logo |
+| File format | PNG (8-bit RGB) |
+| Dimensions | 1408 × 768 |
+| Aspect ratio | ~1.83:1 (landscape canvas; artwork itself is a centered vertical composition on an off-white ~`#F8F8F3` panel with pale-mint side bars) |
+| Transparency | None (opaque) |
+| Displayed content | Detailed tropical tree with interwoven trunk and visible roots enclosing a gold Miami skyline, sun element in the canopy, "MIAMI ROOTS" wordmark below |
+| Intended uses | Expressive secondary mark: merchandise, posters, editorial artwork, community storytelling, special events, murals, limited-edition applications, brand presentations |
+| Production readiness | Concept — do **not** use for small avatars, navigation bars, favicons, or other small-scale placements where the simpler primary logo reproduces more clearly |
+| Known limitations | High detail degrades at small sizes; landscape canvas needs cropping for square/portrait placements; raster only; gold/cream palette extends beyond the two-color system of the primary marks (not yet ratified) |
+| Source / approval status | Owner-supplied 2026-07-16; classified by owner as *secondary artistic logo concept* |
+| Recommended future derivatives | Cropped square/portrait export of the artwork panel (only when a concrete use case exists); vector redraw if adopted for merchandise |
+
 ## Assets expected but not yet received
 
 The following were announced by the owner but had **not been supplied** as of 2026-07-16.
 Destination directories exist and are ready; see
 [`subgroup-asset-inventory.md`](subgroup-asset-inventory.md) for the full coverage matrix.
+(The announced Miami Roots parent banner **has since been received** — registered above as
+`brand-banner-parent`.)
 
 | Expected asset | Destination when received | Canonical filename pattern |
 |---|---|---|
-| Miami Roots parent banner | `public/brand/banners/` | `miami-roots-community-banner.<ext>` (add `-wide` / `-square` / `-story` suffixes only if multiple formats with supporting dimensions arrive) |
 | Subgroup banners | `public/group-banners/` | `<group-slug>-banner.<ext>` |
 | Logos for General Chat, Business & Connections, Community Organizing | `public/group-logos/` | `<group-slug>-logo.<ext>` |
 | Social graphics | `public/social/` | `<subject>-<format>.<ext>` (e.g. `daytime-events-instagram-story.png`) |
@@ -160,8 +242,10 @@ Destination directories exist and are ready; see
 
 ### Planned derivatives of the parent banner (documented, not produced)
 
-Once the parent banner arrives and is registered, these derivatives are anticipated —
-**none should be produced until the source banner exists and its dimensions are known**:
+The source banner now exists (`brand-banner-parent`, 1376×768). These derivatives are
+anticipated but **were not produced during asset organization** — they are sequenced in
+[`asset-implementation-plan.md`](asset-implementation-plan.md), and future generated
+banner concepts belong in `public/brand/banners/concepts/`:
 
 - Website hero banner (responsive crop)
 - WhatsApp Community banner (WhatsApp's community-header crop)
