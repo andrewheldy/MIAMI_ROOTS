@@ -35,11 +35,12 @@ Assumptions made while establishing this repository (2026-07-16), pending confir
    `docs/00-context/community-groups.md` are treated as the current, real set, but exact
    names, count, and descriptions may change before or during build — this repo reflects
    what was provided at founding, not a locked spec.
-2. **Brand assets are directional, not final.** The logo and sub-brand images placed in
-   `public/brand/` and `public/group-logos/` are concept-stage marks provided at project
-   founding. Exact color values were estimated by eye (see
-   `docs/04-design/brand-foundation.md`) and have not been confirmed against a real brand
-   guide or design file.
+2. **Brand assets are approved for production use, but no brand guide exists.**
+   *(Updated 2026-07-16.)* The owner confirmed the supplied Miami Roots logos and subgroup
+   assets are approved production assets (unless clearly screenshots, references, drafts,
+   or alternates — none of the five supplied files were). Color values have since been
+   measured by sampling the files (see `docs/04-design/brand-foundation.md`) but no
+   ratified brand guide, canonical hex pair, or typeface decision exists yet.
 3. **"Ticket Exchange" is a future group, not a current one.** A concept logo for it exists
    in the same asset drop as the current group logos, but the brief explicitly places
    ticket resale out of scope for the initial six groups. Treated as future-phase only.

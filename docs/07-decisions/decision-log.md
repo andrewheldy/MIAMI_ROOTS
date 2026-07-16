@@ -63,6 +63,30 @@ them and leaves an honest trail for whoever finalizes the brand.
 
 **Status:** Active. Superseding entry expected once a real brand guide is confirmed.
 
+### 2026-07-16 — Canonical asset organization and private `inputs/` convention
+
+**Decision:** Adopt the canonical asset layout `public/brand/logos/`,
+`public/brand/banners/`, `public/group-logos/`, `public/group-banners/`, `public/social/`,
+`public/qr/`, with lowercase kebab-case filenames ending in a role suffix
+(`…-logo.<ext>`, `…-banner.<ext>`). The five founding assets were renamed accordingly via
+`git mv` with pixel content untouched (`miami-roots-primary-logo.png` →
+`brand/logos/miami-roots-logo.png`; group logos gained `-logo` suffixes;
+`future-ticket-exchange.png` → `ticket-exchange-logo.png`, still future-scoped per
+`docs/01-product/out-of-scope.md`). Additionally, a private `inputs/` tree
+(`brand-assets/`, `whatsapp-exports/`, `screenshots/`) is excluded from Git
+(`inputs/*` with only `inputs/README.md` tracked) and is the only permitted location for
+WhatsApp screenshots, chat exports, and unapproved design sources.
+
+**Rationale:** Stable, predictable asset paths before any application code references
+them, and a hard structural boundary that keeps private community material (phone numbers,
+invite links, conversations) out of Git history by default rather than by per-file
+vigilance. Registers were added so both sides stay accounted for:
+`docs/04-design/asset-register.md` (+ `subgroup-asset-inventory.md`) for public assets,
+`docs/00-context/source-material-register.md` (+ `whatsapp-community-inventory.md`) for
+private material.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here

@@ -39,6 +39,7 @@ implementing.
 | 7 | What's the retention definition — active in the group, active on the site, or something else? | Needed before retention can be tracked or rewarded. | Open |
 | 8 | Who are the actual initial administrators, and what's the expected admin tooling access model (dashboard in-app vs. spreadsheet-first while manual)? | Shapes whether an admin UI is even in the first build. | Open |
 | 9 | Is there an existing brand guide beyond the concept logos already in this repo (exact colors, type, spacing)? | Needed to finalize `docs/04-design/brand-foundation.md`. | Open |
+| 10 | Two supplied logos display sub-brand names that differ from group operating names ("Daytime Roots" vs Daytime Events; "Nightlife Roots" vs Nightlife & Event Marketing) — which naming should the gateway display, and do the WhatsApp groups themselves use the "… Roots" names? | Affects group display names, slugs, copy, and whether logos or names get revised. See `docs/00-context/whatsapp-community-inventory.md`. | Open |
 
 ## Relationship to other documents
 

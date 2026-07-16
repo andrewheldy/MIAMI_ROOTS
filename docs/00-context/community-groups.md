@@ -36,16 +36,16 @@ product is built against.
 |---|---|---|
 | **General Chat** | The central gathering place for everyday conversation, quick questions, community updates, and informal connection. | No logo asset yet. |
 | **Business & Connections** | A place to share projects and businesses, find collaborators, exchange opportunities, and use the network effect to help members grow together. | No logo asset yet. |
-| **Nightlife & Event Marketing** | For promoters and event organizers to share flyers, guest lists, nightlife events, and collaborative opportunities. | **Explicit rule: no ticket reselling** — ticket resale belongs in a separate, future group (see below). Logo asset exists (`public/group-logos/nightlife-and-event-marketing.png`, "Nightlife Roots"). |
-| **Daytime Events** | Wellness-oriented gatherings — yoga, run clubs, Pilates, outdoor activities, and other experiences that help members recharge, meet people, and restore balance. | Logo asset exists (`public/group-logos/daytime-events.png`, "Daytime Roots"). |
+| **Nightlife & Event Marketing** | For promoters and event organizers to share flyers, guest lists, nightlife events, and collaborative opportunities. | **Explicit rule: no ticket reselling** — ticket resale belongs in a separate, future group (see below). Logo asset exists (`public/group-logos/nightlife-and-event-marketing-logo.png`, displayed wordmark: "Nightlife Roots"). |
+| **Daytime Events** | Wellness-oriented gatherings — yoga, run clubs, Pilates, outdoor activities, and other experiences that help members recharge, meet people, and restore balance. | Logo asset exists (`public/group-logos/daytime-events-logo.png`, displayed wordmark: "Daytime Roots"). |
 | **Community Organizing** | Hobby activities, beach cleanups, dog-adoption days, volunteering, group outings, and other projects that bring people together and strengthen relationships. | No logo asset yet. |
-| **Sober Social** | For people who enjoy Miami's social life while remaining sober. Focus is friendship, mutual support, vibrant experiences, and clear-headed fun — **not** treatment or clinical recovery services. | Logo asset exists (`public/group-logos/sober-social.png`, "Sober Social"). |
+| **Sober Social** | For people who enjoy Miami's social life while remaining sober. Focus is friendship, mutual support, vibrant experiences, and clear-headed fun — **not** treatment or clinical recovery services. | Logo asset exists (`public/group-logos/sober-social-logo.png`, displayed wordmark: "Sober Social / Miami Roots"). |
 
 ### Future / explicitly out of scope for now
 
 - **Ticket Exchange** — a dedicated group for ticket resale, separate from Nightlife &
   Event Marketing (which explicitly disallows reselling). A concept logo already exists
-  (`public/group-logos/future-ticket-exchange.png`, "Ticket Exchange") but **this group is
+  (`public/group-logos/ticket-exchange-logo.png`, "Ticket Exchange") but **this group is
   not part of the initial six** and should not be built into the initial product. See
   `docs/01-product/out-of-scope.md`.
 

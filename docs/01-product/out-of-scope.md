@@ -30,7 +30,7 @@ explicit prevents scope creep dressed up as "obviously needed."
 - **Ticket Exchange / ticket resale.** Explicitly excluded from the initial six community
   groups. Nightlife & Event Marketing has a standing "no ticket reselling" rule. A concept
   logo for a future "Ticket Exchange" group exists in
-  `public/group-logos/future-ticket-exchange.png`, but it is not part of the current
+  `public/group-logos/ticket-exchange-logo.png`, but it is not part of the current
   product and should not be implemented without a deliberate future decision.
 - **Clinical/treatment services.** Sober Social is a peer social space, not a treatment or
   recovery program. Miami Roots does not offer clinical or medical services and should not
