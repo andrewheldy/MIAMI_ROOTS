@@ -1,7 +1,7 @@
 ---
 title: Membership Verification
 type: operations
-status: draft
+status: proposed
 owner: unassigned
 created: 2026-07-16
 updated: 2026-07-16
@@ -10,40 +10,82 @@ tags: [operations, verification]
 
 ## Purpose
 
-Describes how a "verified join" is expected to be confirmed operationally — turning a
-prospective member who clicked an invite link into a recorded member.
+The precise manual/semi-manual workflow that turns a submission into a verified, retained
+membership — who does what at each step, what evidence is required, and how mistakes get
+undone. This operationalizes state machine 2 in
+[`../03-architecture/data-model.md`](../03-architecture/data-model.md) and resolves open
+question #3 as a **recommended default**: manual admin verification against the WhatsApp
+participant list, with the product making each manual action cheap.
 
 ## What belongs here
 
-- The operational process for confirming someone actually joined a WhatsApp group
-- Who is responsible for performing/approving verification
+- Step-by-step workflow with actor, evidence, and tooling per step
+- Reversal, mismatch, and concurrency handling
+- What is manual now vs automatable later
 
 ## What does not belong here
 
-- The technical mechanism, if/when one exists (see `docs/03-architecture/integrations.md`)
-- Points/rewards that result from verification (see
-  `docs/05-operations/rewards-operations.md`)
+- State-machine formalism (see [`../03-architecture/data-model.md`](../03-architecture/data-model.md))
+- Points consequences (see [`rewards-operations.md`](rewards-operations.md))
 
-## Known initial information
+## The workflow
 
-Verification is a **distinct event from referral attribution and from the invite-link
-click** — someone can click an invite link and not verify (or not immediately), and
-attribution can exist well before verification happens (see
-`docs/00-context/glossary.md`).
+| Step | State after | Actor | Action & evidence | Manual or automatic |
+|---|---|---|---|---|
+| 1. Submission processed | `submitted` (per selected group) | System | Validated onboarding submission creates member + per-group lifecycle rows | Automatic |
+| 2. Review | `approved` or `rejected` | **Admin** | Plausibility check (name/context/Instagram, fraud signals); reject records a reason | Manual (queue: `/admin/requests`; Supabase dashboard before that ships) |
+| 3. Invite reveal | `invite_revealed` | Applicant (system records) | Approval notification links the applicant to their gated reveal page | Automatic once approved |
+| 4. Invite click | `join_requested` | Applicant (system records) | Click-through redirect to WhatsApp | Automatic |
+| 5. **Verification** | `verified` | **Admin** | Admin checks the group's WhatsApp participant list for the applicant's phone number; records evidence note (e.g. "matched ····1234 in Daytime Events participants") | **Manual — the load-bearing step** |
+| 6. Retention check | `retained` | **Admin** (system reminds) | At +14 days a queue/reminder lists verifications due; admin confirms the person is still in the group | Manual with automatic scheduling |
+| 7. Maturation & points | (referral `matured`) | System | If a referral attribution exists, it matures and posts the ledger entry idempotently | Automatic |
 
-How verification is actually performed — an admin manually checking WhatsApp group
-membership, some form of automated confirmation, or a hybrid — is not yet decided (see
-`docs/02-planning/open-questions.md`, #3). Until it is:
+**Evidence standard for step 5:** the phone number from the member record visibly present
+in the group's participant list. Name-only matches are insufficient (duplicates); if the
+number isn't visible but the person demonstrably joined (e.g. they message the admin from
+that number in the group context), the admin notes exactly what was seen. Evidence notes
+must never contain other members' data or invite links.
 
-- Assume verification is a **manual admin action** that an admin can perform against a
-  prospective member's record.
-- The system should not assume verification happens immediately or automatically after an
-  invite-link click.
-- Whatever mechanism is chosen, it needs to stay simple enough to operate while the
-  community is small (see `docs/03-architecture/data-principles.md`).
+## Mismatches and edge cases
+
+- **Phone-number mismatch** (joined with a different number than submitted): admin
+  confirms with the person, updates the member's phone (audited change), then verifies.
+  Never verify against a number that isn't confirmed as theirs — attribution and
+  duplicate-detection both key on it.
+- **Joined without clicking through** (state still `approved`/`invite_revealed`):
+  verification is allowed from those states; the skip is visible in the state history.
+- **Never joined:** lifecycle simply rests at its last state; a 90-day unverified
+  attribution expires automatically; no punitive action.
+- **Left the group before day 14:** not retained — admin marks `revoked` with reason
+  `left_before_retention`; any referral stays unmaturated (no points ever posted).
+
+## Reversals and mistaken verification
+
+An admin who verified the wrong person (or someone who then left/was removed) moves the
+membership to `revoked` with a reason. Consequences cascade explicitly, never silently:
+a matured referral is reversed and a compensating negative ledger entry posts; a
+merely-verified referral returns to unverified credit state. Every step is audited;
+nothing is deleted. Re-joining later re-uses the same lifecycle row (`revoked →
+verified`).
+
+## Concurrency
+
+Two admins acting on the same row: transitions are guarded (`WHERE status = expected`);
+the second actor gets "already handled by <name> at <time>" — informational, not an
+error. Verification and reversal are therefore safe to work from a shared queue without
+coordination.
+
+## Automation boundary
+
+Automatable later without workflow change: reminder scheduling (already system-driven),
+queue prioritization, retention-check batching by group. **Not** automatable under
+current assumptions: the join observation itself (see
+[`../03-architecture/system-context.md`](../03-architecture/system-context.md)) — any
+future WhatsApp Business API assist is a separate, researched decision.
 
 ## Relationship to other documents
 
-- `docs/00-context/glossary.md` — the verified-join definition
-- `docs/01-product/user-journeys.md` — where verification sits in the overall flow
-- `docs/02-planning/open-questions.md` — the unresolved verification mechanism question
+- [`../03-architecture/data-model.md`](../03-architecture/data-model.md) — the state machine this drives
+- [`member-onboarding.md`](member-onboarding.md) — the step-2 review context
+- [`../03-architecture/referral-system.md`](../03-architecture/referral-system.md) — what maturation triggers
+- [`../08-delivery/implementation-plan.md`](../08-delivery/implementation-plan.md) — when the admin tooling for this ships

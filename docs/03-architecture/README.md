@@ -16,10 +16,16 @@ work when it starts, not a finished design.
 
 ## What belongs here
 
-- `system-context.md` — how Miami Roots fits with WhatsApp and external systems
-- `data-principles.md` — principles the eventual data model must respect
-- `privacy-and-safety.md` — privacy, consent, and safety constraints
-- `integrations.md` — expected external integrations and their role
+- `system-context.md` — how Miami Roots fits with WhatsApp and external systems, and the
+  canonical funnel chain
+- `data-principles.md` — principles the data model must respect
+- `data-model.md` — the planned tables, state machines, and RLS posture (no migrations yet)
+- `identity-and-authorization.md` — auth approach, roles, and the deny-by-default matrix
+- `referral-system.md` — referral URLs, attribution rules, QR behavior
+- `analytics-and-events.md` — the canonical event taxonomy
+- `application-architecture.md` — Next.js structure, route map, source layout
+- `privacy-and-safety.md` — privacy, consent, and safety design
+- `integrations.md` — external integrations and their limits
 
 ## What does not belong here
 

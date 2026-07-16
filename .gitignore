@@ -51,3 +51,7 @@ test-results/
 *.log
 .turbo/
 .cache/
+
+# Private source material
+inputs/*
+!inputs/README.md

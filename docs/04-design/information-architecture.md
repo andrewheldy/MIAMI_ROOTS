@@ -42,10 +42,15 @@ Rough, provisional structure implied by `docs/01-product/product-scope.md`:
 - **Admin area** — member, referral, chat-link, verification, and points/rewards
   management. Entirely separate access level from the public-facing pages.
 
-This is a first pass for planning purposes, not a sitemap ready for implementation.
+This first pass has since been elaborated into a concrete proposed route map (URLs,
+access levels, data dependencies, and per-route privacy/security notes) in
+[`../03-architecture/application-architecture.md`](../03-architecture/application-architecture.md)
+— that document is now the implementation-facing source; this one remains the
+design-level summary.
 
 ## Relationship to other documents
 
 - `docs/01-product/product-scope.md` — the functionality this structure needs to expose
 - `docs/01-product/user-journeys.md` — the flows this structure needs to support
 - `docs/04-design/brand-foundation.md` — the visual identity these pages would use
+- [`../03-architecture/application-architecture.md`](../03-architecture/application-architecture.md) — the proposed route map

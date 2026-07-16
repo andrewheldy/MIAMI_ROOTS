@@ -42,6 +42,15 @@ and "verified join" mean the same thing in every document and in the eventual da
 | **Chat / Group** | A WhatsApp group that is part of the Miami Roots network (see `docs/00-context/community-groups.md`). |
 | **Invite link** | The raw WhatsApp-generated URL that adds a joiner to a group. Treated as a rotatable, non-permanent asset — see `docs/05-operations/chat-link-management.md`. |
 | **Gateway** | The Miami Roots web application itself — the "branded community gateway" described in the project brief. |
+| **Applicant** | A visitor who has submitted onboarding but is not yet a verified member. (Same as "prospective member".) |
+| **Connector** | An activated member acting through their personal referral link and dashboard. A capability of membership, not a separate permission tier — see `docs/03-architecture/identity-and-authorization.md`. |
+| **Activation** | The moment a verified member gains an authenticated account (email magic link) and access to the connector dashboard. Distinct from, and later than, verification. |
+| **Invite reveal** | The gated, audited display of a group's actual WhatsApp invite link to an approved applicant — see `docs/03-architecture/privacy-and-safety.md`. |
+| **Attribution window** | How long a referral cookie stays valid before a visit no longer credits the referrer (recommended default: 30 days). |
+| **Maturation** | A referral attribution reaching its final earned state: the referred person verified **and** retained (+14 days). Points post only at maturation. |
+| **Pending points** | Points a connector can expect from referrals that are verified but not yet matured — a derived projection, not ledger entries. |
+| **Available points** | The member's actual balance: the sum of their append-only points-ledger entries. |
+| **Reversal** | A compensating (negative) ledger entry or audited state transition that undoes an earlier effect without deleting history. |
 
 ## Relationship to other documents
 

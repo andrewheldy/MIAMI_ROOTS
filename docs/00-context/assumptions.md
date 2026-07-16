@@ -35,11 +35,12 @@ Assumptions made while establishing this repository (2026-07-16), pending confir
    `docs/00-context/community-groups.md` are treated as the current, real set, but exact
    names, count, and descriptions may change before or during build — this repo reflects
    what was provided at founding, not a locked spec.
-2. **Brand assets are directional, not final.** The logo and sub-brand images placed in
-   `public/brand/` and `public/group-logos/` are concept-stage marks provided at project
-   founding. Exact color values were estimated by eye (see
-   `docs/04-design/brand-foundation.md`) and have not been confirmed against a real brand
-   guide or design file.
+2. **Brand assets are approved for production use, but no brand guide exists.**
+   *(Updated 2026-07-16.)* The owner confirmed the supplied Miami Roots logos and subgroup
+   assets are approved production assets (unless clearly screenshots, references, drafts,
+   or alternates — none of the five supplied files were). Color values have since been
+   measured by sampling the files (see `docs/04-design/brand-foundation.md`) but no
+   ratified brand guide, canonical hex pair, or typeface decision exists yet.
 3. **"Ticket Exchange" is a future group, not a current one.** A concept logo for it exists
    in the same asset drop as the current group logos, but the brief explicitly places
    ticket resale out of scope for the initial six groups. Treated as future-phase only.
@@ -52,6 +53,26 @@ Assumptions made while establishing this repository (2026-07-16), pending confir
    that's already been checked (see `docs/06-research/research-backlog.md`).
 6. **Single-market assumption.** Everything here assumes Miami-only scope for the
    foreseeable future; no multi-city expansion has been discussed.
+
+Added during the MVP planning pass (2026-07-16):
+
+7. **WhatsApp gives the app no dependable programmatic signals** (joins, membership,
+   activity, invite attribution, webhooks). The architecture assumes the pessimistic
+   case deliberately; validating any richer access is research backlog #1. If richer
+   access exists, workflows relax — nothing breaks.
+8. **Announced source material is treated as forthcoming, not present.** Group
+   screenshots, a parent banner, and further assets were announced but not received as
+   of 2026-07-16 (see `docs/00-context/source-material-register.md`); plans include
+   fallbacks rather than waiting.
+9. **Recommended defaults are not owner decisions.** The planning pass proposes defaults
+   (auth model, onboarding fields, 30-day attribution / 14-day retention windows, point
+   values, manual verification) labeled as such in
+   `docs/02-planning/open-questions.md`; each needs ratification at its decision gate in
+   `docs/08-delivery/implementation-plan.md` before it hardens.
+10. **Admin capacity is small but sufficient for a manual verification loop** at current
+    community scale. Unvalidated (no volume data); the funnel's admin-time-per-member is
+    kept minimal by design, and this assumption is revisited with real queue metrics
+    after launch.
 
 ## Relationship to other documents
 

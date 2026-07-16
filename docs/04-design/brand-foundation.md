@@ -31,7 +31,7 @@ observational documentation of what exists, not a finished brand guideline.
 
 ### Primary mark
 
-`public/brand/miami-roots-primary-logo.png` — a palm tree growing from a WhatsApp
+`public/brand/logos/miami-roots-logo.png` — a palm tree growing from a WhatsApp
 speech-bubble icon, itself rooted into the ground by a visible root system, with a bold
 uppercase "MIAMI ROOTS" wordmark stacked between the tree and the icon. The composition
 literally illustrates the brand name and its WhatsApp-first, community-rooted concept in
@@ -62,10 +62,24 @@ All provided marks use a two-color, high-contrast palette:
 - A muted **seafoam / mint green** background (visually close to a mid-tone teal-green).
 - A **deep forest green** for the wordmark, icon, and linework.
 
-Exact hex values have **not** been confirmed against a source brand file — do not treat any
-specific hex code as final. Whoever owns brand/design should sample the actual asset files
-in `public/brand/` and `public/group-logos/` and record confirmed values here, replacing
-this note.
+Values **measured by sampling the committed asset files** (2026-07-16, dominant background
+color and dominant dark ink color per file, downsampled):
+
+| Asset | Background (sampled) | Ink (sampled) |
+|---|---|---|
+| Parent logo | `#80C9B8` | `#013B24` |
+| Daytime Events logo | `#7CBFB9` | `#043C2E` |
+| Nightlife & Event Marketing logo | `#80C6BC` | `#013625` |
+| Sober Social logo | `#7FBCB9` | `#06382C` |
+| Ticket Exchange logo (future) | `#7BC1B2` | `#01412A` |
+
+Two things follow from these measurements: the palette is consistent in character but
+**not pixel-identical across assets** (the backgrounds have subtle texture/noise and vary
+by a few points per channel), and **no single ratified hex pair exists yet**. These are
+measured observations, not brand decisions — whoever owns brand/design should pick and
+ratify canonical values (e.g. background near `#7FC3B7`, ink near `#02392A`) and record
+that as a decision. Do not hard-code any of these values into product UI as "the brand
+color" before that happens.
 
 ### Typography
 
