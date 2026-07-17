@@ -51,8 +51,11 @@ Assumptions made while establishing this repository (2026-07-16), pending confir
    retention, or messaging compliance (e.g. WhatsApp's own terms around automated invite
    handling) is unverified and should be treated as a research item, not a constraint
    that's already been checked (see `docs/06-research/research-backlog.md`).
-6. **Single-market assumption.** Everything here assumes Miami-only scope for the
-   foreseeable future; no multi-city expansion has been discussed.
+6. **Single-market implementation, future multi-city model.** *(Superseded in part
+   2026-07-17.)* The current product and all current claims remain Miami/South Florida
+   specific. The owner has since confirmed the longer-term ambition for a parent Roots
+   brand with locally operated city chapters; no expansion market, timeline, operating
+   model, or legal structure is decided yet.
 
 Added during the MVP planning pass (2026-07-16):
 
@@ -73,6 +76,32 @@ Added during the MVP planning pass (2026-07-16):
     community scale. Unvalidated (no volume data); the funnel's admin-time-per-member is
     kept minimal by design, and this assumption is revisited with real queue metrics
     after launch.
+
+Added during the Milestone 2 public-gateway implementation (2026-07-16):
+
+11. **Milestone 2 public copy and supporting UI colors are implementation drafts, not a
+    brand ratification.** The attached redesign brief authorizes the public-gateway build
+    and supplies its messaging direction, but it does not resolve open naming question
+    #10, approve final member-facing copy, or ratify canonical brand colors. The six
+    typed group records therefore keep the operating names from
+    `community-groups.md`; all new copy is derived from approved repository purposes and
+    rules; the gold/coral/sky/lime/lavender supporting tones are centralized provisional
+    UI tokens; and the guidelines page is explicitly versioned
+    `2026-07-16-draft.1`. No WhatsApp invite URL or live onboarding destination is
+    exposed before the later gated milestones.
+
+Added during the owner strategy interview and public-site expansion (2026-07-17):
+
+12. **MyVerse and Sidequests are future product relationships, not live integrations.**
+    The owner described MyVerse as a future distribution layer and Sidequests as a source
+    of richer context/activity discovery. Their ownership, data flow, naming, routes, and
+    technical integration remain undefined. The public site may label the intended
+    relationship as future-facing but must not imply either integration works today.
+13. **No direct public inquiry channel is confirmed.** A publication-safe email address,
+    form endpoint, downloadable partnership brief, and operating entity are not yet
+    confirmed. The contact experience therefore routes visitors to relevant information
+    and uses an explicit prelaunch empty state instead of inventing a contact address or
+    accepting data without an owner-controlled destination.
 
 ## Relationship to other documents
 

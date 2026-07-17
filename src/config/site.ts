@@ -8,9 +8,8 @@
  */
 export const siteConfig = {
   name: "Miami Roots",
-  /** Short, factual description grounded in docs/00-context/project-brief.md. */
   description:
-    "A private, community-oriented network in Miami — helping people build real relationships and share real opportunities.",
+    "A curated, community-powered city network helping people explore Miami, find their people, and participate in local life.",
   /** Canonical public URL; falls back to localhost for local development. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 } as const;

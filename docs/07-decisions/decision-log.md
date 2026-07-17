@@ -175,6 +175,84 @@ named in M1's acceptance criteria remain owner/infra tasks.
 
 **Status:** Active.
 
+### 2026-07-16 — Milestone 2 public gateway implementation baseline adopted
+
+**Decision:** Treat the owner-supplied public-site redesign brief as explicit
+authorization to implement Milestone 2 only, and adopt the resulting public experience as
+the implementation baseline: an editorial civic-brand landing page, a typed in-code model
+for exactly the six current communities, `/groups` plus six static detail routes, a
+mission-focused `/about` page, and a versioned draft `/guidelines` page. The site uses
+Server Components throughout the public experience, CSS/SVG motion with reduced-motion
+support, approved production logos where available, and designed icon fallbacks where
+assets are missing. Ticket Exchange remains absent.
+
+The visual signature is a lightweight SVG “living root network” in the hero. The existing
+mint/forest candidates remain centralized provisional tokens; supporting sun/coral/sky/
+lime/lavender tones are implementation-level UI colors, not a palette ratification. The
+owner-supplied banner, moodboard, and artistic-tree files remain reference/concept assets
+and are not rendered as production page artwork.
+
+**Rationale:** This directly answers the brief's emotional journey—wonder, curiosity,
+belonging, discovery, action—while keeping the implementation inside the current
+Milestone 2 boundary: no database, authentication, onboarding capture, public WhatsApp
+invite URL, events product, fabricated story, or fake impact metric was introduced.
+
+**Explicitly NOT decided by this entry:** final group display names (open question #10),
+final owner-approved public copy, canonical brand colors/typefaces, production guidelines
+consent version, or any live join/onboarding destination. Those remain at their existing
+decision gates. The draft copy/color status is recorded in assumption #11.
+
+**Status:** Active implementation baseline; owner copy/naming review remains outstanding.
+
+### 2026-07-17 — Public identity, access model, and complete website architecture confirmed
+
+**Decision:** Position Miami Roots as a **curated, community-powered city network and
+guide with civic ambitions**. The current Miami project is the first local expression of
+a future parent Roots network with city chapters, while all current product claims and
+content remain Miami/South Florida specific. The operating project is informal today and
+the site must not call it a nonprofit, S corporation, charity, or established institution
+until a legal structure exists.
+
+The owner confirmed the following public/member model: all six current community
+descriptions and approved public event information are browseable without membership;
+private community access is for adults 18+ through a trusted-member referral or organizer
+approval; a central team controls approval initially; approved members may later propose
+events or communities; and public WhatsApp invite links remain prohibited. Organizers are
+the supply side of the experience, but residents exploring communities remain the primary
+homepage audience. Gamification is future exploration only.
+
+Extend the Milestone 2 public architecture with static `/impact`, `/partners`,
+`/get-involved`, `/join`, `/contact`, and an interactive, no-data-retention
+`/find-your-people` guide. Community cards and pages may contain a structured public-event
+slot, but must render an honest empty state until a real event is supplied. Impact,
+program, partner, story, metric, contact, and integration modules must distinguish current
+proof from future intent. MyVerse/Sidequests may appear only as a labeled future
+distribution relationship.
+
+**Rationale:** This resolves the strategic interview without turning Miami Roots into a
+generic WhatsApp directory or an unearned institutional brand. Public exploration serves
+residents, curation protects trust, approved organizers make the network participatory,
+and the partner/impact architecture makes the model legible to civic and funding audiences
+without fabricated proof.
+
+**Status:** Active. The final legal entity, contact channel, MyVerse/Sidequests technical
+relationship, organizer pricing, gamification mechanics, and production applications
+remain undecided.
+
+### 2026-07-17 — Deployment dependency security patches applied within the ratified stack
+
+**Decision:** Keep the ratified Next.js 15 / React 19 architecture while updating to the
+current secure patch line before publication: Next.js resolves to 15.5.20, React and
+React DOM to 19.2.4, matching React type packages are used, and PostCSS is overridden to
+8.5.10 because the framework's nested older version remained covered by a published
+security advisory. `npm audit --omit=dev` reports zero vulnerabilities after the update.
+
+**Rationale:** Shipping the existing 15.4.6 / React 19.1.1 lockfile would knowingly deploy
+versions affected by React Server Components security advisories. This is a patch-level
+hardening change inside the owner-ratified major-version stack, not a Next.js 16 migration.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here

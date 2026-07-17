@@ -14,14 +14,23 @@ The authoritative statement of the current phase and the milestone-by-milestone 
 building the MVP gateway. Work outside the active milestone is out of bounds per
 `CLAUDE.md`/`AGENTS.md`.
 
-## Current phase: Milestone 1 complete — Milestone 2 not started
+## Current phase: Milestone 1 complete — Milestone 2 implemented locally, acceptance open
 
-As of 2026-07-16 the repository contains foundation + organized assets + the
-architecture/implementation plan, **and the Milestone 1 application foundation** (a
-bootstrapped Next.js App Router app with quality tooling and a minimal branded shell).
-**No product features, database, or Supabase wiring exist** beyond the pre-existing env
-name scaffolding. The next authorized work is **Milestone 2**, and it requires explicit
-owner go-ahead.
+As of 2026-07-16 the repository contains the foundation, organized assets, architecture
+plan, Milestone 1 application shell, **and the owner-authorized Milestone 2 public gateway
+implementation**: landing page, all-six community directory, six static detail pages,
+About, Impact, Partners, Get involved, Join, Contact, a private-by-design community
+matching guide, and versioned draft guidelines. The implementation remains database-free and uses
+a typed interim content module as planned. No Supabase wiring, data capture, referral
+handling, authentication, or invite-link exposure exists.
+
+Milestone 2 is not marked fully accepted yet: the owner copy/naming review remains open,
+CI/Vercel preview are still owner/infra work, and a reproducible local Lighthouse anomaly
+on the long landing page must be resolved or validated in the real preview environment.
+Browser verification otherwise passes at desktop and 390 px mobile widths with no console
+errors or layout overflow; the guidelines route scores 98 performance, while the landing
+audit incorrectly identifies the off-screen footer as LCP/CLS despite a zero-entry
+LayoutShift observer trace. Milestone 3 remains unauthorized.
 
 ### Milestone 1 — delivered
 
@@ -80,6 +89,10 @@ in this milestone).
 
 ### M2 — Public branded gateway 〔critical path〕
 
+- **Status:** Implemented locally on 2026-07-16; owner copy/naming review, preview deploy,
+  and final Lighthouse acceptance remain open. The 2026-07-17 owner strategy interview
+  expanded the static public-site boundary; those additions remain backend-free and do not
+  authorize Milestone 3 or any data capture.
 - **Goal:** The real landing + group directory + group detail pages, mobile-first,
   content from a typed in-code content module (deliberate interim before M4).
 - **Outcome:** A visitor can read about Miami Roots and each MVP group.

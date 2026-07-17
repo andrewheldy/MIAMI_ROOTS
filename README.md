@@ -30,12 +30,12 @@ for the current chat structure.
 
 ## Current project stage
 
-**Application foundation (Milestone 1) in place.** This repository contains the project
-documentation, brand context, and — as of Milestone 1 — a bootstrapped Next.js application
-shell with quality tooling. **No product features, database schema, authentication, or
-backend integration exist yet.** The app is a deliberately minimal, branded shell that
-future milestones build on. Do not assume any part of the product described in these docs
-is live.
+**Milestone 2 public gateway implemented locally; acceptance and preview deployment are
+open.** The repository now contains a branded, multi-page public experience for community
+discovery, impact, partnerships, involvement, guidelines, and the future access model.
+It remains deliberately database-free: no application data is captured, no authentication
+or Supabase integration exists, and no WhatsApp invite link is public. Later MVP workflows
+described in the docs are not live.
 
 ## Stack
 
@@ -107,13 +107,13 @@ introduces the database and are intentionally left blank. Never commit real secr
 
 ```
 src/
-├── app/            App Router: layout, homepage, loading/error/not-found
+├── app/            App Router: public pages, layout, loading/error/not-found
 ├── components/
 │   └── layout/     Header, footer, and the Container layout primitive
 ├── config/         Central site configuration (provisional copy)
 ├── lib/            Small shared utilities
 ├── styles/         Global stylesheet + provisional design tokens
-├── features/       (empty) one directory per domain feature, added as built
+├── features/       Community content, cards, homepage, and matching guide
 └── types/          (empty) cross-feature shared types
 tests/
 └── unit/           Vitest unit tests
