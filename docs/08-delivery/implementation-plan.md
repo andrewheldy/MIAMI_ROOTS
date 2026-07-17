@@ -24,9 +24,10 @@ matching guide, and versioned draft guidelines. The implementation remains datab
 a typed interim content module as planned. No Supabase wiring, data capture, referral
 handling, authentication, or invite-link exposure exists.
 
-Milestone 2 is not marked fully accepted yet: the owner copy/naming review remains open,
-CI/Vercel preview are still owner/infra work, and a reproducible local Lighthouse anomaly
-on the long landing page must be resolved or validated in the real preview environment.
+Milestone 2 is not marked fully accepted yet: the owner copy/naming review and CI remain
+open, and a reproducible local Lighthouse anomaly on the long landing page must be
+resolved or validated in the real preview environment. A Vercel preview was deployed
+successfully on 2026-07-17 and is currently protected by the project's Vercel SSO setting.
 Browser verification otherwise passes at desktop and 390 px mobile widths with no console
 errors or layout overflow; the guidelines route scores 98 performance, while the landing
 audit incorrectly identifies the off-screen footer as LCP/CLS despite a zero-entry
@@ -68,9 +69,9 @@ in this milestone).
 ### M1 — Application and quality-tooling bootstrap 〔critical path〕 — ✅ delivered 2026-07-16
 
 - **Status:** App shell, tooling, and local quality gates delivered and passing
-  (`format:check`, `lint`, `typecheck`, `test`, `build`). **Still owner/infra work:** the
-  `.github/workflows` CI pipeline and the Vercel project/preview deploy (the two **Human**
-  items below).
+  (`format:check`, `lint`, `typecheck`, `test`, `build`). The Vercel project is linked and
+  a protected preview is live as of 2026-07-17. **Still owner/infra work:** the
+  `.github/workflows` CI pipeline.
 - **Goal:** A running, deployable, empty Next.js app with quality gates.
 - **Outcome:** Placeholder page renders locally and on a Vercel preview.
 - **Deps:** Owner go-ahead. **Decision gate:** ratify stack versions (Next.js/TS/Tailwind
@@ -83,14 +84,15 @@ in this milestone).
   works; README dev-setup section updated.
 - **Demo:** Open preview URL → placeholder with parent logo.
 - **Risks:** Tooling sprawl — keep to the brief's stack, nothing extra.
-- **Human:** Create Vercel project; connect repo.
+- **Human:** Confirm desired Vercel Git integration and preview-protection policy before
+  merge; CLI preview deployment is already working.
 - **Deferred:** All product UI, Supabase, analytics.
 - **Claude Code suitable:** Yes, entirely.
 
 ### M2 — Public branded gateway 〔critical path〕
 
-- **Status:** Implemented locally on 2026-07-16; owner copy/naming review, preview deploy,
-  and final Lighthouse acceptance remain open. The 2026-07-17 owner strategy interview
+- **Status:** Implemented locally on 2026-07-16 and deployed to a protected Vercel preview
+  on 2026-07-17; owner copy/naming review and final Lighthouse acceptance remain open. The 2026-07-17 owner strategy interview
   expanded the static public-site boundary; those additions remain backend-free and do not
   authorize Milestone 3 or any data capture.
 - **Goal:** The real landing + group directory + group detail pages, mobile-first,
