@@ -44,7 +44,7 @@ export function SiteHeader() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-muted hover:text-forest rounded-md text-sm font-medium transition-colors"
+                className="text-muted hover:text-forest inline-flex min-h-11 items-center rounded-md text-sm font-medium transition-colors"
               >
                 {link.label}
               </Link>

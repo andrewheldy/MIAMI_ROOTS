@@ -69,10 +69,10 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
       {/* Group header */}
       <section className="bg-surface border-border border-b">
         <Container className="py-12 sm:py-16">
-          <nav aria-label="Breadcrumb" className="mb-6">
+          <nav aria-label="Breadcrumb" className="mb-4">
             <Link
               href="/groups"
-              className="text-muted hover:text-forest rounded-md text-sm font-medium"
+              className="text-muted hover:text-forest -ml-1 inline-flex min-h-11 items-center rounded-md px-1 text-sm font-medium"
             >
               ← All groups
             </Link>

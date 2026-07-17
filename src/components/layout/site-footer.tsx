@@ -31,7 +31,7 @@ export function SiteFooter() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:text-forest rounded-md transition-colors"
+                  className="hover:text-forest inline-flex min-h-11 items-center rounded-md transition-colors sm:min-h-0 sm:py-1.5"
                 >
                   {link.label}
                 </Link>
