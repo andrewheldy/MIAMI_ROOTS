@@ -137,6 +137,61 @@ client-bundle assertion. No production or staging credentials exist in CI.
    the same staging-first order. Never edit applied migrations; never make
    dashboard-only schema changes.
 
+### Step-by-step owner walkthrough (secure; no secret ever leaves your machine)
+
+Run everything below on your own machine, signed in with your own accounts.
+Never paste keys, tokens, or database URLs into chat, commits, logs, or
+screenshots — the walkthrough needs only project *names* and *references*
+(refs are non-secret identifiers, e.g. `abcdefghijklmnopqrst`).
+
+**Staging first**
+
+1. Dashboard → create project **miami-roots-staging** (note its project ref
+   from Settings → General).
+2. In a checkout of this repository:
+   `npx supabase login` (opens the browser; token stays in your keychain),
+   then `npx supabase link --project-ref <staging-ref>`.
+3. Inspect the plan before applying: `npx supabase db push --dry-run` —
+   expect exactly the seven `20260718*` migrations, nothing else.
+4. Apply: `npx supabase db push`.
+5. Verify: Dashboard → SQL editor → paste `scripts/db/verify-hosted.sql` →
+   run. **All ten checks must read PASS**, and the trailing query must list
+   the seven `20260718*` migration versions. The script is read-only and
+   inserts no data, so there is nothing to clean up.
+6. Vercel → Project → Settings → Environment Variables: set
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+   `SUPABASE_SERVICE_ROLE_KEY` with **staging** values for the **Preview**
+   (and any staging) environment. Do NOT set `SUPABASE_DB_URL` in Vercel —
+   it is a local/CI harness variable only.
+7. Redeploy the PR preview and confirm it builds and the public pages render
+   unchanged.
+
+**Production (only after every staging check passes)**
+
+8. Create **miami-roots-production** → `npx supabase link --project-ref
+   <production-ref>` → `db push --dry-run` (same seven migrations) →
+   `db push`.
+9. Re-run `scripts/db/verify-hosted.sql` in the production SQL editor — all
+   PASS, same seven versions (staging and production must match exactly).
+10. Vercel: set the same three variable names with **production** values for
+    the **Production** environment only. Production credentials must never be
+    attached to Preview.
+
+## Hosted rollout status (updated 2026-07-18)
+
+| Item | Status |
+| --- | --- |
+| PR #7 (M2.5 hub) | ✅ merged to main (`b7104ad`) |
+| PR #8 rebased onto merged main | ✅ (`4d7c267`, doc/env-example conflicts only — no behavior change) |
+| `miami-roots-staging` created, linked, pushed | ⏳ **pending owner** — no Supabase credentials exist in the implementation environment |
+| Staging verification (`verify-hosted.sql`) | ⏳ pending owner (script dry-run against the local harness: **10/10 PASS**) |
+| Vercel preview/staging env vars | ⏳ pending owner |
+| `miami-roots-production` created, linked, pushed | ⏳ pending owner (only after staging passes) |
+| Production verification + Vercel production env vars | ⏳ pending owner |
+
+When the owner completes a step, update this table in place (append-style
+edits, no secrets — project refs are acceptable, keys and URLs are not).
+
 ## Owner actions still required (M3 remote half)
 
 1. Create the Supabase organization + **staging** and **production** projects.
