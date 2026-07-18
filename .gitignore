@@ -58,3 +58,6 @@ test-results/
 # Private source material
 inputs/*
 !inputs/README.md
+
+# --- Local database harness (scripts/db/start-local.sh) ---
+.local/

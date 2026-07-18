@@ -14,20 +14,25 @@ The authoritative statement of the current phase and the milestone-by-milestone 
 building the MVP gateway. Work outside the active milestone is out of bounds per
 `CLAUDE.md`/`AGENTS.md`.
 
-## Current phase: Milestone 2.5 delivered — Milestone 3 not started
+## Current phase: Milestone 3 local foundation delivered — remote half awaits owner
 
 As of 2026-07-16 the repository contains foundation + organized assets + the
 architecture/implementation plan, the Milestone 1 application foundation, **and the
 Milestone 2 public branded gateway** (landing page, `/groups` directory, `/groups/[slug]`
-detail pages, `/guidelines`), rendered from a typed in-code content module. The two M1
-infrastructure-tail items — GitHub Actions CI and Vercel readiness — were also completed in
-this pass. As of 2026-07-18 an owner-directed **Milestone 2.5** added the `/join`
-shareable community hub and env-var-backed `/go/<slug>` WhatsApp redirects — see
-[`milestone-2-5-shareable-hub.md`](milestone-2-5-shareable-hub.md). **No database,
-authentication, Supabase wiring, analytics, or private WhatsApp data exist.** Full M2
-detail is in [`milestone-2-public-gateway.md`](milestone-2-public-gateway.md). The next
-authorized work is **Milestone 3**, and it requires explicit owner go-ahead and a
-Supabase account.
+detail pages, `/guidelines`), rendered from a typed in-code content module. As of
+2026-07-18 an owner-directed **Milestone 2.5** added the `/join` shareable community hub
+and env-var-backed `/go/<slug>` WhatsApp redirects — merged via PR #7, see
+[`milestone-2-5-shareable-hub.md`](milestone-2-5-shareable-hub.md). The same day the
+owner authorized **Milestone 3**, and its local half is delivered: the six-table spine
+schema with deny-by-default RLS (`supabase/migrations/`), the three Supabase client
+boundaries (`src/lib/supabase/`), environment validation, a database security test
+suite, and a CI job that replays migrations from zero — see
+[`milestone-3-database-foundation.md`](milestone-3-database-foundation.md).
+**Still owner-gated (M3's remote half):** creating the hosted staging/production
+Supabase projects, pushing migrations to them, and setting keys in Vercel. **The public
+site still renders from the in-code content module — no page reads the database** (that
+is Milestone 4). Full M2 detail is in
+[`milestone-2-public-gateway.md`](milestone-2-public-gateway.md).
 
 ### Milestone 1 — delivered
 

@@ -87,6 +87,16 @@ Added during the Milestone 2.5 shareable-hub pass (2026-07-18):
     and are stable-once-shipped regardless of how Q#10 resolves. If the owner intends the
     brief's labels as actual renames, update `src/content/groups/groups.ts` and close Q#10.
 
+Added during the Milestone 3 pass (2026-07-18):
+
+12. **No hosted Supabase projects exist yet.** No staging/production project URL, anon
+    key, service-role key, access token, or database URL was present in any environment
+    at M3 implementation time, so the milestone's remote half (project creation,
+    `db push`, Vercel env) is treated as not-yet-done owner work — see the owner
+    checklist in `docs/08-delivery/milestone-3-database-foundation.md`. If projects do
+    exist somewhere, nothing conflicts: the committed migrations are the source of truth
+    and push cleanly onto an empty project.
+
 ## Relationship to other documents
 
 When an assumption here is confirmed or changed, either update it in place (with an updated
