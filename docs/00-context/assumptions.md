@@ -74,6 +74,19 @@ Added during the MVP planning pass (2026-07-16):
     kept minimal by design, and this assumption is revisited with real queue metrics
     after launch.
 
+Added during the Milestone 2.5 shareable-hub pass (2026-07-18):
+
+11. **The hub brief's chat labels do not rename the groups.** The M2.5 task brief listed
+    two chats under labels that differ from the content model's group names — "Daytime
+    Events & Wellness" (group: *Daytime Events*) and "Sober Support" (group: *Sober
+    Social*). The `/join` hub displays the existing content-model names, treating the
+    brief's labels as descriptions of *which* chats to include, not as a resolution of
+    naming open question #10. The `/go/` redirect slugs and env-var names, however, follow
+    the brief verbatim (`/go/sober-support`, `WHATSAPP_SOBER_SUPPORT_URL`, `/go/nightlife-events`,
+    `WHATSAPP_NIGHTLIFE_EVENTS_URL`) because those were specified as an explicit contract
+    and are stable-once-shipped regardless of how Q#10 resolves. If the owner intends the
+    brief's labels as actual renames, update `src/content/groups/groups.ts` and close Q#10.
+
 ## Relationship to other documents
 
 When an assumption here is confirmed or changed, either update it in place (with an updated

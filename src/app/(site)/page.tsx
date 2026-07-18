@@ -179,7 +179,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Honest closing CTA — no invented join links */}
+      {/* Closing CTA — the shareable hub is the way in */}
       <Section aria-labelledby="cta-heading">
         <div className="border-border bg-surface rounded-2xl border px-6 py-10 text-center sm:px-12">
           <SectionHeading
@@ -188,12 +188,14 @@ export default function HomePage() {
             className="mx-auto text-center"
           />
           <p className="text-muted mx-auto mt-4 max-w-xl text-base leading-relaxed">
-            Invite access is currently managed by community administrators.
-            Explore the groups to see where you&apos;d fit — joining details are
-            coming soon.
+            The community lives in a set of WhatsApp chats. Pick the ones that
+            fit your life and say hello.
           </p>
-          <div className="mt-6 flex justify-center">
-            <ActionLink href="/groups">Explore the community</ActionLink>
+          <div className="mt-6 flex justify-center gap-3">
+            <ActionLink href="/join">Join the chats</ActionLink>
+            <ActionLink href="/groups" variant="secondary">
+              Explore the community
+            </ActionLink>
           </div>
         </div>
       </Section>

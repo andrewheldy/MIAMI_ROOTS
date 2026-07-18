@@ -211,6 +211,48 @@ WhatsApp data were introduced.
 
 **Status:** Active.
 
+### 2026-07-18 — Milestone 2.5 shareable hub: `/join` page and env-based `/go` redirects
+
+**Decision:** Ship a "Milestone 2.5" shareable community hub at `/join` — a standalone,
+mobile-first, link-in-bio-style page (cinematic hero, stacked chat links, Web Share/copy
+control, guidelines note, compact footer) — plus controlled redirect routes
+`/go/<slug>` for six chats (`general-chat`, `business-connections`, `daytime-events`,
+`nightlife-events`, `community-organizing`, `sober-support`; Ticket Exchange stays
+excluded). Key mechanics:
+
+- **Invite links live only in server environment variables**
+  (`WHATSAPP_*_URL`, one per chat), read per-request (`force-dynamic`) so rotation is a
+  hosting-config change with no rebuild and nothing in Git history — consistent with the
+  interim posture in `docs/05-operations/chat-link-management.md` (the full
+  server-store + audited reveal design remains Milestone 3+).
+- **Redirects are validated** (HTTPS only, exact-hostname allowlist of WhatsApp domains)
+  and fall back to a branded "unavailable" page when a variable is missing or invalid;
+  `/go` responses carry `X-Robots-Tag: noindex` and `Referrer-Policy: no-referrer`.
+- **The registry is data-only** (`src/content/join/chat-links.ts`): redirect slug → group
+  slug → env-var name, no URLs, enforced by tests. Hub cards reuse the existing group
+  content module — no duplicated copy.
+- **App restructured into a `(site)` route group** so `/join` and `/go` render without
+  the global header/footer while every existing page keeps its chrome and URL.
+- **Hero media is owner-suppliable, never fabricated:** the page probes for
+  `public/media/miami-roots-hero.{mp4,webm}` and `…-poster.webp` at render time; absent
+  video ⇒ poster only; absent poster ⇒ the committed community banner is used as the
+  **interim** still. This is a deliberate, narrow production use of the banner concept on
+  this one page until real footage arrives (see `docs/04-design/join-hero-media.md`) —
+  it does not ratify the banner as general hero art.
+- **Redirect slugs/env names follow the owner brief verbatim** even where they differ
+  from group slugs (`sober-support` ↔ *Sober Social*, `nightlife-events` ↔ *Nightlife &
+  Event Marketing*); display names stay the content model's (assumption #11, Q#10 open).
+
+**Rationale:** The community needs one shareable, premium link now, before the M3+
+database/auth foundation exists. Env-var-held links deliver the two properties that
+matter at this scale — out of Git, easy rotation — without pulling any M3 scope forward.
+
+**Explicitly NOT decided by this entry:** palette (Q#9) and group names (Q#10) remain
+provisional; the site stays `noindex`; no database, auth, Supabase, or analytics; the
+gated invite-reveal architecture of M3+ is unchanged and still pending.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here
