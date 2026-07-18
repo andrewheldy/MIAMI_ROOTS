@@ -182,7 +182,7 @@ screenshots — the walkthrough needs only project *names* and *references*
 | Item | Status |
 | --- | --- |
 | PR #7 (M2.5 hub) | ✅ merged to main (`b7104ad`) |
-| PR #8 rebased onto merged main | ✅ (`4d7c267`, doc/env-example conflicts only — no behavior change) |
+| PR #8 (this milestone) | ✅ merged to main (`e8727d0`, 2026-07-18); post-merge `validate` (37 unit tests + bundle scan) and `db:validate` (35 DB tests from zero) both green on main |
 | `miami-roots-staging` created, linked, pushed | ⏳ **pending owner** — no Supabase credentials exist in the implementation environment |
 | Staging verification (`verify-hosted.sql`) | ⏳ pending owner (script dry-run against the local harness: **10/10 PASS**) |
 | Vercel preview/staging env vars | ⏳ pending owner |

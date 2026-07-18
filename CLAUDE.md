@@ -63,8 +63,8 @@ file adds Claude-specific detail without repeating all of it.
 ## Scope for this current phase
 
 **Milestone 2 (public branded gateway) is complete**, Milestone 2.5 (the `/join`
-shareable hub) is delivered in PR #7 pending owner approval, and **Milestone 3's local
-half (database & security foundation) is delivered**: the six-table spine schema with
+shareable hub) is merged (PR #7), and **Milestone 3's local half (database & security
+foundation) is merged (PR #8)**: the six-table spine schema with
 deny-by-default RLS lives in `supabase/migrations/`, the three Supabase client
 boundaries in `src/lib/supabase/`, and CI replays migrations from zero with RLS tests
 (see `docs/08-delivery/milestone-3-database-foundation.md`). M3's **remote half is
