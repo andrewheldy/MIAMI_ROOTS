@@ -14,17 +14,20 @@ The authoritative statement of the current phase and the milestone-by-milestone 
 building the MVP gateway. Work outside the active milestone is out of bounds per
 `CLAUDE.md`/`AGENTS.md`.
 
-## Current phase: Milestone 2 delivered — Milestone 3 not started
+## Current phase: Milestone 2.5 delivered — Milestone 3 not started
 
 As of 2026-07-16 the repository contains foundation + organized assets + the
 architecture/implementation plan, the Milestone 1 application foundation, **and the
 Milestone 2 public branded gateway** (landing page, `/groups` directory, `/groups/[slug]`
 detail pages, `/guidelines`), rendered from a typed in-code content module. The two M1
 infrastructure-tail items — GitHub Actions CI and Vercel readiness — were also completed in
-this pass. **No database, authentication, Supabase wiring, analytics, or private WhatsApp
-data exist.** Full M2 detail is in
-[`milestone-2-public-gateway.md`](milestone-2-public-gateway.md). The next authorized work
-is **Milestone 3**, and it requires explicit owner go-ahead and a Supabase account.
+this pass. As of 2026-07-18 an owner-directed **Milestone 2.5** added the `/join`
+shareable community hub and env-var-backed `/go/<slug>` WhatsApp redirects — see
+[`milestone-2-5-shareable-hub.md`](milestone-2-5-shareable-hub.md). **No database,
+authentication, Supabase wiring, analytics, or private WhatsApp data exist.** Full M2
+detail is in [`milestone-2-public-gateway.md`](milestone-2-public-gateway.md). The next
+authorized work is **Milestone 3**, and it requires explicit owner go-ahead and a
+Supabase account.
 
 ### Milestone 1 — delivered
 

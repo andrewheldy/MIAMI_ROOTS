@@ -50,6 +50,16 @@ export function SiteHeader() {
               </Link>
             </li>
           ))}
+          {/* The shareable hub is the site's primary conversion path — styled
+              as the one filled action in the nav. */}
+          <li>
+            <Link
+              href="/join"
+              className="bg-forest text-background hover:bg-forest-600 inline-flex min-h-11 items-center rounded-lg px-4 text-sm font-semibold transition-colors"
+            >
+              Join the chats
+            </Link>
+          </li>
         </ul>
       </Container>
     </header>

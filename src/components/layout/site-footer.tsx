@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/container";
 import { siteConfig } from "@/config/site";
 
 const footerLinks = [
+  { href: "/join", label: "Join the chats" },
   { href: "/groups", label: "Groups" },
   { href: "/guidelines", label: "Community guidelines" },
 ] as const;
