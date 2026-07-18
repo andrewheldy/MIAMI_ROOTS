@@ -10,5 +10,8 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+    // Database tests need a running Postgres and run via `npm run db:test`
+    // (vitest.db.config.ts); the default unit run stays dependency-free.
+    exclude: ["tests/db/**", "**/node_modules/**"],
   },
 });

@@ -1,10 +1,17 @@
 # Continuous integration for the Miami Roots gateway.
 #
-# Runs the repository's own combined quality gate (`npm run validate`:
-# format check → lint → typecheck → tests → build) on every pull request and
-# on pushes to main. Kept intentionally minimal — no deployment logic and no
-# third-party actions beyond the official checkout/setup-node pair, which also
-# provides npm dependency caching.
+# Two jobs on every pull request and push to main:
+#   * validate — the repository's combined quality gate (`npm run validate`:
+#     format check → lint → typecheck → tests → build → client-bundle
+#     assertion).
+#   * database — the M3 database foundation, reproduced from zero against a
+#     disposable Postgres service container: Supabase shim → all migrations →
+#     seed → RLS/constraint/security tests. No production or staging
+#     credentials are involved anywhere in CI.
+#
+# Kept intentionally minimal — no deployment logic and no third-party actions
+# beyond the official checkout/setup-node pair, which also provides npm
+# dependency caching.
 name: CI
 
 on:
@@ -38,7 +45,46 @@ jobs:
         run: npm ci
 
       - name: Validate
-        # `validate` = format:check → lint → typecheck → test → build. Any stage
-        # failing fails the job, so the reason (formatting, lint, types, tests, or
-        # build) is clear from the failing step's log.
+        # `validate` = format:check → lint → typecheck → test → build →
+        # test:bundle. Any stage failing fails the job, so the reason
+        # (formatting, lint, types, tests, build, or a service-role leak into
+        # client bundles) is clear from the failing step's log.
         run: npm run validate
+
+  database:
+    name: Database (migrations from zero + RLS tests)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      # Disposable CI service container only — no real project is reachable
+      # from CI, and the reset script itself refuses non-local hosts.
+      SUPABASE_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply migrations from a clean database
+        run: npm run db:reset
+
+      - name: Run database security tests
+        run: npm run db:test

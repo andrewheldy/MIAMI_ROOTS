@@ -253,6 +253,49 @@ gated invite-reveal architecture of M3+ is unchanged and still pending.
 
 **Status:** Active.
 
+### 2026-07-18 — Milestone 3 database & security foundation (local scaffolding delivered)
+
+**Decision:** Implement the M3 database foundation as owner-directed: versioned SQL
+migrations for the six-table spine (`members`, `community_groups`,
+`onboarding_submissions`, `consent_events`, `audit_log`, `events`) exactly as specified
+by `docs/03-architecture/data-model.md`, with deny-by-default RLS per
+`identity-and-authorization.md`; the three Supabase client configurations
+(`src/lib/supabase/{browser,server,service}.ts`) per `application-architecture.md`;
+environment validation that names variables without echoing values; a behavior-level
+database security test suite; and a CI job that replays migrations from zero against a
+disposable Postgres and runs the RLS matrix tests. Full detail:
+`docs/08-delivery/milestone-3-database-foundation.md`.
+
+Supporting choices worth recording:
+
+- **Dependencies added (minimum required by the milestone):** `@supabase/supabase-js`,
+  `@supabase/ssr`, `server-only` (runtime deps); `pg` + `@types/pg` (dev, test harness).
+- **Plain-Postgres test harness alongside the Supabase CLI:** CI and Docker-less
+  environments run migrations/tests against bare Postgres 16 via
+  `scripts/db/supabase-shim.sql`, which recreates the platform baseline (roles,
+  `auth.uid()`, default privileges). The shim is a test fixture, never a migration;
+  owner machines use `npx supabase start` / `db reset` as designed.
+- **Append-only is mechanical:** UPDATE/DELETE/TRUNCATE revoked on `consent_events`
+  and `audit_log` for every app role *including* `service_role`.
+- **Service-role confinement is triple-layered:** `server-only` import guard,
+  ESLint `no-restricted-imports` for shared UI/content code, and a post-build client
+  bundle scan (`npm run test:bundle`) wired into `validate` and CI.
+
+**Deviations from the planning docs, deliberate and narrow** (full rationale in the
+delivery record): `events.referral_link_id` lands in M5 with `referral_links` so column
+and FK arrive together; role checks use `SECURITY DEFINER` helpers rather than JWT claim
+mirroring (which needs per-project auth-hook configuration — semantics identical,
+reversible); admin reads of `consent_events` and of `members.notes_admin` happen via
+privileged server paths, not client-role policies.
+
+**Explicitly NOT done (blocked on owner, recorded as the remote half of M3):** creating
+the hosted staging/production Supabase projects, pushing migrations to them, and placing
+real keys into Vercel env. No credentials existed in this environment; none were
+fabricated, and no placeholder secrets were committed. **No user-visible change:** the
+public site still renders from `src/content/groups/` (M4 moves content into the DB).
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here

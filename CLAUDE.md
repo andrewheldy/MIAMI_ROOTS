@@ -62,15 +62,21 @@ file adds Claude-specific detail without repeating all of it.
 
 ## Scope for this current phase
 
-**Milestone 2 (public branded gateway) is complete:** on top of the M1 foundation, the
-public gateway now exists — landing page, `/groups` directory, `/groups/[slug]` detail
-pages, and `/guidelines` — rendered from a typed in-code content module
-(`src/content/groups/`). CI (`.github/workflows/ci.yml`) runs the full validation gate.
-There is still **no database schema, authentication, Supabase wiring, analytics, or private
-WhatsApp data** — those belong to Milestone 3 and beyond. Do not build M3 (database/security
-foundation) or anything beyond it unless explicitly asked to move into that phase — check
-`docs/08-delivery/implementation-plan.md` and `docs/08-delivery/milestone-2-public-gateway.md`
-for the current phase before assuming otherwise.
+**Milestone 2 (public branded gateway) is complete**, Milestone 2.5 (the `/join`
+shareable hub) is delivered in PR #7 pending owner approval, and **Milestone 3's local
+half (database & security foundation) is delivered**: the six-table spine schema with
+deny-by-default RLS lives in `supabase/migrations/`, the three Supabase client
+boundaries in `src/lib/supabase/`, and CI replays migrations from zero with RLS tests
+(see `docs/08-delivery/milestone-3-database-foundation.md`). M3's **remote half is
+owner-gated**: hosted Supabase projects, `db push`, and Vercel keys do not exist yet.
+**No public page reads the database** — the site renders from the typed in-code content
+module (`src/content/groups/`), and moving content into the DB is Milestone 4. Do not
+build M4 (DB-backed content), M5 (referral capture), or anything beyond unless
+explicitly asked to move into that phase — check
+`docs/08-delivery/implementation-plan.md` for the current phase before assuming
+otherwise. Database rules that now apply: never edit an applied migration; every new
+table ships with RLS enabled and minimum policies; the service-role key is read only by
+`src/lib/supabase/service.ts`.
 
 When extending the app: public group content lives in `src/content/groups/` (data-only,
 separate from components) and must stay public-safe — never add invite links, phone
