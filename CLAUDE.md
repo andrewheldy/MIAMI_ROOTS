@@ -62,14 +62,19 @@ file adds Claude-specific detail without repeating all of it.
 
 ## Scope for this current phase
 
-**Milestone 1 (application foundation) is complete:** the Next.js App Router app, quality
-tooling (ESLint, Prettier, TypeScript strict, Vitest), and a minimal branded shell exist
-at the repository root. There is still **no database schema, authentication, Supabase
-wiring, or any product feature** — those belong to later milestones. Do not build
-Milestone 2 (the public branded gateway) or anything beyond it unless explicitly asked to
-move into that phase — check `docs/08-delivery/implementation-plan.md` for the current
-phase before assuming otherwise.
+**Milestone 2 (public branded gateway) is complete:** on top of the M1 foundation, the
+public gateway now exists — landing page, `/groups` directory, `/groups/[slug]` detail
+pages, and `/guidelines` — rendered from a typed in-code content module
+(`src/content/groups/`). CI (`.github/workflows/ci.yml`) runs the full validation gate.
+There is still **no database schema, authentication, Supabase wiring, analytics, or private
+WhatsApp data** — those belong to Milestone 3 and beyond. Do not build M3 (database/security
+foundation) or anything beyond it unless explicitly asked to move into that phase — check
+`docs/08-delivery/implementation-plan.md` and `docs/08-delivery/milestone-2-public-gateway.md`
+for the current phase before assuming otherwise.
 
-When extending the app: design tokens are provisional and centralized in
-`src/styles/globals.css` — change brand values there, not inline. Keep user-facing copy
-provisional and minimal until an owner voice pass happens (M2).
+When extending the app: public group content lives in `src/content/groups/` (data-only,
+separate from components) and must stay public-safe — never add invite links, phone
+numbers, or other private community data. Design tokens are provisional and centralized in
+`src/styles/globals.css` — change brand values there, not inline. All user-facing copy and
+the mint/forest palette remain **provisional** pending an owner voice pass and palette
+ratification (Q#9/Q#10).

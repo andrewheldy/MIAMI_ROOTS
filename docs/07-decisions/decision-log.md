@@ -175,6 +175,42 @@ named in M1's acceptance criteria remain owner/infra tasks.
 
 **Status:** Active.
 
+### 2026-07-16 — Milestone 2 public gateway delivered on a typed in-code content model
+
+**Decision:** Build the Milestone 2 public branded gateway — landing page, `/groups`
+directory, statically generated `/groups/[slug]` detail pages, and a `/guidelines` page —
+mobile-first, with public group content sourced from a **typed in-code content module**
+(`src/content/groups/`) rather than a database. Add a small set of Server-Component UI
+primitives (`src/components/ui/`: `Section`, `SectionHeading`, `Badge`, `Notice`,
+`EmptyState`, `GroupLogo`, `CommunityCard`, `ActionLink`) and give the header/footer real
+navigation. Also complete the two deferred M1 infrastructure items: a GitHub Actions CI
+workflow (`.github/workflows/ci.yml`, running `npm run validate`) and Vercel readiness
+(verified build with no config overrides; **no `vercel.json` added**). Full detail:
+`docs/08-delivery/milestone-2-public-gateway.md`.
+
+Content decisions worth recording:
+
+- **Six MVP groups only; Ticket Exchange deliberately excluded** (out of scope per
+  `docs/01-product/out-of-scope.md`), despite the prompt listing ticket exchange as a
+  likely vertical — the repository is the source of truth. A test enforces its absence.
+- **Three groups render a monogram fallback** (no logo asset yet); the card design never
+  assumes a logo exists.
+- **`dynamicParams = false`** on the group route so unknown slugs return real 404s.
+
+**Rationale:** The content module is the deliberate interim named in the M2 plan; its field
+shape mirrors the planned `community_groups` row so M4 is a data lift, not a redesign. CI
+reuses the repo's own combined gate with no bespoke logic. Keeping components to justified
+primitives avoids a component-library explosion.
+
+**Explicitly NOT decided by this entry:** the brand palette (Q#9) and group display names
+(Q#10) remain **provisional**; all gateway copy is provisional pending an owner voice pass;
+no branded webfont was adopted (system stack retained); the site stays `noindex, nofollow`
+and the indexed-vs-noindex launch choice remains open; the parent banner concept was **not**
+adopted as production hero art. No database, authentication, Supabase, analytics, or private
+WhatsApp data were introduced.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here

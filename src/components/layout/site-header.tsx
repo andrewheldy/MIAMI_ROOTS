@@ -4,15 +4,24 @@ import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { siteConfig } from "@/config/site";
 
+const navLinks = [
+  { href: "/groups", label: "Groups" },
+  { href: "/guidelines", label: "Community guidelines" },
+] as const;
+
 /**
- * Global site header: the approved primary Miami Roots mark plus wordmark,
- * linking home. Kept intentionally minimal for the foundation shell — no
- * navigation targets exist yet, so none are invented.
+ * Global site header: the approved primary Miami Roots mark plus wordmark linking
+ * home, and navigation to the real public destinations that now exist (the group
+ * directory and the community guidelines). Server Component — no client state.
  */
 export function SiteHeader() {
   return (
     <header className="border-border bg-background border-b">
-      <Container as="nav" className="flex items-center py-4">
+      <Container
+        as="nav"
+        className="flex items-center justify-between gap-4 py-4"
+        aria-label="Primary"
+      >
         <Link
           href="/"
           className="flex items-center gap-3 rounded-md"
@@ -30,6 +39,18 @@ export function SiteHeader() {
             {siteConfig.name}
           </span>
         </Link>
+        <ul className="flex items-center gap-4 sm:gap-6">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="text-muted hover:text-forest inline-flex min-h-11 items-center rounded-md text-sm font-medium transition-colors"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </Container>
     </header>
   );

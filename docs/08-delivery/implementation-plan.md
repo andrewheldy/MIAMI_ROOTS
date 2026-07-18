@@ -14,14 +14,17 @@ The authoritative statement of the current phase and the milestone-by-milestone 
 building the MVP gateway. Work outside the active milestone is out of bounds per
 `CLAUDE.md`/`AGENTS.md`.
 
-## Current phase: Milestone 1 complete — Milestone 2 not started
+## Current phase: Milestone 2 delivered — Milestone 3 not started
 
 As of 2026-07-16 the repository contains foundation + organized assets + the
-architecture/implementation plan, **and the Milestone 1 application foundation** (a
-bootstrapped Next.js App Router app with quality tooling and a minimal branded shell).
-**No product features, database, or Supabase wiring exist** beyond the pre-existing env
-name scaffolding. The next authorized work is **Milestone 2**, and it requires explicit
-owner go-ahead.
+architecture/implementation plan, the Milestone 1 application foundation, **and the
+Milestone 2 public branded gateway** (landing page, `/groups` directory, `/groups/[slug]`
+detail pages, `/guidelines`), rendered from a typed in-code content module. The two M1
+infrastructure-tail items — GitHub Actions CI and Vercel readiness — were also completed in
+this pass. **No database, authentication, Supabase wiring, analytics, or private WhatsApp
+data exist.** Full M2 detail is in
+[`milestone-2-public-gateway.md`](milestone-2-public-gateway.md). The next authorized work
+is **Milestone 3**, and it requires explicit owner go-ahead and a Supabase account.
 
 ### Milestone 1 — delivered
 
@@ -59,9 +62,11 @@ in this milestone).
 ### M1 — Application and quality-tooling bootstrap 〔critical path〕 — ✅ delivered 2026-07-16
 
 - **Status:** App shell, tooling, and local quality gates delivered and passing
-  (`format:check`, `lint`, `typecheck`, `test`, `build`). **Still owner/infra work:** the
-  `.github/workflows` CI pipeline and the Vercel project/preview deploy (the two **Human**
-  items below).
+  (`format:check`, `lint`, `typecheck`, `test`, `build`). The **`.github/workflows` CI
+  pipeline was completed as part of M2's infrastructure tail** (`ci.yml`, runs
+  `npm run validate`). **Still owner-only:** creating/connecting the Vercel project and
+  setting `NEXT_PUBLIC_SITE_URL` per environment — the app is verified Vercel-ready with no
+  config overrides (see `milestone-2-public-gateway.md`).
 - **Goal:** A running, deployable, empty Next.js app with quality gates.
 - **Outcome:** Placeholder page renders locally and on a Vercel preview.
 - **Deps:** Owner go-ahead. **Decision gate:** ratify stack versions (Next.js/TS/Tailwind
@@ -78,8 +83,16 @@ in this milestone).
 - **Deferred:** All product UI, Supabase, analytics.
 - **Claude Code suitable:** Yes, entirely.
 
-### M2 — Public branded gateway 〔critical path〕
+### M2 — Public branded gateway 〔critical path〕 — ✅ delivered 2026-07-16
 
+- **Status:** Delivered. Landing, `/groups`, `/groups/[slug]` (SSG,
+  `dynamicParams = false`), and `/guidelines` render from `src/content/groups/`. All six
+  MVP groups render (three via monogram fallback); Ticket Exchange excluded; guidelines
+  page carries a version string; browser-verified at 375/768/1440 with no overflow, one h1
+  per page, and real 404s. Full detail: `milestone-2-public-gateway.md`. **Still open
+  (owner):** copy/voice pass, palette (Q#9) and naming (Q#10) ratification, indexed-vs-
+  noindex launch decision. Lighthouse mobile was not run in this environment (no owner
+  Vercel/preview URL yet) — deferred to the Vercel preview.
 - **Goal:** The real landing + group directory + group detail pages, mobile-first,
   content from a typed in-code content module (deliberate interim before M4).
 - **Outcome:** A visitor can read about Miami Roots and each MVP group.

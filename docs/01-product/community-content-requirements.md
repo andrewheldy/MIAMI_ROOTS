@@ -73,6 +73,12 @@ Ticket Exchange gets **no content row** in MVP (out of scope).
 
 ## Where MVP content lives (recommended default)
 
+> **Milestone 2 interim (implemented):** the public content below currently lives in a
+> typed in-code module, `src/content/groups/` (see
+> [`../08-delivery/milestone-2-public-gateway.md`](../08-delivery/milestone-2-public-gateway.md)).
+> Its field shape mirrors the `community_groups` row described here so **M4** moves the data
+> into Supabase without a redesign. The target below remains the plan of record.
+
 **In Supabase (`community_groups`), seeded from a public-safe seed file; edited via the
 Supabase dashboard; no admin content UI in MVP.**
 
