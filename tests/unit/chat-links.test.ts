@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import { getGroupBySlug } from "@/content/groups";
 import {
   chatLinks,
+  communityEntrance,
+  getChatLinkByGroupSlug,
   getChatLinkByRedirectSlug,
 } from "@/content/join/chat-links";
 
@@ -53,10 +55,49 @@ describe("chat-link registry", () => {
   });
 
   it("never embeds a WhatsApp invite URL or any URL at all", () => {
-    const serialized = JSON.stringify(chatLinks);
+    const serialized = JSON.stringify([chatLinks, communityEntrance]);
     expect(serialized).not.toMatch(/chat\.whatsapp\.com/i);
     expect(serialized).not.toMatch(/wa\.me/i);
     expect(serialized).not.toMatch(/https?:\/\//i);
+  });
+});
+
+describe("community entrance", () => {
+  it("ships the main-community redirect contract", () => {
+    expect(communityEntrance.redirectSlug).toBe("community");
+    expect(communityEntrance.envVar).toBe("WHATSAPP_COMMUNITY_URL");
+  });
+
+  it("does not collide with any subgroup redirect slug or env var", () => {
+    expect(chatLinks.map((l) => l.redirectSlug)).not.toContain(
+      communityEntrance.redirectSlug,
+    );
+    expect(chatLinks.map((l) => l.envVar)).not.toContain(
+      communityEntrance.envVar,
+    );
+  });
+
+  it("is not reachable through the subgroup lookup (the /go route handles it explicitly)", () => {
+    expect(getChatLinkByRedirectSlug("community")).toBeUndefined();
+  });
+});
+
+describe("getChatLinkByGroupSlug", () => {
+  it("maps every published chat-linked group back to its canonical /go slug", () => {
+    expect(getChatLinkByGroupSlug("sober-social")?.redirectSlug).toBe(
+      "sober-support",
+    );
+    expect(
+      getChatLinkByGroupSlug("nightlife-and-event-marketing")?.redirectSlug,
+    ).toBe("nightlife-events");
+    for (const link of chatLinks) {
+      expect(getChatLinkByGroupSlug(link.groupSlug)).toBe(link);
+    }
+  });
+
+  it("returns undefined for groups without a public chat", () => {
+    expect(getChatLinkByGroupSlug("ticket-exchange")).toBeUndefined();
+    expect(getChatLinkByGroupSlug("does-not-exist")).toBeUndefined();
   });
 });
 
