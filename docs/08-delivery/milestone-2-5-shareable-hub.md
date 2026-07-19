@@ -75,6 +75,13 @@ and userinfo tricks, missing/invalid handling). Runtime behavior — redirects, 
 states, reduced motion, poster fallback, mobile layouts — verified against a production
 build.
 
+> **Update 2026-07-19:** the 2026-07-19 link audit (`../WHATSAPP_COMMUNITY_LINK_AUDIT.md`)
+> extended this architecture: `/go/community` now serves the main community entrance via
+> `WHATSAPP_COMMUNITY_URL`, `/groups/[slug]` pages link to their chats through
+> `/go/<slug>`, the homepage hero leads with "Join the chats", and the `/go` unavailable
+> state offers the main community as a fallback when its own link resolves. Seven
+> `WHATSAPP_*_URL` variables now exist (decision log, 2026-07-19).
+
 ## Owner actions
 
 1. Set the six `WHATSAPP_*_URL` variables in hosting (Vercel → Project → Environment

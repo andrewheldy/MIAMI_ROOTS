@@ -80,7 +80,13 @@ table ships with RLS enabled and minimum policies; the service-role key is read 
 
 When extending the app: public group content lives in `src/content/groups/` (data-only,
 separate from components) and must stay public-safe — never add invite links, phone
-numbers, or other private community data. Design tokens are provisional and centralized in
+numbers, or other private community data. **WhatsApp destinations have exactly one
+canonical registry**: `src/content/join/chat-links.ts` maps every `/go/<slug>` redirect
+(six subgroups plus the `community` main entrance) to a server-only `WHATSAPP_*_URL`
+environment variable — components link to `/go/<slug>`, never to a raw invite URL, and
+`tests/unit/no-raw-invite-links.test.ts` fails the build if an invite URL is committed
+anywhere outside `tests/`. Link-wiring status and pending owner verifications are
+recorded in `docs/WHATSAPP_COMMUNITY_LINK_AUDIT.md`. Design tokens are provisional and centralized in
 `src/styles/globals.css` — change brand values there, not inline. All user-facing copy and
 the mint/forest palette remain **provisional** pending an owner voice pass and palette
 ratification (Q#9/Q#10).

@@ -30,7 +30,14 @@ into the repository.
 - The source files themselves (those stay under `inputs/`, untracked — see
   [`source-material-register.md`](source-material-register.md))
 
-## Evidence status (as of 2026-07-16)
+## Evidence status (as of 2026-07-19)
+
+**Update 2026-07-19:** the owner supplied the **main community invite link** while
+authorizing a metadata-only link audit (see `../WHATSAPP_COMMUNITY_LINK_AUDIT.md`). Per
+standing rules the link itself lives only in the hosting environment
+(`WHATSAPP_COMMUNITY_URL`), never in this repository. Subgroup names, bios, and invite
+validity remain unverified — the audit session's network policy blocked WhatsApp-side
+retrieval, so the intake procedure below is still the path for real evidence.
 
 **No WhatsApp screenshots or chat exports have been received yet.** The owner announced
 that screenshots of each group (names, bios, descriptions) and possibly exports would be
