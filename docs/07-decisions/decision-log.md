@@ -296,6 +296,37 @@ public site still renders from `src/content/groups/` (M4 moves content into the 
 
 **Status:** Active.
 
+### 2026-07-19 — Main community entrance `/go/community` and site-wide canonical link wiring
+
+**Decision:** Extend the Milestone 2.5 redirect architecture — unchanged in kind — with a
+main-community entrance: a `communityEntrance` record in the canonical registry
+(`src/content/join/chat-links.ts`) mapping `/go/community` →
+`WHATSAPP_COMMUNITY_URL` (env-held, like every destination). Wire the remaining
+site surfaces through the registry: `/groups/[slug]` pages gain a real "Open
+… in WhatsApp" CTA via `/go/<redirect-slug>` (replacing the stale
+"joining details are coming soon" text that predated `/go`), the homepage hero
+gains a primary "Join the chats" → `/join` CTA, and the `/go` unavailable state
+offers "Join the main Miami Roots community" → `/go/community` — rendered only
+when that link itself resolves server-side, so the fallback is never a dead
+end. A repository-wide test (`tests/unit/no-raw-invite-links.test.ts`) now
+fails the build if a raw invite URL is ever committed outside `tests/`.
+
+**Rationale:** The 2026-07-19 owner-authorized link audit
+(`docs/WHATSAPP_COMMUNITY_LINK_AUDIT.md`) found every existing link correct but
+three gaps: group pages dead-ended, no canonical way to reach the community
+container itself, and no working fallback when a subgroup link is down. The
+owner supplied the main community invite link with the audit; keeping it
+env-only preserves the ratified rotation/credential posture.
+
+**Explicitly NOT decided by this entry:** no WhatsApp-side metadata was
+verified (blocked by the audit environment's network policy — recorded in the
+audit doc with owner actions); group names (Q#10) and palette (Q#9) remain
+provisional; `/join` hub card set is unchanged (no card was added for the main
+entrance — whether to surface one there is an owner call); no M4+ scope pulled
+forward.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here

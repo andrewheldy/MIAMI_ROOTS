@@ -61,7 +61,37 @@ export const chatLinks: readonly ChatLink[] = [
   },
 ];
 
+/**
+ * The main Miami Roots WhatsApp Community entrance — the front door that adds
+ * a visitor to the community container itself rather than to one subgroup.
+ * It is not a `ChatLink` (it has no group content record); it exists so the
+ * site has exactly one canonical way to reach "the community as a whole":
+ * flyers/QR codes point at `/go/community`, and the `/go` unavailable state
+ * can offer it as a working fallback when a subgroup link is down.
+ * The invite URL itself lives only in the server environment, like every
+ * other destination in this module.
+ */
+export const communityEntrance = {
+  /** Public display name for redirect-gate states. Not a WhatsApp transcript. */
+  name: "Miami Roots Community",
+  redirectSlug: "community",
+  envVar: "WHATSAPP_COMMUNITY_URL",
+} as const;
+
+export type CommunityEntrance = typeof communityEntrance;
+
 /** Look up a chat link by its `/go/` redirect slug. */
 export function getChatLinkByRedirectSlug(slug: string): ChatLink | undefined {
   return chatLinks.find((link) => link.redirectSlug === slug);
+}
+
+/**
+ * Look up the chat link serving a content-model group slug, for surfaces that
+ * start from a group record (e.g. the `/groups/[slug]` join CTA) and need the
+ * canonical `/go/` path. Returns undefined for groups with no public chat.
+ */
+export function getChatLinkByGroupSlug(
+  groupSlug: string,
+): ChatLink | undefined {
+  return chatLinks.find((link) => link.groupSlug === groupSlug);
 }

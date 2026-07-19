@@ -16,6 +16,7 @@ import {
   getPublishedGroups,
   getRelatedGroups,
 } from "@/content/groups";
+import { getChatLinkByGroupSlug } from "@/content/join/chat-links";
 
 interface GroupPageProps {
   params: Promise<{ slug: string }>;
@@ -63,6 +64,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
   }
 
   const related = getRelatedGroups(group);
+  const chatLink = getChatLinkByGroupSlug(group.slug);
 
   return (
     <>
@@ -190,13 +192,31 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
           </div>
         ) : null}
 
-        {/* Honest access state — never a fake join link */}
-        <div className="border-border bg-surface mt-8 max-w-2xl rounded-lg border p-5">
-          <p className="text-forest font-semibold">Joining this group</p>
-          <p className="text-muted mt-2 text-sm leading-relaxed">
-            {accessCopy[group.access]}
-          </p>
-        </div>
+        {/* Join CTA through the canonical /go redirect when this group has a
+            public chat link; the honest access state otherwise. The /go gate
+            itself handles a missing/rotating invite with a branded fallback,
+            so this link is never a dead end. */}
+        {chatLink ? (
+          <div className="border-border bg-surface mt-8 max-w-2xl rounded-lg border p-5">
+            <p className="text-forest font-semibold">Join this group</p>
+            <p className="text-muted mt-2 text-sm leading-relaxed">
+              Ready to say hello? The chat lives on WhatsApp — this link takes
+              you straight there.
+            </p>
+            <div className="mt-4">
+              <ActionLink href={`/go/${chatLink.redirectSlug}`}>
+                Open {group.name} in WhatsApp
+              </ActionLink>
+            </div>
+          </div>
+        ) : (
+          <div className="border-border bg-surface mt-8 max-w-2xl rounded-lg border p-5">
+            <p className="text-forest font-semibold">Joining this group</p>
+            <p className="text-muted mt-2 text-sm leading-relaxed">
+              {accessCopy[group.access]}
+            </p>
+          </div>
+        )}
       </Section>
 
       {/* Related groups */}
