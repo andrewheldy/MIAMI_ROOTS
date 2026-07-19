@@ -55,9 +55,9 @@ export default function HomePage() {
               This is its home on the web — start by exploring what&apos;s here.
             </p>
             <div className="mt-2 flex flex-wrap gap-3">
-              <ActionLink href="/groups">Explore the community</ActionLink>
-              <ActionLink href="/guidelines" variant="secondary">
-                How we treat each other
+              <ActionLink href="/join">Join the chats</ActionLink>
+              <ActionLink href="/groups" variant="secondary">
+                Explore the community
               </ActionLink>
             </div>
           </div>
