@@ -7,6 +7,7 @@ import { GroupLogo } from "@/components/ui/group-logo";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getGroupBySlug, getPublishedGroups } from "@/content/groups";
+import { ShareLauncher, ShareSection } from "@/features/share";
 
 const howItWorks = [
   {
@@ -179,6 +180,9 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Grow the roots — the community-share prompt */}
+      <ShareSection />
+
       {/* Closing CTA — the shareable hub is the way in */}
       <Section aria-labelledby="cta-heading">
         <div className="border-border bg-surface rounded-2xl border px-6 py-10 text-center sm:px-12">
@@ -196,6 +200,17 @@ export default function HomePage() {
             <ActionLink href="/groups" variant="secondary">
               Explore the community
             </ActionLink>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <ShareLauncher
+              triggers={[
+                {
+                  label: "Share Miami Roots",
+                  target: "card",
+                  variant: "quiet",
+                },
+              ]}
+            />
           </div>
         </div>
       </Section>
