@@ -4,7 +4,7 @@ type: delivery
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-07-19
 tags: [delivery, implementation, milestones]
 ---
 
@@ -33,6 +33,14 @@ Supabase projects, pushing migrations to them, and setting keys in Vercel. **The
 site still renders from the in-code content module — no page reads the database** (that
 is Milestone 4). Full M2 detail is in
 [`milestone-2-public-gateway.md`](milestone-2-public-gateway.md).
+
+As of 2026-07-19 an owner-directed **community-share feature** landed the DB-free,
+non-personal half of Milestone 12 out of sequence: a homepage share prompt, share
+modal, full-screen scan mode, and client-side QR/story/square download assets, all
+pointing at the stable `/join` URL with campaign-level (non-personal) attribution — see
+[`community-share-feature.md`](community-share-feature.md). It touches no database,
+migration, RLS, env var, or WhatsApp link; per-member referral identities remain deferred
+to M5/M11.
 
 ### Milestone 1 — delivered
 
@@ -302,6 +310,12 @@ in this milestone).
 
 ### M12 — QR and sharing assets 〔parallelizable after M11〕
 
+- **Status (2026-07-19):** The **DB-free, non-personal half was delivered early** on owner
+  request — homepage share prompt, share modal, full-screen scan mode, and client-side
+  QR/story/square downloads pointing at the stable `/join` URL with campaign-level
+  attribution (`docs/08-delivery/community-share-feature.md`). Still deferred to true M12
+  (needs M11): **per-member/per-slug** QR (`/api/qr/<slug>.png`), per-connector attribution
+  identities, and OG images.
 - **Goal:** `/api/qr/<slug>.png`, story/square sharing cards, OG images, share/download
   UX per `docs/04-design/asset-implementation-plan.md`.
 - **Outcome:** Connectors share printable/postable assets.
