@@ -1,12 +1,13 @@
 import type { CommunityGroup } from "./types";
 
 /**
- * The six Milestone-2 community groups, in display order.
+ * The seven community groups, in display order.
  *
  * Provenance & rules (see `docs/00-context/community-groups.md`):
- *   - These six are the MVP set. Ticket Exchange is deliberately EXCLUDED — it is
- *     out of scope for the initial product (`docs/01-product/out-of-scope.md`),
- *     even though a concept logo exists.
+ *   - The original six were the MVP set. Ticket Exchange was later approved as a
+ *     first-class seventh community (decision log 2026-07-19), superseding its
+ *     earlier out-of-scope status; it sits in the event cluster (after Nightlife)
+ *     and carries a concise peer-to-peer safety treatment (`safety`).
  *   - Three groups (General Chat, Business & Connections, Community Organizing)
  *     have no dedicated logo asset yet → `logo: null` → parent-mark fallback.
  *   - Two logos display a wordmark ("Daytime Roots", "Nightlife Roots") that
@@ -165,11 +166,70 @@ export const communityGroups: readonly CommunityGroup[] = [
         ],
       },
     ],
-    related: ["business-and-connections", "general-chat"],
+    related: ["ticket-exchange", "business-and-connections", "general-chat"],
     metadata: {
       title: "Nightlife & Event Marketing",
       description:
         "Promoters and organizers share flyers, guest lists, and nightlife events. Promotion, not ticket resale.",
+    },
+  },
+  {
+    slug: "ticket-exchange",
+    name: "Ticket Exchange",
+    shortDescription:
+      "Buy, sell, and exchange event tickets with other Miami Roots members. Verify everything before sending payment.",
+    fullDescription:
+      "Ticket Exchange is a trusted peer-to-peer space for members to buy, sell, and swap tickets to Miami events — catch a last-minute ticket, pass along one you can't use, and connect with people heading to the same shows. Miami Roots is the community that introduces you, not a party to the sale: every deal is directly between members, so verify the ticket and the person before any money moves.",
+    category: "events",
+    status: "active",
+    logo: {
+      src: "/group-logos/ticket-exchange-logo.png",
+      width: 1122,
+      height: 1402,
+    },
+    access: "managed-by-admins",
+    order: 5,
+    belongs: [
+      "Tickets you're selling because plans changed",
+      "Requests for last-minute tickets to local events",
+      "Face-value and fair member-to-member exchanges",
+      "Finding others heading to the same event",
+    ],
+    doesNotBelong: [
+      "Large-scale scalping or professional resale operations",
+      "Unverifiable tickets or requests for deposits up front",
+      "Spam, off-topic promotion, or pressure tactics",
+    ],
+    etiquette: [
+      "Be upfront about the event, seat, price, and transfer method",
+      "Verify before you pay, and never share passwords or codes",
+      "Deal in good faith — this only works if members can trust each other",
+    ],
+    safety: {
+      badge: "Buy & sell safely",
+      summary:
+        "Peer-to-peer trades between members. Verify the seller and the ticket before sending payment.",
+      points: [
+        "Verify the seller's identity before you commit",
+        "Verify ticket ownership and ask for proof of purchase with sensitive details hidden",
+        "Confirm the ticket can be transferred through the original platform",
+        "Use a payment method with buyer protection where possible",
+        "Never share passwords or verification codes",
+        "Avoid deposits for tickets you can't independently verify",
+        "Report suspicious activity to Miami Roots admins",
+      ],
+      disclaimer:
+        "Miami Roots does not guarantee tickets, buyers, sellers, or transactions, and is not a broker, escrow, or payment processor. Every exchange is directly between members.",
+    },
+    related: [
+      "nightlife-and-event-marketing",
+      "daytime-events",
+      "general-chat",
+    ],
+    metadata: {
+      title: "Ticket Exchange",
+      description:
+        "Buy, sell, and exchange event tickets with other Miami Roots members. A trusted peer-to-peer community — verify everything before sending payment.",
     },
   },
   {
@@ -183,7 +243,7 @@ export const communityGroups: readonly CommunityGroup[] = [
     status: "active",
     logo: null,
     access: "managed-by-admins",
-    order: 5,
+    order: 6,
     belongs: [
       "Volunteering, cleanups, and give-back projects",
       "Hobby activities and group outings",
@@ -220,7 +280,7 @@ export const communityGroups: readonly CommunityGroup[] = [
       wordmark: "Sober Social / Miami Roots",
     },
     access: "managed-by-admins",
-    order: 6,
+    order: 7,
     belongs: [
       "Sober-friendly plans, hangouts, and events",
       "Encouragement and mutual support between members",

@@ -34,6 +34,14 @@ and the leak-response runbook. The architectural design these operations rely on
 - The public URL for a group never changes; the link behind it rotates freely.
 - One active link per group; history retained.
 
+> Interim implementation (Milestone 2.5+): the seven live chats are held as server-only
+> `WHATSAPP_*_URL` environment variables behind validated `/go/<slug>` redirects — including
+> `WHATSAPP_TICKET_EXCHANGE_URL` for the Ticket Exchange community approved 2026-07-19
+> (decision log). This env-var interim stands until the full server-store + audited-reveal
+> design below ships. Ticket Exchange additionally carries member-facing **safety guidance**
+> (verify before paying; Miami Roots does not guarantee any transaction) — that is public
+> content, separate from these link-credential rules.
+
 ## Procedures
 
 - **Entering a link (new group or rotation):** a WhatsApp group admin generates the link

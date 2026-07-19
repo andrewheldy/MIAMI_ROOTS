@@ -80,7 +80,7 @@ export default function GuidelinesPage() {
         <SectionHeading
           id="group-rules-heading"
           title="A few group-specific rules"
-          description="Most groups share the same norms. Two carry an extra rule worth calling out."
+          description="Most groups share the same norms. A few carry an extra rule worth calling out."
         />
         <div className="mt-8 grid gap-4 md:max-w-3xl">
           <Notice
@@ -96,6 +96,20 @@ export default function GuidelinesPage() {
               matching ID, and be skeptical of unknown or anonymous business
               profiles. Miami Roots is a community, not a marketplace — it
               doesn&apos;t vet sellers or guarantee any transaction.
+            </p>
+          </Notice>
+          <Notice title="Ticket Exchange: verify before you pay" tone="caution">
+            <p>
+              Ticket Exchange is a peer-to-peer space between members — Miami
+              Roots connects you, it doesn&apos;t vet tickets or hold funds.
+              Verify the seller&apos;s identity and that they own the ticket,
+              ask for proof of purchase with sensitive details hidden, confirm
+              the ticket can be transferred through the original platform, and
+              use a payment method with buyer protection where possible. Never
+              share passwords or verification codes, and avoid deposits for
+              tickets you can&apos;t independently verify. Miami Roots does not
+              guarantee tickets, buyers, sellers, or transactions. Report
+              anything suspicious to the admins.
             </p>
           </Notice>
           <Notice title="Sober Social: social, not clinical" tone="info">

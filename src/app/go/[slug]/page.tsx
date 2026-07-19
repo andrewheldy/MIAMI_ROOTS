@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
+import { SafetyBadge } from "@/components/ui/safety-badge";
 import { getGroupBySlug } from "@/content/groups";
 import { getChatLinkByRedirectSlug } from "@/content/join/chat-links";
 import { resolveChatDestination } from "@/lib/chat-redirect";
@@ -76,6 +77,15 @@ export default async function GoPage({ params }: GoPageProps) {
           This chat link is being updated. Check back soon — the rest of the
           Miami Roots communities are one tap away.
         </p>
+        {group.safety ? (
+          <div className="border-forest/15 bg-surface mt-5 rounded-xl border p-4 text-left">
+            <SafetyBadge label={group.safety.badge} />
+            <p className="text-muted mt-2 text-sm leading-relaxed">
+              {group.safety.summary} Miami Roots does not guarantee tickets,
+              buyers, sellers, or transactions.
+            </p>
+          </div>
+        ) : null}
         <div className="mt-6 flex flex-col items-center gap-3">
           <Link
             href="/join"

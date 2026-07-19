@@ -30,6 +30,10 @@ A standalone, mobile-first page outside the `(site)` route group (no global head
 - **Chat links** — six stacked, thumb-friendly cards (General Chat first, badged "Best
   place to start"; Ticket Exchange excluded), each reusing the group content module for
   name, description, and logo/monogram, linking to its `/go/` route.
+  _Update 2026-07-19: Ticket Exchange was later approved as the seventh community and added
+  to the hub (now seven cards; General Chat still first, Ticket Exchange with the
+  event-oriented communities carrying a "Buy & sell safely" indicator). See the
+  decision-log entry 2026-07-19 and `docs/08-delivery/frontend-nav-motion-ticket-exchange.md`._
 - **Share control** — "Share Miami Roots": Web Share API where available, clipboard copy
   with visible "Link copied" feedback otherwise. No dependency added.
 - **Trust note** — short, non-alarming pointer to `/guidelines` beside the chat list.
@@ -77,9 +81,10 @@ build.
 
 ## Owner actions
 
-1. Set the six `WHATSAPP_*_URL` variables in hosting (Vercel → Project → Environment
+1. Set the `WHATSAPP_*_URL` variables in hosting (Vercel → Project → Environment
    Variables). Unset variables show that chat's unavailable state — safe to roll out
-   gradually.
+   gradually. _As of 2026-07-19 there are seven, including the added
+   `WHATSAPP_TICKET_EXCHANGE_URL`._
 2. Supply real hero footage per
    [`../04-design/join-hero-media.md`](../04-design/join-hero-media.md).
 3. Voice-pass the hub copy (provisional, like all gateway copy — Q#9/Q#10 unchanged).
