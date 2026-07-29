@@ -95,4 +95,37 @@ body {
       transform: translateY(0);
     }
   }
+
+  /*
+   * Share dialog entrance. Both rules live inside the no-preference query, so
+   * reduced-motion visitors get a fully static, fully visible dialog (no fade,
+   * no movement) while everyone else gets a gentle backdrop fade and panel pop.
+   */
+  .share-backdrop {
+    animation: share-fade 0.2s ease-out both;
+  }
+
+  .share-panel {
+    animation: share-pop 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes share-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes share-pop {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 }

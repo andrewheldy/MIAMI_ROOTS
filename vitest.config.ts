@@ -7,6 +7,11 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  // Component tests (`*.test.tsx`) render with the automatic JSX runtime, so no
+  // `import React` boilerplate is needed and no test dependency is added.
+  esbuild: {
+    jsx: "automatic",
+  },
   test: {
     environment: "node",
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],

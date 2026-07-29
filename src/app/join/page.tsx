@@ -8,6 +8,7 @@ import { GroupLogo } from "@/components/ui/group-logo";
 import { siteConfig } from "@/config/site";
 import { getGroupBySlug, type CommunityGroup } from "@/content/groups";
 import { chatLinks, type ChatLink } from "@/content/join/chat-links";
+import { CampaignAttribution } from "@/features/share";
 import { getJoinHeroMedia } from "@/lib/join-media";
 
 import { HeroMedia } from "./hero-media";
@@ -59,6 +60,9 @@ export default function JoinPage() {
 
   return (
     <main id="main" className="flex-1">
+      {/* Capture campaign attribution (?ref/&utm_*) so a member share is
+          measurable; non-personal, renders nothing, preserves the layout. */}
+      <CampaignAttribution />
       {/* Cinematic hero: poster always, video only when present + motion is ok. */}
       <section
         aria-labelledby="join-heading"

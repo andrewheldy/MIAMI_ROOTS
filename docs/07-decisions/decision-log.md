@@ -4,7 +4,7 @@ type: decisions
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-07-19
 tags: [decisions]
 ---
 
@@ -293,6 +293,52 @@ the hosted staging/production Supabase projects, pushing migrations to them, and
 real keys into Vercel env. No credentials existed in this environment; none were
 fabricated, and no placeholder secrets were committed. **No user-visible change:** the
 public site still renders from `src/content/groups/` (M4 moves content into the DB).
+
+**Status:** Active.
+
+### 2026-07-19 — Community-share feature (owner-directed, DB-free QR/share)
+
+**Decision:** Ship an owner-directed "Share Miami Roots" community-growth feature: a
+homepage share prompt ("Grow the roots"), a polished accessible share modal, a
+distraction-free full-screen scan view, and client-side downloadable assets (standard QR
+PNG, 1080×1920 Instagram Story card, 1080×1080 square card). Every QR, link, and asset
+points at the **stable, hardcoded production URL** `https://miami-roots.vercel.app/join`
+with **non-personal campaign attribution** — never a raw WhatsApp invite link. Full detail:
+[`docs/08-delivery/community-share-feature.md`](../08-delivery/community-share-feature.md).
+
+Choices worth recording:
+
+- **Scope pulled forward deliberately, without pulling M12's dependencies.** QR/sharing is
+  nominally Milestone 12 (which depends on M11's per-member referral identities). Only the
+  DB-free, non-personal half was built, on explicit owner request. It touches **no** Supabase
+  schema, migration, RLS, environment variable, or WhatsApp link, so it does not enter M4/M5+
+  scope or alter the gated-invite architecture. Per-member referral codes remain deferred to
+  M5/M11 (the current DB/privacy design does not support them yet).
+- **Zero-runtime-dependency QR encoder, written in-repo.** Rather than add an npm QR
+  dependency, a small byte-mode QR encoder (ISO/IEC 18004) lives in `src/lib/qr/`. It is
+  verified **bit-for-bit** against Project Nayuki's canonical MIT-licensed generator across
+  eight known-answer vectors (multiple versions, ECC levels, and UTF-8), and the rendered
+  PNGs were confirmed to decode back to the exact share URL. No third-party code is bundled;
+  the reference implementation was used only to generate test fixtures. This matches the
+  repo's established minimal-dependency posture.
+- **Channel-tagged, non-personal attribution.** All shares carry
+  `ref=community-share&utm_source=member_share&utm_campaign=miami_roots_growth`; `utm_medium`
+  is `qr` for the codes (exactly as briefed), `web_share`/`copy_link` for the other channels.
+  First-touch attribution landing on `/join` is captured to `sessionStorage` as a foundation
+  the M5/M14 analytics-and-referral layer can later read — nothing reads it yet.
+- **Stable website URL, never a WhatsApp link, in downloaded assets.** So printed/posted QR
+  codes survive community-link rotations and deploys — the underlying chats can be re-pointed
+  behind `/join` without invalidating a single card already in the wild.
+- **Native Web Share with copy fallback; full a11y.** Uses the Web Share API where present and
+  copies the link where not. Dialogs are focus-trapped with focus restoration, Escape-to-close,
+  labelled controls, a polite live region for feedback, reduced-motion-safe animation, ≥44px
+  touch targets, and no layout shift (SVG in a fixed-aspect box). Verified live in Chromium
+  across desktop and mobile viewports.
+
+**Explicitly NOT decided by this entry:** palette (Q#9) and group names (Q#10) remain
+provisional; all share copy is provisional pending an owner voice pass; the site stays
+`noindex`; no database, auth, Supabase, analytics vendor, or private WhatsApp data were
+introduced; per-member referral identities remain deferred to M5/M11.
 
 **Status:** Active.
 
