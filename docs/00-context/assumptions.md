@@ -4,7 +4,7 @@ type: context
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-07-19
 tags: [context, assumptions]
 ---
 
@@ -96,6 +96,29 @@ Added during the Milestone 3 pass (2026-07-18):
     checklist in `docs/08-delivery/milestone-3-database-foundation.md`. If projects do
     exist somewhere, nothing conflicts: the committed migrations are the source of truth
     and push cleanly onto an empty project.
+
+Added during the community-share pass (2026-07-19):
+
+13. **The stable share destination is `https://miami-roots.vercel.app/join`.** The
+    share feature was directed to encode this exact production website URL into every QR
+    and downloadable asset, hardcoded (not `siteConfig.url`, which is environment-derived).
+    The assumption is that this Vercel URL is the durable public entry point; if a custom
+    domain is later adopted, change `JOIN_DESTINATION_URL` in
+    `src/lib/share/destination.ts` — but note any QR already printed/posted will still
+    resolve only while the Vercel URL remains reachable, so a redirect from the old URL
+    should be kept if the domain moves.
+14. **Campaign attribution is non-personal and channel-tagged.** All shares carry
+    `ref=community-share&utm_source=member_share&utm_campaign=miami_roots_growth`; only
+    `utm_medium` varies by channel (`qr` for the printed/scanned codes exactly as briefed,
+    `web_share` and `copy_link` for the other channels). No per-member referral identity is
+    minted — that awaits the M5/M11 referral architecture. The captured first-touch value on
+    `/join` is stored in `sessionStorage` (key `miami-roots:attribution`) as a foundation the
+    analytics/referral layer can later read; nothing reads it yet.
+15. **Downloadable-asset copy is provisional.** The Story ("Meet your people in Miami." /
+    "Scan to join Miami Roots.") and square ("Put down roots with us." / "Scan to join Miami
+    Roots.") card copy was supplied by the share brief and is treated like the rest of the
+    gateway copy — provisional pending an owner voice pass (Q#9). It is public-safe (no
+    invite links, phone numbers, or private data), enforced by test.
 
 ## Relationship to other documents
 

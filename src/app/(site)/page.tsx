@@ -10,6 +10,7 @@ import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getGroupBySlug, getPublishedGroups } from "@/content/groups";
 import { getGoPath } from "@/content/join/chat-links";
+import { ShareLauncher, ShareSection } from "@/features/share";
 
 const howItWorks = [
   {
@@ -211,6 +212,9 @@ export default function HomePage() {
         </MotionReveal>
       </Section>
 
+      {/* Grow the roots — the community-share prompt */}
+      <ShareSection />
+
       {/* Closing CTA — the shareable hub is the way in */}
       <Section aria-labelledby="cta-heading">
         <MotionReveal className="border-border bg-surface rounded-2xl border px-6 py-10 text-center sm:px-12">
@@ -230,6 +234,18 @@ export default function HomePage() {
             </ActionLink>
           </div>
         </MotionReveal>
+          <div className="mt-6 flex justify-center">
+            <ShareLauncher
+              triggers={[
+                {
+                  label: "Share Miami Roots",
+                  target: "card",
+                  variant: "quiet",
+                },
+              ]}
+            />
+          </div>
+        </div>
       </Section>
     </>
   );
