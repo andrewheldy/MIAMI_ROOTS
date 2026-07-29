@@ -357,6 +357,9 @@ interaction feedback (menu open/close, hamburger morph, staggered entrances,
 viewport reveals). One small, current library with first-class reduced-motion
 support delivers that without a heavier framework, and centralizing the tokens
 keeps the motion coherent instead of scattered.
+
+**Status:** Active.
+
 ### 2026-07-19 — Community-share feature (owner-directed, DB-free QR/share)
 
 **Decision:** Ship an owner-directed "Share Miami Roots" community-growth feature: a

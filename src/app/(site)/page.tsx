@@ -233,7 +233,6 @@ export default function HomePage() {
               Explore the groups
             </ActionLink>
           </div>
-        </MotionReveal>
           <div className="mt-6 flex justify-center">
             <ShareLauncher
               triggers={[
@@ -245,7 +244,7 @@ export default function HomePage() {
               ]}
             />
           </div>
-        </div>
+        </MotionReveal>
       </Section>
     </>
   );
