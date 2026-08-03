@@ -31,9 +31,17 @@ aligned; this one is the shorter, portable version.
 
 ## Current phase
 
-Milestone 2 complete — the public branded gateway (landing, `/groups`, `/groups/[slug]`,
-`/guidelines`) is in place, rendered from a typed in-code content module
-(`src/content/groups/`), plus CI (`.github/workflows/ci.yml`). No database schema,
-authentication, Supabase wiring, analytics, or private WhatsApp data exist yet. Do not begin
-Milestone 3 (or any later) work without explicit instruction. See
+Milestone 2 (public branded gateway) and Milestone 2.5 (`/join` hub, `/go/<slug>` chat
+redirects) are complete; **Milestone 3's local half** is delivered — the six-table spine
+schema with deny-by-default RLS in `supabase/migrations/`, the three Supabase client
+boundaries in `src/lib/supabase/`, and CI that replays migrations from zero. M3's **remote
+half is owner-gated**: no hosted Supabase project, key, or database URL exists in any
+environment. **No public page reads the database** — the site renders from the typed in-code
+content module (`src/content/groups/`); moving content into the DB is Milestone 4.
+
+Two owner-directed features landed outside the milestone sequence: the **community-share**
+feature (2026-07-19) and the **Founding Connectors program** (2026-08-03 — `/connectors`,
+the nomination flow, the `/r/<code>` card redirect, and a `connectors` +
+`connector_nominations` migration). Neither is a licence to start M4/M5/M6. Do not begin
+later-milestone work without explicit instruction. See
 `docs/08-delivery/implementation-plan.md` for the authoritative current phase.

@@ -4,7 +4,7 @@ type: planning
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-08-03
 tags: [planning, open-questions]
 ---
 
@@ -46,7 +46,16 @@ planning pass proposed an answer (linked); implementation may proceed on it, but
 | 10 | Two supplied logos display sub-brand names that differ from group operating names ("Daytime Roots" vs Daytime Events; "Nightlife Roots" vs Nightlife & Event Marketing) — which naming should the gateway display, and do the WhatsApp groups themselves use the "… Roots" names? | Affects group display names, slugs, copy, and whether logos or names get revised. See `docs/00-context/whatsapp-community-inventory.md`. | Open — owner decision, ideally by M2 |
 | 11 | Should the attribution window (30 days) and maturation retention window (14 days) stay at the recommended defaults? | Tunes fairness vs. gaming; cheap to change pre-launch, disruptive after. | **Recommended default:** 30/14 — `docs/03-architecture/referral-system.md` |
 | 12 | Is third-party product analytics enabled at launch, or first-party only? | Privacy posture and script weight vs. convenience. | Open — decision gate at M14; first-party events are canonical either way |
-| 13 | Public/opt-in connector leaderboard — ever, and if so when? | Motivation vs. privacy and volume-gaming pressure. | Open — **default is no leaderboard**; revisit post-MVP with real data |
+| 13 | Public/opt-in connector leaderboard — ever, and if so when? | Motivation vs. privacy and volume-gaming pressure. | Open — **default is no leaderboard**; revisit post-MVP with real data. Reaffirmed by the Founding Connectors program design (2026-08-03) |
+
+Added during the Founding Connectors pass (2026-08-03):
+
+| # | Question | Why it matters | Status |
+|---|---|---|---|
+| 14 | Is `myroots.dev` registered and pointed at this deployment? | Card URLs are specified as `myroots.dev/r/<code>`. A card printed with the wrong domain is permanently broken — this blocks printing, not building. | Open — **blocking a print run**; see assumption 16 |
+| 15 | Should a Founding Connector card and a member referral link (`/r/<slug>`, M5) eventually be the same identity, or stay separate? | They currently share the `/r/` prefix but are separate systems. If they should converge, that shapes M5's design. | Open — **default is separate**; decide before M5 is built. See assumption 20 |
+| 16 | Do connector benefits (early access, priority, perks, guest passes) create any compensation or tax exposure in Florida? | Determines whether the benefits table can stand as written, and gates any future performance-based reward. | Open — **needs an attorney**, not an internal answer |
+| 17 | Cohort size, benefits list, nomination retention windows (12 mo / 6 mo declined), and review cadence — keep the recommended defaults? | Cheap to change now; disruptive once connectors have been told. | **Recommended default:** as specified in `docs/01-product/founding-connectors-program.md` |
 
 ## Relationship to other documents
 

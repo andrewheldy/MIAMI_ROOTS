@@ -4,7 +4,7 @@ type: architecture
 status: proposed
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-08-03
 tags: [architecture, data-model, database, state-machines]
 ---
 
@@ -365,6 +365,51 @@ Ledger debit posts at `approved` (idempotent via unique reference); cancellation
 approval posts a compensating credit. Balance check at request AND approval (balance may
 have changed between). Concurrent double-redeem is blocked by the `idempotency_key`
 unique constraint plus a balance re-check inside the approval transaction.
+
+## Founding Connectors tables (added 2026-08-03, outside the original 13)
+
+Added by the owner-directed Founding Connectors program. Deliberately **separate from**
+`referral_links` — see the decision-log entry of 2026-08-03 and
+[`../08-delivery/founding-connectors-mvp.md`](../08-delivery/founding-connectors-mvp.md).
+
+### `connectors`
+
+- **Responsibility:** One row per issued Founding Connector card — its permanent public
+  code, who holds it, its lifecycle state, and where it currently points.
+- **Important fields:** `id`, `code` (unique, `^[a-z0-9]+(-[a-z0-9]+)*$`, 2–30 chars),
+  `display_name`, `category`, `status` (`active|paused|retired`), `destination_kind`
+  (`page|group|chat`) + `destination_ref`, `issued_on?`,
+  `public_recognition_consent` (default false), `notes_admin?`.
+- **Unique constraints:** `code`. Codes are permanent and never reassigned, so a card in
+  the wild can never begin crediting a different person.
+- **Sensitive fields:** `notes_admin` only. No contact details are stored here.
+- **RLS:** none for any client role — resolution happens server-side; writes are service
+  role only.
+- **Constraint of note:** `destination_ref` rejects absolute and protocol-relative values,
+  so an open redirect cannot be one bad row away.
+- **Canonical vs derived:** canonical for card state. The application content module
+  (`src/content/connectors/`) is the interim source of truth until cards are provisioned
+  here, exactly as `community_groups` awaits M4.
+
+### `connector_nominations`
+
+- **Responsibility:** Interest and nomination intake from the public `/connectors` page.
+- **Important fields:** `id`, `kind` (`self|other`), `nominee_name`, `nominator_name?`,
+  `contact_method` (`email|instagram|whatsapp|other`), `contact_value`,
+  `instagram_handle?`, `neighborhood`, `community_role`, `why`, `referral_source?`,
+  `consent_to_contact` (constrained **true**), `status`
+  (`received|reviewing|invited|declined|purged`).
+- **Sensitive fields:** all contact fields — for the *submitter* only. A nomination about
+  someone else records their name and public handle, never their private contact details.
+- **RLS:** no client access at all, matching `onboarding_submissions`.
+- **Retention:** unused nominations purge at 12 months, declined at 6 (recommended
+  defaults in the program design); immediate deletion on request.
+
+### `events.connector_id`
+
+A nullable FK from `events` to `connectors` (`on delete set null`), added with its target
+table rather than as a dangling column — the same discipline M3 applied to
+`referral_link_id`. Written null while the registry lives in application content.
 
 ## Cross-cutting requirements
 

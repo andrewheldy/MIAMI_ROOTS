@@ -4,7 +4,7 @@ type: context
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-08-03
 tags: [context, index]
 ---
 
@@ -35,6 +35,15 @@ that matches what you're trying to do.
 | [`06-research/`](06-research/) | Open research questions and sources consulted |
 | [`07-decisions/`](07-decisions/) | The durable record of material decisions made |
 | [`08-delivery/`](08-delivery/) | Current implementation phase, testing strategy, release checklist |
+
+## Cross-cutting programs
+
+Some initiatives span several sections. Their documents are listed together here so the
+full set is findable from one place.
+
+| Program | Documents |
+|---|---|
+| **Founding Connectors** (NFC/QR card distribution program) | [`01-product/founding-connectors-program.md`](01-product/founding-connectors-program.md) (design, measurement, governance) · [`05-operations/founding-connectors-operations.md`](05-operations/founding-connectors-operations.md) (procedures, launch plan) · [`05-operations/founding-connectors-message-pack.md`](05-operations/founding-connectors-message-pack.md) (onboarding messages) · [`04-design/founding-connector-card-spec.md`](04-design/founding-connector-card-spec.md) (the physical card) · [`08-delivery/founding-connectors-mvp.md`](08-delivery/founding-connectors-mvp.md) (engineering record) |
 
 ## Suggested reading order for a new contributor
 

@@ -30,15 +30,23 @@ for the current chat structure.
 
 ## Current project stage
 
-**Public gateway (Milestone 2) in place.** On top of the Milestone 1 foundation, the
-repository now contains the public branded gateway: a landing page, a community group
-directory (`/groups`), statically generated group detail pages (`/groups/[slug]`), and a
-community guidelines page (`/guidelines`). Public group content comes from a typed in-code
-module (`src/content/groups/`) — a deliberate interim before the database milestone.
-Continuous integration (`.github/workflows/ci.yml`) runs the full validation gate on every
-PR. **No database schema, authentication, Supabase wiring, analytics, or private WhatsApp
-data exist yet.** Brand palette and all copy remain provisional. Do not assume any part of
-the product beyond this public gateway is live.
+**Public gateway plus the database foundation's local half.** On top of the Milestone 1
+foundation, the repository contains the public branded gateway (landing page, `/groups`,
+`/groups/[slug]`, `/guidelines`), the `/join` shareable community hub with controlled
+`/go/<slug>` chat redirects (M2.5), a community-share feature, and — added on owner
+direction — the **Founding Connectors** program: `/connectors`, a nomination intake flow,
+and the `/r/<code>` tracked card redirect. Public content still comes from typed in-code
+modules (`src/content/groups/`, `src/content/connectors/`) — a deliberate interim before
+the database milestone.
+
+Milestone 3's **local** half is delivered: migrations with deny-by-default RLS
+(`supabase/migrations/`), the three Supabase client boundaries (`src/lib/supabase/`), and
+CI that replays migrations from zero and runs the database security tests. **Its remote
+half is not:** no hosted Supabase project, key, or database URL exists in any environment,
+so **no page reads or writes a database today** — the nomination flow says so plainly
+rather than pretending. Authentication, analytics, and private WhatsApp data do not exist
+yet. Brand palette and all copy remain provisional. Do not assume any part of the product
+beyond the public pages is live.
 
 ## Stack
 
@@ -110,18 +118,23 @@ introduces the database and are intentionally left blank. Never commit real secr
 
 ```
 src/
-├── app/            App Router: /, /groups, /groups/[slug], /guidelines, error/not-found
+├── app/            App Router: /, /groups, /groups/[slug], /guidelines, /connectors,
+│                   /join, /go/[slug] and /r/[code] redirect gates, error/not-found
 ├── components/
 │   ├── layout/     Header, footer, and the Container layout primitive
 │   └── ui/         Reusable Server-Component primitives (Section, Card, Badge, …)
 ├── config/         Central site configuration (provisional copy)
-├── content/        Typed public content model (groups/) — canonical for M2
-├── lib/            Small shared utilities
+├── content/        Typed public content models (groups/, connectors/, join/)
+├── lib/            Shared utilities (qr/, share/, supabase/, connectors/)
 ├── styles/         Global stylesheet + provisional design tokens
-├── features/       (empty) one directory per domain feature, added as built
+├── features/       One directory per domain feature (share/)
 └── types/          (empty) cross-feature shared types
+supabase/
+├── migrations/     Append-only schema migrations, RLS enabled at creation
+└── seed/           Public-safe seed data
 tests/
-└── unit/           Vitest unit tests
+├── unit/           Vitest unit tests (no database required)
+└── db/             Database security tests (npm run db:test)
 ```
 
 Design tokens (colors, typography, radii) live in

@@ -7,6 +7,7 @@ import { siteConfig } from "@/config/site";
 const footerLinks = [
   { href: joinNavLink.href, label: joinNavLink.label },
   { href: "/groups", label: "Groups" },
+  { href: "/connectors", label: "Founding Connectors" },
   { href: "/guidelines", label: "Community guidelines" },
 ] as const;
 

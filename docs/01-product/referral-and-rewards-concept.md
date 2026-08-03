@@ -91,4 +91,7 @@ celebrates people joined, not "conversion".
 - [`../03-architecture/referral-system.md`](../03-architecture/referral-system.md) — mechanics
 - [`../03-architecture/data-model.md`](../03-architecture/data-model.md) — ledger + state machines
 - [`../05-operations/rewards-operations.md`](../05-operations/rewards-operations.md) — admin procedure
+- [`founding-connectors-program.md`](founding-connectors-program.md) — a **separate**
+  system: owner-issued NFC/QR cards that credit no points and involve no ledger. The two
+  share the `/r/` namespace but not their lifecycles (open question #15)
 - `docs/02-planning/open-questions.md` #4–5 — the owner ratifications still needed

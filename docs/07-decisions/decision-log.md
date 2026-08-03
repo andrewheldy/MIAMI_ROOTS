@@ -4,7 +4,7 @@ type: decisions
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-19
+updated: 2026-08-03
 tags: [decisions]
 ---
 
@@ -403,6 +403,81 @@ Choices worth recording:
 provisional; all share copy is provisional pending an owner voice pass; the site stays
 `noindex`; no database, auth, Supabase, analytics vendor, or private WhatsApp data were
 introduced; per-member referral identities remain deferred to M5/M11.
+
+**Status:** Active.
+
+### 2026-08-03 — Miami Roots Founding Connectors program (owner-directed)
+
+**Decision:** Build the **Miami Roots Founding Connectors** program — an
+invitation-led cohort of roughly 20–30 trusted Miami community members, each issued a
+branded NFC + QR card pointing at a Miami Roots-owned tracked URL. Delivered as design
+documentation plus a working MVP: the public `/connectors` page, a nomination intake flow,
+the `/r/<code>` tracked redirect, and a `connectors` + `connector_nominations` migration.
+Full engineering record:
+[`docs/08-delivery/founding-connectors-mvp.md`](../08-delivery/founding-connectors-mvp.md);
+program design:
+[`docs/01-product/founding-connectors-program.md`](../01-product/founding-connectors-program.md).
+
+Choices worth recording:
+
+- **Connector cards are a separate system from M5 member referral links.** `referral_links`
+  belongs to an onboarded, activated member and feeds the points ledger; a connector card is
+  issued by the owner to a person who may never create an account and credits nothing
+  automatically. Two tables, two lifecycles. When M5 arrives, a person may hold both, and
+  the join is a nullable `member_id` added to `connectors` **then**, with its foreign key —
+  the same discipline the M3 `events` migration applied to `referral_link_id`. This pass
+  sets no attribution cookie and does not advance M4/M5/M6.
+- **Open redirects are prevented by construction, not by validation.** A connector
+  destination is a closed union of *internal* targets — an allowlisted page path, a
+  validated group slug, or a validated `/go/<slug>` chat gate. No string from the request
+  reaches the redirect target, and the database column additionally rejects absolute and
+  protocol-relative values. Incoming query parameters are allowlisted to the known campaign
+  keys; the four attribution keys Miami Roots owns are always overwritten, so a visitor
+  cannot spoof how they arrived or who gets credit.
+- **A disabled card still opens the community door, uncredited.** `paused`/`retired` cards
+  redirect to the default destination with no `utm_content` and lose any per-card
+  destination override; an *unissued* code 404s. Reasoning: a real person may be holding a
+  real card, and a dead end punishes the wrong person — but a withdrawn connector must stop
+  accruing credit. Codes are never reused, so a card in the wild can never begin crediting
+  someone else.
+- **NFC and QR are distinguished only by a printed parameter.** The chip writes
+  `?s=n`, the printed code encodes `?s=q`; anything absent or unrecognized is recorded as
+  `unknown`. Nothing is inferred from headers, and no fingerprinting is used.
+- **Scan telemetry is deliberately thinner than the existing privacy floor allows.** A scan
+  records the public card code, the source, whether it was credited, an optional campaign
+  label, and a timestamp — and nothing else. No IP address (not even hashed), user agent,
+  fingerprint, referrer, or geolocation. The existing design permits hashed network metadata
+  only where an anti-abuse need is documented; a card scan has none. Consequently all
+  reporting speaks in **taps, not people**, and a click may never be reported as a confirmed
+  WhatsApp join.
+- **The nomination flow never claims a submission it cannot store.** Because M3's hosted
+  half is still owner-gated, no write path exists in any environment today, so `/connectors`
+  renders an honest direct-contact route instead of a form. Where Supabase is configured the
+  real form renders and really writes. Both branches are covered by tests.
+- **A nomination collects exactly one person's contact details: the submitter's.**
+  Nominating someone else records their name and public handle only — never a phone number
+  or email for a person who has not been asked. `consent_to_contact` is constrained true at
+  the database level, so a contact detail cannot be stored without permission.
+- **No leaderboard, no public ranking by referral count**, consistent with the standing
+  default in open question #13. Recognition is qualitative and human-observed, and public
+  naming of a connector is opt-in per person and revocable.
+- **The card registry lives in application content for now** (`src/content/connectors/`),
+  mirroring the `connectors` row shape exactly, the same interim the group content module
+  uses before M4. Everything committed is clearly fictional fixture data; real connectors are
+  added one at a time with owner approval and hold no contact details, enforced by test.
+- **Multi-city is kept possible without being built.** Codes are globally unique and
+  city-agnostic, destinations are per-card and internal, and scan events carry the code — so
+  a second city is a content and reporting change, not a redesign. No city columns, routing,
+  or cross-city recognition were built.
+
+**Explicitly NOT decided by this entry:** palette (Q#9), group names (Q#10), and all copy
+remain provisional; no legal review has happened, and the "not employees / cannot bind"
+language and consent copy are flagged as needing an attorney; the site stays `noindex`; no
+hosted Supabase project, environment variable, WhatsApp link, analytics vendor, or real
+personal data was introduced; cohort size, benefits, retention windows, and review cadence
+are recommended defaults (assumptions 19), not owner decisions; whether `myroots.dev`
+resolves to this deployment is unverified (assumption 16) and cards must not be printed
+until it does.
 
 **Status:** Active.
 

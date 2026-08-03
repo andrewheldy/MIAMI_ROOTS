@@ -4,7 +4,7 @@ type: architecture
 status: proposed
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-08-03
 tags: [architecture, referrals, attribution, qr]
 ---
 
@@ -27,6 +27,24 @@ planning pass unless marked otherwise.
   `referral_attributions`)
 - Points policy (see [`../01-product/referral-and-rewards-concept.md`](../01-product/referral-and-rewards-concept.md))
 - Sharing-asset design (see [`../04-design/asset-implementation-plan.md`](../04-design/asset-implementation-plan.md))
+
+## Namespace note — `/r/` is now shared (2026-08-03)
+
+The `/r/` prefix this document reserves for member referral links is **already serving
+Founding Connector cards** (`/r/<code>`, resolved by `src/lib/connectors/`), on an explicit
+founder decision that the printed card URL is `myroots.dev/r/<code>`. The two systems are
+separate (see the decision-log entry of 2026-08-03) but they share **one code space**, and a
+physical card cannot be reprinted.
+
+Consequences that M5 must honor:
+
+1. **Connector codes win any collision.** They are printed on objects in the world; member
+   slugs are chosen in a browser and can be re-chosen.
+2. **Slug selection at member activation must reject any code already issued to a
+   connector**, in addition to the reserved-word list.
+3. **Resolution order:** connector codes first, then member slugs — never the reverse.
+4. Whether the two should converge into one identity is open question #15; the default is
+   that they stay separate.
 
 ## Referral URLs and slugs
 

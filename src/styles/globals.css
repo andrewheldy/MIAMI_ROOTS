@@ -34,6 +34,9 @@
   --color-muted: #55655f;
   --color-surface: #f2faf7;
   --color-border: #d8e8e3;
+  /* Form validation only — a warm brick that stays legible on white and does
+     not read as a nightlife accent. Contrast on --color-background: 6.6:1. */
+  --color-danger: #8a2b1f;
 
   /* Typography (neutral placeholder — no branded face chosen yet) */
   --font-sans:

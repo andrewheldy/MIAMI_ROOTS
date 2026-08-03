@@ -17,14 +17,24 @@ const SPINE_TABLES = [
   "events",
 ] as const;
 
+/**
+ * Tables added by the owner-directed Founding Connectors program (2026-08-03).
+ * Kept separate from the M3 spine so the origin of each table stays legible.
+ */
+const CONNECTOR_TABLES = ["connectors", "connector_nominations"] as const;
+
 /** Tables that must expose no client-role policies at all (fail closed). */
-const NO_CLIENT_POLICY_TABLES = ["onboarding_submissions", "events"] as const;
+const NO_CLIENT_POLICY_TABLES = [
+  "onboarding_submissions",
+  "events",
+  ...CONNECTOR_TABLES,
+] as const;
 
 /** Mechanically append-only tables (no UPDATE/DELETE for any app role). */
 const APPEND_ONLY_TABLES = ["consent_events", "audit_log"] as const;
 
 describe("M3 schema", () => {
-  it("creates exactly the six spine tables in public", async () => {
+  it("creates exactly the documented tables in public", async () => {
     const rows = await withSuperuser(async (c) =>
       (
         await c.query(
@@ -32,7 +42,7 @@ describe("M3 schema", () => {
         )
       ).rows.map((r) => r.tablename),
     );
-    expect(rows).toEqual([...SPINE_TABLES].sort());
+    expect(rows).toEqual([...SPINE_TABLES, ...CONNECTOR_TABLES].sort());
   });
 
   it("has row level security enabled on every application table", async () => {
@@ -109,6 +119,7 @@ describe("M3 schema", () => {
       "members.members_email_key",
       "community_groups.community_groups_slug_key",
       "events.events_dedup_key_key",
+      "connectors.connectors_code_key",
     ]) {
       expect(uniques).toContain(expected);
     }

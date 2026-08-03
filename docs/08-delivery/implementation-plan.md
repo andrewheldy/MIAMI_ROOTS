@@ -4,7 +4,7 @@ type: delivery
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-19
+updated: 2026-08-03
 tags: [delivery, implementation, milestones]
 ---
 
@@ -41,6 +41,19 @@ pointing at the stable `/join` URL with campaign-level (non-personal) attributio
 [`community-share-feature.md`](community-share-feature.md). It touches no database,
 migration, RLS, env var, or WhatsApp link; per-member referral identities remain deferred
 to M5/M11.
+
+As of 2026-08-03 an owner-directed **Founding Connectors program** landed out of sequence:
+the public `/connectors` page, a nomination intake flow, the tracked `/r/<code>` card
+redirect, a `connectors` + `connector_nominations` migration, and the program's product,
+operations, card, and message documentation — see
+[`founding-connectors-mvp.md`](founding-connectors-mvp.md). **This is not Milestone 5.**
+M5's `referral_links` belong to an onboarded, activated *member* and feed the points
+ledger; a connector card is issued by the owner to someone who may never have an account
+and credits nothing automatically. The two are separate tables; when M5 lands, a person may
+hold both and the join is a nullable `member_id` added to `connectors` at that point. This
+pass sets no attribution cookie, touches no WhatsApp link, adds no environment variable,
+and does not move M4, M5, or M6 forward. Its database writes are dark until M3's remote
+half is done by the owner, and the UI says so rather than pretending otherwise.
 
 ### Milestone 1 — delivered
 
