@@ -4,7 +4,7 @@ type: architecture
 status: proposed
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-16
+updated: 2026-08-03
 tags: [architecture, analytics, events, observability]
 ---
 
@@ -72,6 +72,15 @@ person (avoided in events — identity lives in domain tables).
 | `member_deletion_requested` | Deletion/withdrawal request | member/admin | member_id | Server | member_id (open request) | B | Kept as consent record | ✅ |
 | `rate_limit_tripped` | Any rate limiter fires | system | surface, ip_hash | Middleware/server | — | A/B | 3 mo | Security |
 | `admin_login_failed` | Auth failure on admin surface | system | — (no identifiers beyond ip_hash) | Auth hooks/platform | — | B | 6 mo | Security |
+| `connector_link_visited` | GET `/r/<code>` resolves (Founding Connector card tap or scan) | anon | connector_code, source (`nfc\|qr\|link\|unknown`), credited (bool), campaign? | Server page, before the redirect | None — every tap counts, and a tap is not a person | A | 24 mo | ✅ |
+
+**Note on `connector_link_visited` (added 2026-08-03).** It is class **A**, not B: it
+carries a public card code printed on a physical object and no pseudonymous identifier at
+all — no IP hash, no user-agent hash, no cookie. The card registry lives in application
+content for now, so `connector_id` is written null and the code in `properties` is the join
+key; see [`../08-delivery/founding-connectors-mvp.md`](../08-delivery/founding-connectors-mvp.md).
+This event counts **taps, not people**, and must never be reported as confirmed community
+joins.
 
 **Redaction rules for `properties` (hard rules):** never an invite URL, never a full
 phone number or email, never free-text member content, never a raw IP (hashed only,

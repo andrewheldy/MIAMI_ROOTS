@@ -5,6 +5,12 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
+      // Server modules under test import `server-only`, which resolves to a
+      // deliberately-throwing build outside an RSC graph. See the stub for why
+      // replacing it here does not weaken the real boundary.
+      "server-only": fileURLToPath(
+        new URL("./tests/stubs/server-only.ts", import.meta.url),
+      ),
     },
   },
   // Component tests (`*.test.tsx`) render with the automatic JSX runtime, so no

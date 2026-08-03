@@ -4,7 +4,7 @@ type: context
 status: active
 owner: unassigned
 created: 2026-07-16
-updated: 2026-07-19
+updated: 2026-08-03
 tags: [context, assumptions]
 ---
 
@@ -119,6 +119,35 @@ Added during the community-share pass (2026-07-19):
     Roots.") card copy was supplied by the share brief and is treated like the rest of the
     gateway copy — provisional pending an owner voice pass (Q#9). It is public-safe (no
     invite links, phone numbers, or private data), enforced by test.
+
+Added during the Founding Connectors pass (2026-08-03):
+
+16. **Cards are printed with the domain `myroots.dev`.** The program brief specifies
+    `myroots.dev/r/<code>` as the card URL. The site currently deploys to a Vercel URL, and
+    no evidence in this repository confirms that `myroots.dev` is registered and pointed at
+    the deployment. Everything is *specified* against `myroots.dev`; nothing is *printed*
+    until the owner confirms it resolves. Note the tension with assumption 13, which
+    hardcodes the Vercel URL for share assets — if the custom domain lands, both should
+    move together and the old URL should keep redirecting.
+17. **`?s=n` and `?s=q` are the NFC/QR discriminator.** The NFC chip and the printed QR
+    encode the same `/r/<code>` URL with different `s` values, because nothing else can
+    distinguish them without device fingerprinting (which the privacy design rules out).
+    An absent or unrecognized value is recorded as `unknown`, never inferred.
+18. **A disabled card still opens the community door, uncredited.** A `paused` or `retired`
+    card redirects to the default destination with no `utm_content`, rather than 404ing.
+    The reasoning: a real person may be standing in front of a real card, and a dead end
+    punishes the wrong person. An *unissued* code still 404s. This is a program-behavior
+    assumption, reversible in one place (`src/lib/connectors/destination.ts`) if the owner
+    prefers a hard stop.
+19. **Cohort size, benefits, retention windows, and review cadence are recommended
+    defaults.** ~20–30 connectors, the benefits table, 12-month/6-month nomination
+    retention, and monthly review all come from this design pass, not from an owner
+    decision. They are implementable and owner-tunable.
+20. **Connector cards are not member referral links.** The program treats `connectors` and
+    the planned M5 `referral_links` as separate systems with separate lifecycles, on the
+    reasoning in `docs/08-delivery/founding-connectors-mvp.md`. If the owner would rather
+    a connector card *be* a member referral link, that is a real design change and should
+    be decided before M5 is built.
 
 ## Relationship to other documents
 

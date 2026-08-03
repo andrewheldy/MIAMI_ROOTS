@@ -78,6 +78,17 @@ otherwise. Database rules that now apply: never edit an applied migration; every
 table ships with RLS enabled and minimum policies; the service-role key is read only by
 `src/lib/supabase/service.ts`.
 
+As of 2026-08-03 an owner-directed **Founding Connectors program** also landed out of
+sequence: `/connectors`, the nomination intake flow, the `/r/<code>` tracked card redirect,
+and a `connectors` + `connector_nominations` migration. **It is not Milestone 5** —
+connector cards and member referral links are separate systems (see
+`docs/08-delivery/founding-connectors-mvp.md` and the 2026-08-03 decision-log entry), and
+this pass sets no attribution cookie and does not advance M4/M5/M6. Rules it adds: the card
+registry in `src/content/connectors/` holds **no** contact details and only owner-approved
+entries; connector codes are permanent and never reused; connector destinations stay a
+closed union of *internal* targets, so `/r/` can never become an open redirect; and no
+nomination or scan is ever reported as stored unless it really was.
+
 When extending the app: public group content lives in `src/content/groups/` (data-only,
 separate from components) and must stay public-safe — never add invite links, phone
 numbers, or other private community data. Design tokens are provisional and centralized in
