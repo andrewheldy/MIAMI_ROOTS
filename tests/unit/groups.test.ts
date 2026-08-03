@@ -23,11 +23,20 @@ function publicPath(src: string): string {
 }
 
 describe("community group content integrity", () => {
-  it("exposes the six MVP groups and excludes out-of-scope Ticket Exchange", () => {
+  it("exposes the seven communities, including the approved Ticket Exchange", () => {
     const slugs = communityGroups.map((g) => g.slug);
-    expect(slugs).toHaveLength(6);
-    expect(slugs).not.toContain("ticket-exchange");
+    expect(slugs).toHaveLength(7);
+    expect(slugs).toContain("ticket-exchange");
     expect(new Set(slugs).size).toBe(slugs.length); // no duplicates
+  });
+
+  it("keeps General Chat first and does not let Ticket Exchange displace it", () => {
+    const published = getPublishedGroups();
+    expect(published[0]!.slug).toBe("general-chat");
+    const ticketIndex = published.findIndex(
+      (g) => g.slug === "ticket-exchange",
+    );
+    expect(ticketIndex).toBeGreaterThan(0);
   });
 
   it("uses only kebab-case slugs", () => {
@@ -76,6 +85,38 @@ describe("community group content integrity", () => {
     }
   });
 
+  it("gives Ticket Exchange a complete, non-guarantee safety treatment", () => {
+    const ticket = getGroupBySlug("ticket-exchange");
+    expect(ticket).toBeDefined();
+    expect(ticket!.category).toBe("events");
+    expect(ticket!.logo?.src).toBe("/group-logos/ticket-exchange-logo.png");
+
+    const safety = ticket!.safety;
+    expect(safety, "Ticket Exchange must carry a safety block").toBeDefined();
+    expect(safety!.badge.length).toBeGreaterThan(0);
+    expect(safety!.summary.length).toBeGreaterThan(0);
+    expect(safety!.points.length).toBeGreaterThanOrEqual(5);
+    // The non-guarantee posture must be explicit and must not over-lawyer into
+    // claiming Miami Roots brokers or guarantees the transaction.
+    expect(safety!.disclaimer.toLowerCase()).toContain("does not guarantee");
+
+    // It must not present Miami Roots as a seller/broker/escrow/processor.
+    const prose = [
+      ticket!.shortDescription,
+      ticket!.fullDescription,
+      safety!.summary,
+    ]
+      .join(" ")
+      .toLowerCase();
+    expect(prose).not.toMatch(/\bescrow\b/);
+    expect(prose).not.toMatch(/payment processor/);
+  });
+
+  it("is the only group carrying a safety block (for now)", () => {
+    const withSafety = communityGroups.filter((g) => g.safety);
+    expect(withSafety.map((g) => g.slug)).toEqual(["ticket-exchange"]);
+  });
+
   it("resolves every related slug to a published group", () => {
     for (const group of communityGroups) {
       for (const slug of group.related ?? []) {
@@ -102,7 +143,10 @@ describe("getGroupBySlug", () => {
 
   it("returns undefined for an unknown slug (drives 404)", () => {
     expect(getGroupBySlug("does-not-exist")).toBeUndefined();
-    expect(getGroupBySlug("ticket-exchange")).toBeUndefined();
+  });
+
+  it("returns the approved Ticket Exchange group", () => {
+    expect(getGroupBySlug("ticket-exchange")?.name).toBe("Ticket Exchange");
   });
 
   it("is case-sensitive on the canonical slug", () => {

@@ -33,10 +33,13 @@ describe("HomePage integration", () => {
     // New share prompt is present…
     expect(html).toContain("Miami is better when your people are here.");
     expect(html).toContain("Get Your Share Card");
-    // …and the existing hero, trust, and closing CTA copy are unchanged.
+    // …and the existing hero, trust, and closing CTA journey still stand.
+    // The closing CTA labels read "Join the community chats" / "Explore the
+    // groups" since the navigation & motion pass unified them with the hero.
     expect(html).toContain("A community rooted in Miami");
     expect(html).toContain("Ready to find your people?");
-    expect(html).toContain("Join the chats");
+    expect(html).toContain("Join the community chats");
+    expect(html).toContain("Explore the groups");
   });
 
   it("keeps the small 'Share Miami Roots' action near the closing CTA", () => {

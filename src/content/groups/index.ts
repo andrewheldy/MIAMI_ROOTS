@@ -11,6 +11,7 @@ export const categoryLabels: Record<GroupCategory, string> = {
   nightlife: "Nightlife",
   wellness: "Wellness",
   community: "Community",
+  events: "Events",
 };
 
 /**

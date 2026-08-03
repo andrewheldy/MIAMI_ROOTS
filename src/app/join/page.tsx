@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { GroupLogo } from "@/components/ui/group-logo";
+import { SafetyBadge } from "@/components/ui/safety-badge";
 import { siteConfig } from "@/config/site";
 import { getGroupBySlug, type CommunityGroup } from "@/content/groups";
 import { chatLinks, type ChatLink } from "@/content/join/chat-links";
@@ -171,6 +172,9 @@ export default function JoinPage() {
                       </span>
                       {link.featured ? (
                         <Badge tone="brand">Best place to start</Badge>
+                      ) : null}
+                      {group.safety ? (
+                        <SafetyBadge label={group.safety.badge} />
                       ) : null}
                     </span>
                     <span className="text-muted mt-1 block text-sm leading-relaxed">

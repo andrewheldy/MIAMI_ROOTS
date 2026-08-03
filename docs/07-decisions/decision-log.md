@@ -296,6 +296,70 @@ public site still renders from `src/content/groups/` (M4 moves content into the 
 
 **Status:** Active.
 
+### 2026-07-19 — Ticket Exchange approved as the seventh public community
+
+**Decision:** Add **Ticket Exchange** as a first-class seventh Miami Roots
+community, reversing its earlier out-of-scope status. It ships with group slug
+`ticket-exchange`, the existing `public/group-logos/ticket-exchange-logo.png`
+asset, a new `events` editorial category, and the controlled chat route
+`/go/ticket-exchange` backed by the server-only `WHATSAPP_TICKET_EXCHANGE_URL`
+variable — the same env-var-held, validated-redirect architecture as the other
+six chats (2026-07-18 Milestone 2.5 entry). It appears everywhere the other
+published communities do (groups directory, homepage preview, `/join`, its own
+detail page), positioned with the event-oriented communities (after Nightlife &
+Event Marketing) so it never displaces **General Chat** as the recommended front
+door.
+
+**Positioning & safety:** Ticket Exchange is a **peer-to-peer** space for members
+to buy, sell, and exchange event tickets. Miami Roots is explicitly **not** a
+ticket seller, broker, guarantor, escrow, or payment processor, and is not a
+party to any transaction. A concise, reusable safety treatment (typed `safety`
+block on the content model: a "Buy & sell safely" badge, a one-line summary, a
+verification checklist, and a non-guarantee disclaimer) surfaces on the group
+card, homepage preview, detail page, `/join` card, and the `/go/ticket-exchange`
+unavailable state; the detail page carries the fuller version and a prominent
+route to the community guidelines.
+
+**Supersedes:** the 2026-07-16 Milestone 2 note "Six MVP groups only; Ticket
+Exchange deliberately excluded" and the Ticket Exchange line in
+`docs/01-product/out-of-scope.md`, both of which accurately described the prior
+scope. This entry is the deliberate future decision those records anticipated.
+
+**Rationale:** The community owner approved Ticket Exchange as an acquisition and
+utility channel. It fills a real member need (last-minute tickets, passing on
+tickets you can't use) that the standing "no ticket reselling" rule in Nightlife
+& Event Marketing had no home for, while the safety treatment keeps Miami Roots'
+"community, not a marketplace" posture intact.
+
+**Explicitly NOT changed:** the Supabase schema, migrations, RLS, auth, and
+service-role boundaries (this was a frontend/content pass); the palette (Q#9) and
+provisional group display names (Q#10); the site's `noindex` status. Invite links
+remain server-only — no raw WhatsApp URL entered code, client bundles, or Git.
+The real `WHATSAPP_TICKET_EXCHANGE_URL` value is an owner/hosting task.
+
+**Status:** Active.
+
+### 2026-07-19 — Framer Motion (the `motion` package) adopted for restrained interaction
+
+**Decision:** Add the official **`motion`** package (v12, `motion/react` imports —
+React 19 compatible) as the site's one animation dependency, and build a small,
+centralized motion system: shared easing/duration tokens
+(`src/components/motion/tokens.ts`) and reusable `MotionReveal` / `StaggerReveal`
+client wrappers, plus a client `MobileNav` and an animated `CommunityCard`. Motion
+is confined to narrow client wrappers around server-rendered children so pages
+stay Server Components; all of it respects `prefers-reduced-motion` (content
+renders immediately with no replacement movement). Durations stay in the
+160–600ms bands and use opacity/translate/scale only — no parallax, looping, or
+decorative background motion.
+
+**Rationale:** The navigation refactor and hierarchy improvements needed real
+interaction feedback (menu open/close, hamburger morph, staggered entrances,
+viewport reveals). One small, current library with first-class reduced-motion
+support delivers that without a heavier framework, and centralizing the tokens
+keeps the motion coherent instead of scattered.
+
+**Status:** Active.
+
 ### 2026-07-19 — Community-share feature (owner-directed, DB-free QR/share)
 
 **Decision:** Ship an owner-directed "Share Miami Roots" community-growth feature: a

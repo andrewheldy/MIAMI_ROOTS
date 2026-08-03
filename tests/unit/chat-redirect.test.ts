@@ -1,9 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import {
   APPROVED_REDIRECT_HOSTS,
   resolveChatDestination,
 } from "@/lib/chat-redirect";
+import { getChatLinkByRedirectSlug } from "@/content/join/chat-links";
 
 // Example invite codes below are made up — they exercise URL shape only.
 describe("resolveChatDestination", () => {
@@ -74,5 +75,49 @@ describe("resolveChatDestination", () => {
         reason: "invalid",
       });
     }
+  });
+});
+
+/**
+ * Exercises the exact wiring `/go/ticket-exchange` uses: read the group's own
+ * server env var (name from the registry) and resolve it. Mirrors the shipped
+ * route so a regression in either the var name or the resolution shows up here.
+ */
+describe("Ticket Exchange redirect wiring (/go/ticket-exchange)", () => {
+  const ticket = getChatLinkByRedirectSlug("ticket-exchange");
+  const envVar = ticket!.envVar;
+  const original = process.env[envVar];
+
+  afterEach(() => {
+    if (original === undefined) delete process.env[envVar];
+    else process.env[envVar] = original;
+  });
+
+  it("reads the WHATSAPP_TICKET_EXCHANGE_URL variable", () => {
+    expect(envVar).toBe("WHATSAPP_TICKET_EXCHANGE_URL");
+  });
+
+  it("shows the unavailable state when the variable is missing", () => {
+    delete process.env[envVar];
+    expect(resolveChatDestination(process.env[envVar])).toEqual({
+      ok: false,
+      reason: "missing",
+    });
+  });
+
+  it("shows the unavailable state when the variable is an invalid URL", () => {
+    process.env[envVar] = "https://evil.example/not-whatsapp";
+    expect(resolveChatDestination(process.env[envVar])).toEqual({
+      ok: false,
+      reason: "invalid",
+    });
+  });
+
+  it("redirects when the variable is a valid WhatsApp invite URL", () => {
+    process.env[envVar] = "https://chat.whatsapp.com/TicketExch123";
+    expect(resolveChatDestination(process.env[envVar])).toEqual({
+      ok: true,
+      url: "https://chat.whatsapp.com/TicketExch123",
+    });
   });
 });

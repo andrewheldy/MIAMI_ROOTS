@@ -1,0 +1,44 @@
+import { describe, expect, it } from "vitest";
+
+import {
+  desktopNavLinks,
+  joinNavLink,
+  mainNavLinks,
+} from "@/config/navigation";
+
+describe("navigation configuration", () => {
+  it("exposes the expected primary links in order", () => {
+    expect(mainNavLinks.map((l) => l.href)).toEqual([
+      "/",
+      "/groups",
+      "/guidelines",
+    ]);
+  });
+
+  it("routes the dominant CTA to the shareable hub with consistent copy", () => {
+    expect(joinNavLink.href).toBe("/join");
+    expect(joinNavLink.label).toBe("Join the community chats");
+  });
+
+  it("hides Home from the desktop bar (the logo is the route home)", () => {
+    expect(desktopNavLinks.map((l) => l.href)).toEqual([
+      "/groups",
+      "/guidelines",
+    ]);
+    expect(desktopNavLinks.some((l) => l.href === "/")).toBe(false);
+  });
+
+  it("keeps the CTA out of the ordinary link lists", () => {
+    expect(mainNavLinks.some((l) => l.href === joinNavLink.href)).toBe(false);
+    expect(desktopNavLinks.some((l) => l.href === joinNavLink.href)).toBe(
+      false,
+    );
+  });
+
+  it("gives every link a non-empty label and internal href", () => {
+    for (const link of [...mainNavLinks, joinNavLink]) {
+      expect(link.label.trim().length).toBeGreaterThan(0);
+      expect(link.href.startsWith("/")).toBe(true);
+    }
+  });
+});

@@ -19,7 +19,7 @@
 
 /** Editorial grouping used to organize the directory. Not a WhatsApp construct. */
 export type GroupCategory =
-  "everyday" | "business" | "nightlife" | "wellness" | "community";
+  "everyday" | "business" | "nightlife" | "wellness" | "community" | "events";
 
 /**
  * Lifecycle status. Only `active` groups are rendered publicly; `hidden` and
@@ -63,6 +63,24 @@ export interface GroupNotice {
   readonly body: readonly string[];
   /** Visual tone. `info` for neutral context, `caution` for safety-relevant. */
   readonly tone: "info" | "caution";
+}
+
+/**
+ * A concise, reusable safety treatment for a group whose activity carries
+ * member-to-member risk (currently only Ticket Exchange's peer ticket trades).
+ * Kept data-only and general so any future group can opt in without new UI:
+ * cards render the `badge` + `summary`, the detail page renders the full
+ * `points` checklist and the `disclaimer`.
+ */
+export interface GroupSafety {
+  /** Restrained inline pill, e.g. "Buy & sell safely". */
+  readonly badge: string;
+  /** One short line for cards and previews — mobile-readable. */
+  readonly summary: string;
+  /** The practical checklist. Fuller version lives on the detail page. */
+  readonly points: readonly string[];
+  /** The Miami Roots non-guarantee line. Stated plainly, never over-lawyered. */
+  readonly disclaimer: string;
 }
 
 /** Per-page SEO/social metadata. Kept provisional alongside the copy. */
@@ -114,6 +132,11 @@ export interface CommunityGroup {
   readonly etiquette: readonly string[];
   /** Optional safety/expectation notice(s). */
   readonly notices?: readonly GroupNotice[];
+  /**
+   * Optional concise safety treatment, surfaced on cards and the detail page
+   * for groups whose activity carries member-to-member risk (Ticket Exchange).
+   */
+  readonly safety?: GroupSafety;
   /** Slugs of related groups to cross-link. Validated to exist. */
   readonly related?: readonly string[];
   /** Per-page metadata. */

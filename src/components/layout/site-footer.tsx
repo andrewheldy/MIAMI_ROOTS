@@ -1,10 +1,11 @@
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
+import { joinNavLink } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 
 const footerLinks = [
-  { href: "/join", label: "Join the chats" },
+  { href: joinNavLink.href, label: joinNavLink.label },
   { href: "/groups", label: "Groups" },
   { href: "/guidelines", label: "Community guidelines" },
 ] as const;

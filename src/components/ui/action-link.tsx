@@ -27,7 +27,8 @@ export function ActionLink({
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors",
+        // Colors transition always; the subtle press scale is motion-safe only.
+        "inline-flex min-h-11 items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-[color,background-color,border-color,transform] motion-safe:active:scale-[0.98]",
         variant === "primary" &&
           "bg-forest text-background hover:bg-forest-600",
         variant === "secondary" &&

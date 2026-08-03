@@ -27,11 +27,14 @@ explicit prevents scope creep dressed up as "obviously needed."
 
 ## Known initial information
 
-- **Ticket Exchange / ticket resale.** Explicitly excluded from the initial six community
-  groups. Nightlife & Event Marketing has a standing "no ticket reselling" rule. A concept
-  logo for a future "Ticket Exchange" group exists in
-  `public/group-logos/ticket-exchange-logo.png`, but it is not part of the current
-  product and should not be implemented without a deliberate future decision.
+- **Ticket Exchange / ticket resale.** _Superseded on 2026-07-19 — Ticket Exchange is now
+  an approved, public community (see `docs/07-decisions/decision-log.md`, 2026-07-19)._
+  Historically (Milestone 2) it was excluded from the initial six community groups and its
+  logo was a future-scoped concept. It is now the seventh community, a **peer-to-peer**
+  ticket buy/sell/exchange space with a concise safety treatment; Miami Roots remains not a
+  seller, broker, guarantor, escrow, or payment processor. Nightlife & Event Marketing keeps
+  its standing "no ticket reselling" rule — that group is for promotion, and member ticket
+  trades now have their own home in Ticket Exchange.
 - **Clinical/treatment services.** Sober Social is a peer social space, not a treatment or
   recovery program. Miami Roots does not offer clinical or medical services and should not
   be built or marketed as if it does.
@@ -41,7 +44,9 @@ explicit prevents scope creep dressed up as "obviously needed."
   mentioned in the founding brief is a future phase, not initial scope, and even then is
   expected to be member-facing, not public.
 - **Payments, ticketing transactions, or e-commerce of any kind.** Nothing in the current
-  brief calls for the product to handle money.
+  brief calls for the product to handle money. This is unchanged by Ticket Exchange: that
+  community only connects members in a WhatsApp chat — the product processes no payments,
+  holds no funds, and is not a party to any ticket transaction.
 
 ## Relationship to other documents
 
