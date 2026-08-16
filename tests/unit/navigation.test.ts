@@ -5,6 +5,7 @@ import {
   joinNavLink,
   mainNavLinks,
 } from "@/config/navigation";
+import { COMMUNITY_GO_PATH } from "@/content/join/community-link";
 
 describe("navigation configuration", () => {
   it("exposes the expected primary links in order", () => {
@@ -12,18 +13,23 @@ describe("navigation configuration", () => {
       "/",
       "/groups",
       "/guidelines",
+      "/invite",
     ]);
   });
 
-  it("routes the dominant CTA to the shareable hub with consistent copy", () => {
-    expect(joinNavLink.href).toBe("/join");
-    expect(joinNavLink.label).toBe("Join the community chats");
+  it("routes the one CTA to the parent community redirect", () => {
+    expect(joinNavLink.href).toBe(COMMUNITY_GO_PATH);
+    expect(joinNavLink.href).toBe("/go/community");
+    expect(joinNavLink.label).toBe("Join the community");
+    // Following it leaves the site for WhatsApp; surfaces say so out loud.
+    expect(joinNavLink.external).toBe(true);
   });
 
   it("hides Home from the desktop bar (the logo is the route home)", () => {
     expect(desktopNavLinks.map((l) => l.href)).toEqual([
       "/groups",
       "/guidelines",
+      "/invite",
     ]);
     expect(desktopNavLinks.some((l) => l.href === "/")).toBe(false);
   });
@@ -33,6 +39,14 @@ describe("navigation configuration", () => {
     expect(desktopNavLinks.some((l) => l.href === joinNavLink.href)).toBe(
       false,
     );
+  });
+
+  it("never links a visitor into an individual chat", () => {
+    for (const link of [...mainNavLinks, joinNavLink]) {
+      expect(link.href.startsWith("/go/")).toBe(
+        link.href === COMMUNITY_GO_PATH,
+      );
+    }
   });
 
   it("gives every link a non-empty label and internal href", () => {

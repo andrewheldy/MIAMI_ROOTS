@@ -9,6 +9,7 @@ import { ActionLink } from "@/components/ui/action-link";
 import { Badge } from "@/components/ui/badge";
 import { CommunityCard } from "@/components/ui/community-card";
 import { GroupLogo } from "@/components/ui/group-logo";
+import { JoinAction } from "@/components/ui/join-action";
 import { Notice } from "@/components/ui/notice";
 import { SafetyBadge } from "@/components/ui/safety-badge";
 import { Section } from "@/components/ui/section";
@@ -19,7 +20,6 @@ import {
   getPublishedGroups,
   getRelatedGroups,
 } from "@/content/groups";
-import { getGoPath } from "@/content/join/chat-links";
 
 interface GroupPageProps {
   params: Promise<{ slug: string }>;
@@ -43,7 +43,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const group = getGroupBySlug(slug);
   if (!group) {
-    return { title: "Group not found" };
+    return { title: "Room not found" };
   }
   return {
     title: group.metadata.title,
@@ -51,13 +51,11 @@ export async function generateMetadata({
   };
 }
 
-const accessCopy: Record<string, string> = {
-  "managed-by-admins":
-    "Invite access is currently managed by community administrators. Explore the group here — joining details are coming soon.",
-  "coming-soon":
-    "A public way to join this group is coming soon. In the meantime, here's what it's about.",
-};
-
+/**
+ * One room, explained. Since 2026-08-16 this page has no per-chat join control:
+ * the room lives inside the parent WhatsApp community, so the only action here
+ * is the same one as everywhere else on the site.
+ */
 export default async function GroupDetailPage({ params }: GroupPageProps) {
   const { slug } = await params;
   const group = getGroupBySlug(slug);
@@ -67,15 +65,10 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
   }
 
   const related = getRelatedGroups(group);
-  const goPath = getGoPath(group.slug);
-  const joinLabel =
-    group.slug === "ticket-exchange"
-      ? "Join Ticket Exchange"
-      : "Join this chat";
 
   return (
     <>
-      {/* Group header */}
+      {/* Room header */}
       <section className="bg-surface border-border border-b">
         <Container className="py-12 sm:py-16">
           <nav aria-label="Breadcrumb" className="mb-4">
@@ -83,7 +76,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
               href="/groups"
               className="text-muted hover:text-forest -ml-1 inline-flex min-h-11 items-center rounded-md px-1 text-sm font-medium"
             >
-              ← All groups
+              ← All rooms
             </Link>
           </nav>
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
@@ -101,41 +94,44 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
               <h1 className="text-forest mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
                 {group.name}
               </h1>
-              <p className="text-muted mt-2 max-w-2xl leading-relaxed">
-                {group.shortDescription}
+              <p className="text-forest-600 mt-2 max-w-2xl text-lg font-medium text-pretty">
+                {group.forYouIf}
               </p>
             </div>
           </div>
 
-          {/* Primary action + secondary navigation */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            {goPath ? <ActionLink href={goPath}>{joinLabel}</ActionLink> : null}
-            <ActionLink href="/groups" variant="secondary">
-              All groups
-            </ActionLink>
-            <ActionLink href="/guidelines" variant="secondary">
-              Community guidelines
-            </ActionLink>
+          <p className="text-muted mt-6 max-w-2xl leading-relaxed">
+            {group.whyItExists}
+          </p>
+
+          <div className="mt-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <JoinAction block />
+            <Link
+              href="/guidelines"
+              className="text-forest inline-flex min-h-12 items-center text-base font-semibold underline underline-offset-4 hover:no-underline"
+            >
+              House rules
+            </Link>
           </div>
-          {!goPath ? (
-            <p className="text-muted mt-4 max-w-2xl text-sm leading-relaxed">
-              {accessCopy[group.access]}
-            </p>
-          ) : null}
+          <p className="text-muted mt-4 max-w-2xl text-sm leading-relaxed">
+            This room sits inside the Miami Roots community. Join the community
+            once and you can open it, along with every other room, from the
+            inside.
+          </p>
         </Container>
       </section>
 
       {/* About */}
       <Section aria-labelledby="about-heading">
         <MotionReveal>
-          <SectionHeading id="about-heading" title="About this group" as="h2" />
+          <SectionHeading id="about-heading" title="About this room" as="h2" />
           <p className="text-muted mt-4 max-w-2xl leading-relaxed text-pretty">
             {group.fullDescription}
           </p>
           {group.displayNameProvisional ? (
             <p className="text-muted mt-4 max-w-2xl text-sm">
-              Note: this group&apos;s display name is provisional while its
-              final name is confirmed.
+              Note: this room&apos;s display name is provisional while its final
+              name is confirmed.
               {group.logo?.wordmark
                 ? ` Its logo currently reads “${group.logo.wordmark}.”`
                 : ""}
@@ -144,8 +140,8 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
         </MotionReveal>
       </Section>
 
-      {/* Ticket safety — the fuller, peer-to-peer treatment for groups that
-          carry member-to-member risk. A ticket-style clipped reveal, restrained. */}
+      {/* Ticket safety: the fuller, peer-to-peer treatment for rooms that carry
+          member-to-member risk. */}
       {group.safety ? (
         <Section tone="surface" aria-labelledby="safety-heading">
           <MotionReveal className="border-forest/20 bg-background relative max-w-2xl overflow-hidden rounded-2xl border p-6 sm:p-8">
@@ -185,7 +181,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
               </div>
               <div className="mt-5">
                 <ActionLink href="/guidelines" variant="secondary">
-                  Read the community guidelines
+                  Read the house rules
                 </ActionLink>
               </div>
             </div>
@@ -218,7 +214,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
               </ul>
             </div>
             <div className="border-border bg-background rounded-xl border p-6">
-              <h3 className="text-forest font-semibold">Not for this group</h3>
+              <h3 className="text-forest font-semibold">Not for this room</h3>
               <ul className="mt-3 space-y-2">
                 {group.doesNotBelong.map((item) => (
                   <li
@@ -245,7 +241,7 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
         <MotionReveal>
           <SectionHeading
             id="expectations-heading"
-            title="Community etiquette"
+            title="How people act in here"
             as="h2"
           />
           <ul className="mt-4 max-w-2xl space-y-2">
@@ -280,18 +276,14 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
         </MotionReveal>
       </Section>
 
-      {/* Related groups */}
+      {/* Related rooms */}
       {related.length > 0 ? (
         <Section
           tone={group.safety ? "default" : "surface"}
           aria-labelledby="related-heading"
         >
           <MotionReveal>
-            <SectionHeading
-              id="related-heading"
-              title="Related groups"
-              as="h2"
-            />
+            <SectionHeading id="related-heading" title="Nearby rooms" as="h2" />
           </MotionReveal>
           <StaggerReveal
             as="ul"
@@ -307,20 +299,27 @@ export default async function GroupDetailPage({ params }: GroupPageProps) {
         </Section>
       ) : null}
 
-      {/* Back to directory */}
+      {/* Close */}
       <Section aria-labelledby="back-heading">
-        <MotionReveal>
-          <SectionHeading
+        <MotionReveal className="max-w-2xl">
+          <h2
             id="back-heading"
-            title="Keep exploring"
-            as="h2"
-            description="There are more communities to discover across Miami Roots."
-          />
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <ActionLink href="/join">Join the community chats</ActionLink>
-            <ActionLink href="/groups" variant="secondary">
-              See all groups
-            </ActionLink>
+            className="text-title text-forest font-bold text-balance"
+          >
+            One door, all of it
+          </h2>
+          <p className="text-muted mt-4 leading-relaxed">
+            Join the community and this room is waiting inside, along with the
+            other six.
+          </p>
+          <div className="mt-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <JoinAction block />
+            <Link
+              href="/groups"
+              className="text-forest inline-flex min-h-12 items-center text-base font-semibold underline underline-offset-4 hover:no-underline"
+            >
+              See all the rooms
+            </Link>
           </div>
         </MotionReveal>
       </Section>

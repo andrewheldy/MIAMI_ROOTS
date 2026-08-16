@@ -25,7 +25,7 @@ describe("ShareCardModal", () => {
     expect(html).toContain("aria-labelledby");
     expect(html).toContain("aria-describedby");
     expect(html).toContain("Bring someone into the community");
-    expect(html).toContain("Let them scan this code or send them the link.");
+    expect(html).toContain("Let them scan this code, or send them the link.");
   });
 
   it("exposes every share/download action with an accessible name", () => {

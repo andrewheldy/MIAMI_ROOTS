@@ -57,6 +57,14 @@ Added during the Founding Connectors pass (2026-08-03):
 | 16 | Do connector benefits (early access, priority, perks, guest passes) create any compensation or tax exposure in Florida? | Determines whether the benefits table can stand as written, and gates any future performance-based reward. | Open — **needs an attorney**, not an internal answer |
 | 17 | Cohort size, benefits list, nomination retention windows (12 mo / 6 mo declined), and review cadence — keep the recommended defaults? | Cheap to change now; disruptive once connectors have been told. | **Recommended default:** as specified in `docs/01-product/founding-connectors-program.md` |
 
+Added during the community-first redesign (2026-08-16):
+
+| # | Question | Why it matters | Status |
+|---|---|---|---|
+| 18 | The site now says a way to credit people who bring others in is coming "later this year". Is that a commitment, and roughly when? | It is public copy on the home and invite pages. If the answer is "not this year", the line has to come down before it becomes a broken promise. The mechanics themselves are Q#4 and Q#5; this question is only about the public statement. | Open — **owner decision**. Nothing is tracked or accrued today, and the copy deliberately says so. |
+| 19 | Do the seven rooms stay unreachable from the website permanently, or only until the community is bigger? | `/go/<chat>` routes still resolve for links already in the world, but nothing on the site points at them. If per-room joining ever returns, it returns as a decision, not by a component quietly regaining a button. | Open — **default is permanent**; the redesign is built on it (decision log 2026-08-16). |
+| 20 | Should `/invite` stay open to anybody, or eventually require being a member? | Today it hands out a public link with no gate, which is honest because there is no account system. Once M6 onboarding exists, gating it becomes possible, and the question is whether it is worth the friction. | Open — **default is stay open**; revisit at M6. |
+
 ## Relationship to other documents
 
 Answering a question here should either update `docs/00-context/assumptions.md` (if it's a

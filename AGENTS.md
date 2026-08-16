@@ -39,9 +39,13 @@ half is owner-gated**: no hosted Supabase project, key, or database URL exists i
 environment. **No public page reads the database** — the site renders from the typed in-code
 content module (`src/content/groups/`); moving content into the DB is Milestone 4.
 
-Two owner-directed features landed outside the milestone sequence: the **community-share**
-feature (2026-07-19) and the **Founding Connectors program** (2026-08-03 — `/connectors`,
+Three owner-directed passes landed outside the milestone sequence: the **community-share**
+feature (2026-07-19), the **Founding Connectors program** (2026-08-03 — `/connectors`,
 the nomination flow, the `/r/<code>` card redirect, and a `connectors` +
-`connector_nominations` migration). Neither is a licence to start M4/M5/M6. Do not begin
-later-milestone work without explicit instruction. See
-`docs/08-delivery/implementation-plan.md` for the authoritative current phase.
+`connector_nominations` migration), and the **community-first redesign** (2026-08-16 — one
+call to action at `/go/community`, no per-chat joining anywhere on the site, the new
+`/invite` page, and the `docs/DESIGN_INTELLIGENCE.md` connection record). None is a licence
+to start M4/M5/M6. Do not begin later-milestone work without explicit instruction. See
+`docs/08-delivery/implementation-plan.md` for the authoritative current phase, and
+`CLAUDE.md` for the standing rules the redesign added (one CTA, never link into a chat, no
+em-dashes in user-facing copy, never claim tracking that does not exist).

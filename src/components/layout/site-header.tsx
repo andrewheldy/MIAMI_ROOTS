@@ -47,7 +47,7 @@ export function SiteHeader() {
         <Link
           href="/"
           className="group relative z-50 flex min-w-0 items-center gap-2.5 rounded-md sm:gap-3"
-          aria-label={`${siteConfig.name} — home`}
+          aria-label={`${siteConfig.name}, home`}
         >
           <Image
             src="/brand/logos/miami-roots-logo.png"
@@ -75,12 +75,14 @@ export function SiteHeader() {
             </li>
           ))}
           <li className="ml-1">
-            <Link
+            {/* A plain anchor, not `next/link`: this route redirects out to
+                WhatsApp, so there is nothing to prefetch. */}
+            <a
               href={joinNavLink.href}
               className="bg-forest text-background hover:bg-forest-600 inline-flex min-h-11 items-center rounded-lg px-4 text-sm font-semibold whitespace-nowrap transition-colors"
             >
               {joinNavLink.label}
-            </Link>
+            </a>
           </li>
         </ul>
 

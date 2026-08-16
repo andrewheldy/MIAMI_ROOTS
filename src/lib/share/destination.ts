@@ -21,6 +21,18 @@
 export const JOIN_DESTINATION_URL = "https://miami-roots.vercel.app/join";
 
 /**
+ * The same destination with no campaign parameters, for the one place a human
+ * actually reads the URL: the copyable invite field. A link that trails four
+ * `utm_` parameters reads like an ad when it lands in a friend's chat, and the
+ * whole point of that field is that a member sends it by hand. The QR code and
+ * the native share sheet keep their attribution, where it stays invisible.
+ */
+export const JOIN_LINK_PLAIN = JOIN_DESTINATION_URL;
+
+/** How that link is printed on screen, without the scheme. */
+export const JOIN_LINK_DISPLAY = "miami-roots.vercel.app/join";
+
+/**
  * The channel a share went out through. Only the medium varies per channel; the
  * campaign, source, and `ref` stay constant so all member-share traffic rolls up
  * together.

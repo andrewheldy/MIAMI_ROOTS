@@ -1,8 +1,15 @@
+import { roomClusters } from "./clusters";
 import { communityGroups } from "./groups";
-import type { CommunityGroup, GroupCategory } from "./types";
+import type { CommunityGroup, GroupCategory, RoomCluster } from "./types";
 
-export type { CommunityGroup, GroupCategory, GroupStatus } from "./types";
+export type {
+  CommunityGroup,
+  GroupCategory,
+  GroupStatus,
+  RoomCluster,
+} from "./types";
 export { communityGroups } from "./groups";
+export { roomClusters } from "./clusters";
 
 /** Human-readable labels for editorial categories. */
 export const categoryLabels: Record<GroupCategory, string> = {
@@ -47,6 +54,27 @@ export function getPublishedGroups(): CommunityGroup[] {
 export function getGroupBySlug(slug: string): CommunityGroup | undefined {
   const group = bySlug.get(slug);
   return group && group.status === "active" ? group : undefined;
+}
+
+/** A cluster paired with its published groups, in the cluster's own order. */
+export interface ResolvedRoomCluster extends RoomCluster {
+  readonly groups: readonly CommunityGroup[];
+}
+
+/**
+ * The room clusters with their groups resolved, skipping any slug that is not
+ * currently published. A cluster whose groups have all been unpublished is
+ * dropped rather than rendered empty.
+ */
+export function getRoomClusters(): ResolvedRoomCluster[] {
+  return roomClusters
+    .map((cluster) => ({
+      ...cluster,
+      groups: cluster.slugs
+        .map((slug) => getGroupBySlug(slug))
+        .filter((group): group is CommunityGroup => group !== undefined),
+    }))
+    .filter((cluster) => cluster.groups.length > 0);
 }
 
 /** Published groups the given group links to, in display order. */

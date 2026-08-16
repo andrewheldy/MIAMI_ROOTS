@@ -13,6 +13,8 @@ interface SectionProps {
   className?: string;
   /** Extra classes on the outer band (e.g. borders). */
   bandClassName?: string;
+  /** Anchor target on the band, for in-page links like `#rooms`. */
+  id?: string;
   /** Accessible label wiring for landmark sections. */
   "aria-labelledby"?: string;
   "aria-label"?: string;
@@ -29,13 +31,15 @@ export function Section({
   as,
   className,
   bandClassName,
+  id,
   ...landmark
 }: SectionProps) {
   const Band = as ?? "section";
   return (
     <Band
+      id={id}
       className={cn(
-        "py-12 sm:py-16",
+        "scroll-mt-20 py-12 sm:py-16",
         tone === "surface" && "bg-surface",
         bandClassName,
       )}

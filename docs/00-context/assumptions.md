@@ -149,6 +149,20 @@ Added during the Founding Connectors pass (2026-08-03):
     a connector card *be* a member referral link, that is a real design change and should
     be decided before M5 is built.
 
+21. **"Rooms" is the right public word for the seven WhatsApp groups.** The 2026-08-16
+    redesign calls them rooms throughout, on the reasoning that a person joining one
+    community with spaces inside it does not think in "groups", and that the word carries
+    the walk-in-and-belong feeling the owner asked for. The underlying content model still
+    calls them groups. Cheap to reverse in copy; do it everywhere at once if reversed.
+22. **The parent community invite is stable enough to be the site's only destination.**
+    Every page now depends on one WhatsApp link resolving. The assumption is that it is
+    rotated deliberately, in hosting, and rarely. If it turns out to churn, the unavailable
+    state becomes a much more visible surface than it is designed to be.
+23. **A message a member can copy is worth more than a share button.** `/invite` ships a
+    ready-to-send message on the assumption that "I don't know what to say" is a bigger
+    barrier to inviting people than friction in the share sheet. Unverified; worth watching
+    once there is any way to observe it.
+
 ## Relationship to other documents
 
 When an assumption here is confirmed or changed, either update it in place (with an updated
