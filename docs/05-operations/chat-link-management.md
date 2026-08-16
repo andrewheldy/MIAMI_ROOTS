@@ -42,6 +42,22 @@ and the leak-response runbook. The architectural design these operations rely on
 > (verify before paying; Miami Roots does not guarantee any transaction) — that is public
 > content, separate from these link-credential rules.
 
+> **The parent community link (2026-08-16).** The community-first redesign added an
+> eighth variable, `WHATSAPP_COMMUNITY_URL`, holding the invite to the parent WhatsApp
+> **Community** that contains every room. It sits behind `/go/community` and obeys every
+> rule on this page unchanged: server-only, validated against the approved WhatsApp hosts,
+> never committed, rotated in hosting config. Two operational consequences:
+>
+> 1. **It is now the site's single point of failure for joining.** If it is unset or
+>    invalid, the site's one call to action shows its unavailable state on every page. It
+>    is the first variable to check when "nobody can join".
+> 2. **Rotating it does not invalidate anything printed.** Members share
+>    `miami-roots.vercel.app/join` (and QR codes encoding it), never the WhatsApp URL, so
+>    a rotation is invisible to everyone holding a card, a flyer, or a saved screenshot.
+>
+> The seven per-chat variables stay configured even though no page links to them any more,
+> because `/go/<chat>` paths were shared before the redesign and must keep resolving.
+
 ## Procedures
 
 - **Entering a link (new group or rotation):** a WhatsApp group admin generates the link

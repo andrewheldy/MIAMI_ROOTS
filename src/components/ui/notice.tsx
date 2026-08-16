@@ -12,9 +12,13 @@ interface NoticeProps {
 }
 
 /**
- * Notice / safety panel: a visually distinct, semantic region for expectations or
- * safety guidance (e.g. the no-resale rule, the "not clinical" framing). Server
- * Component. Uses <aside> so assistive tech treats it as complementary content.
+ * Notice / safety panel: a visually distinct block for expectations or safety
+ * guidance (the no-resale rule, the "not clinical" framing). Server Component.
+ *
+ * A plain <div>, not an <aside>. These notices sit inside the section they
+ * belong to and are part of its argument, not complementary asides; nesting a
+ * complementary landmark inside a section also puts a landmark where assistive
+ * tech does not expect one (axe: landmark-complementary-is-top-level).
  */
 export function Notice({
   title,
@@ -23,7 +27,7 @@ export function Notice({
   className,
 }: NoticeProps) {
   return (
-    <aside
+    <div
       className={cn(
         "rounded-lg border p-5",
         tone === "info" && "border-border bg-surface",
@@ -35,6 +39,6 @@ export function Notice({
       <div className="text-muted mt-2 space-y-2 text-sm leading-relaxed">
         {children}
       </div>
-    </aside>
+    </div>
   );
 }

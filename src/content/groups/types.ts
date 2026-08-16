@@ -39,6 +39,22 @@ export type GroupStatus = "active" | "hidden" | "archived";
  */
 export type GroupAccessState = "managed-by-admins" | "coming-soon";
 
+/**
+ * An editorial grouping of rooms, used when the site explains what is inside
+ * the community. Distinct from `GroupCategory`, which labels one group; a
+ * cluster answers "which part of your life is this for?" across several.
+ */
+export interface RoomCluster {
+  /** Stable identifier, used for element ids and keys. */
+  readonly id: string;
+  /** Cluster heading, e.g. "Rooms for your week". */
+  readonly title: string;
+  /** One line introducing the rooms underneath it. */
+  readonly blurb: string;
+  /** Group slugs in this cluster, in reading order. Validated to exist. */
+  readonly slugs: readonly string[];
+}
+
 /** An approved, repository-committed logo asset with its real intrinsic size. */
 export interface GroupLogoAsset {
   /** Path under `public/`, e.g. `/group-logos/daytime-events-logo.png`. */
@@ -110,6 +126,18 @@ export interface CommunityGroup {
   readonly shortDescription: string;
   /** Longer public description for the detail page. */
   readonly fullDescription: string;
+  /**
+   * One line, second person, answering "is this room for me?". Written for
+   * someone deciding whether they belong before they have joined anything
+   * (owner direction 2026-08-16: the site's job is helping people find their
+   * people, not selling them a chat).
+   */
+  readonly forYouIf: string;
+  /**
+   * Two or three sentences on why this room exists at all. Not a description of
+   * the room's contents (that is `fullDescription`); the reason it was opened.
+   */
+  readonly whyItExists: string;
   /** Editorial category. */
   readonly category: GroupCategory;
   /** Lifecycle status; only `active` renders publicly. */

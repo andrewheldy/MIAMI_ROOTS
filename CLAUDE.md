@@ -89,6 +89,28 @@ entries; connector codes are permanent and never reused; connector destinations 
 closed union of *internal* targets, so `/r/` can never become an open redirect; and no
 nomination or scan is ever reported as stored unless it really was.
 
+As of 2026-08-16 an owner-directed **community-first redesign** rebuilt the public gateway
+(see `docs/08-delivery/community-first-redesign.md` and the 2026-08-16 decision-log
+entries). It is **not a milestone** and advances no database work. Rules it adds, all of
+them load-bearing:
+
+- **One call to action.** The site has exactly one: `joinNavLink` in `src/config/navigation.ts`,
+  pointing at `/go/community`, rendered through `JoinAction`. Do not add a second "join"
+  intent, a second label, or a second WhatsApp destination.
+- **Never link into an individual chat.** The `/go/<chat>` routes stay alive for links
+  already printed in the world, but no page may link to them. `tests/unit/gateway.test.tsx`
+  enforces this; if you need to reverse it, that is an owner decision (Q#19), not a
+  component change.
+- **`WHATSAPP_COMMUNITY_URL` is a credential**, exactly like the seven chat variables.
+  Server-only, validated against the approved hosts, never committed.
+- **No em-dashes in user-facing copy.** Adopted from `taste-skill`, enforced by test on the
+  gateway surfaces. Code comments and docs are unaffected.
+- **Never claim points, credit, or tracking that does not exist.** The rewards line states
+  intent and says plainly that nothing is counted. No points system is built.
+- **Design work follows `docs/DESIGN_INTELLIGENCE.md`**: read it first, honor its exceptions
+  §7, write a brief before building, and run the reviewers its §5 routing selects. Nothing
+  from the canonical repository is installed, copied, or vendored here.
+
 When extending the app: public group content lives in `src/content/groups/` (data-only,
 separate from components) and must stay public-safe — never add invite links, phone
 numbers, or other private community data. Design tokens are provisional and centralized in

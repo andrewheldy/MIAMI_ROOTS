@@ -42,6 +42,20 @@ pointing at the stable `/join` URL with campaign-level (non-personal) attributio
 migration, RLS, env var, or WhatsApp link; per-member referral identities remain deferred
 to M5/M11.
 
+As of 2026-08-16 an owner-directed **community-first redesign** rebuilt the public
+gateway around a single call to action: the parent WhatsApp **Community** behind
+`/go/community` (server-only `WHATSAPP_COMMUNITY_URL`). Every per-chat "Join chat" control
+was removed from the site, the rooms are now explained rather than linked into, and a new
+`/invite` page plus a home-page invite panel carry the copyable link, the live QR, the
+share sheet, and the downloadable cards. See
+[`community-first-redesign.md`](community-first-redesign.md). **This is not a milestone.**
+It touches no database, migration, RLS policy, or hosted project, and it does not advance
+M4, M5, or M6. The `/go/<chat>` routes still resolve for links already printed in the
+world. The same pass integrated the project with the canonical `design-intelligence`
+repository (connection record at `docs/DESIGN_INTELLIGENCE.md`, pinned ref, nothing
+installed). **Owner action required:** `WHATSAPP_COMMUNITY_URL` must be set in hosting or
+the site's one call to action shows its unavailable state on every page.
+
 As of 2026-08-03 an owner-directed **Founding Connectors program** landed out of sequence:
 the public `/connectors` page, a nomination intake flow, the tracked `/r/<code>` card
 redirect, a `connectors` + `connector_nominations` migration, and the program's product,

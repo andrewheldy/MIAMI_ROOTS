@@ -13,7 +13,7 @@ export interface ShareTrigger {
   /** `card` opens the share modal; `fullscreen` opens the scan view directly. */
   target: "card" | "fullscreen";
   /** Visual treatment. `quiet` is the subtle inline text style. */
-  variant?: "primary" | "secondary" | "quiet";
+  variant?: "primary" | "secondary" | "quiet" | "quietOnDark";
 }
 
 interface ShareLauncherProps {
@@ -30,6 +30,8 @@ const VARIANTS: Record<NonNullable<ShareTrigger["variant"]>, string> = {
     "border-border text-forest hover:border-forest/40 hover:bg-surface inline-flex min-h-12 items-center justify-center gap-2 rounded-md border px-5 text-sm font-semibold transition-colors",
   quiet:
     "text-forest inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-semibold underline-offset-4 hover:underline",
+  quietOnDark:
+    "text-mint inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-semibold underline-offset-4 hover:text-white hover:underline",
 };
 
 function ShareGlyph() {

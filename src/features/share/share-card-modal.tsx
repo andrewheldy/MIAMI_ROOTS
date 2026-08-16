@@ -8,7 +8,11 @@ import {
   STANDARD_QR_ASSET,
   STORY_ASSET,
 } from "@/lib/share/assets";
-import { buildJoinShareUrl, QR_SHARE_URL } from "@/lib/share/destination";
+import {
+  buildJoinShareUrl,
+  JOIN_LINK_DISPLAY,
+  QR_SHARE_URL,
+} from "@/lib/share/destination";
 import { copyToClipboard, shareOrCopy } from "@/lib/share/actions";
 import type { ShareAssetSpec } from "@/lib/share/assets";
 
@@ -24,8 +28,6 @@ interface ShareCardModalProps {
 }
 
 type Feedback = { tone: "success" | "error"; message: string } | null;
-
-const JOIN_LINK_DISPLAY = "miami-roots.vercel.app/join";
 
 function currentNavigator() {
   return typeof navigator !== "undefined" ? navigator : undefined;
@@ -61,7 +63,7 @@ export function ShareCardModal({
     const outcome = await shareOrCopy(currentNavigator(), {
       url: buildJoinShareUrl("web_share"),
       title: "Miami Roots",
-      text: "Meet your people in Miami — join Miami Roots.",
+      text: "Come find your people in Miami.",
     });
     if (outcome === "shared") {
       setFeedback(null);
@@ -73,7 +75,7 @@ export function ShareCardModal({
     } else if (outcome === "error") {
       setFeedback({
         tone: "error",
-        message: "Sharing isn't available — copy the link below instead.",
+        message: "Sharing isn't available here. Copy the link below instead.",
       });
     }
   }
@@ -88,7 +90,7 @@ export function ShareCardModal({
         ? { tone: "success", message: "Join link copied to clipboard." }
         : {
             tone: "error",
-            message: `Copy didn't work — the link is ${JOIN_LINK_DISPLAY}`,
+            message: `Copy didn't work. The link is ${JOIN_LINK_DISPLAY}`,
           },
     );
   }
@@ -172,7 +174,7 @@ export function ShareCardModal({
           Bring someone into the community
         </h2>
         <p id={descId} className="text-muted mt-2 text-sm leading-relaxed">
-          Let them scan this code or send them the link.
+          Let them scan this code, or send them the link.
         </p>
 
         <div className="border-border bg-background mx-auto mt-5 w-full max-w-[280px] rounded-2xl border p-4">

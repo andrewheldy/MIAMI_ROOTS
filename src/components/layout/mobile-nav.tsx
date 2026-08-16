@@ -15,7 +15,7 @@ const DESKTOP_QUERY = "(min-width: 1024px)";
  * The mobile/tablet navigation: a hamburger button that morphs into a close
  * icon, opening a branded sheet that drops from the header with a dimmed
  * backdrop. Everything the desktop bar hides at narrow widths lives here, with
- * the "Join the community chats" CTA as the dominant action.
+ * the one "Join the community" CTA as the dominant action.
  *
  * Behavior (all required, all handled): closes on link select, Escape, outside
  * (backdrop) click, route change, and resize to desktop; locks body scroll while
@@ -190,13 +190,14 @@ export function MobileNav() {
                       },
                     }}
                   >
-                    <Link
+                    {/* Plain anchor: the join route redirects out to WhatsApp. */}
+                    <a
                       href={joinNavLink.href}
                       onClick={close}
                       className="bg-forest text-background hover:bg-forest-600 flex min-h-12 items-center justify-center rounded-xl px-4 text-base font-semibold shadow-sm transition-colors"
                     >
                       {joinNavLink.label}
-                    </Link>
+                    </a>
                   </m.li>
                 </m.ul>
               </m.div>

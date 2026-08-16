@@ -481,6 +481,104 @@ until it does.
 
 **Status:** Active.
 
+### 2026-08-16 — Community-first gateway: one door, no per-chat joining (owner-directed)
+
+**Decision:** Rebuild the public gateway around a single call to action, the parent
+WhatsApp **Community**, and turn the website into an explanation of what the community is
+for rather than a directory of chats to click. Delivered as a full redesign of `/`,
+`/join`, `/groups`, `/groups/[slug]`, `/guidelines`, plus a new `/invite` page. Full
+engineering record:
+[`docs/08-delivery/community-first-redesign.md`](../08-delivery/community-first-redesign.md).
+
+**Context:** Owner direction, given as a spoken brief. The site had four competing calls to
+action (join the community chats, explore the groups, join a specific chat, share Miami
+Roots) and treated the seven WhatsApp groups as separately joinable products. The owner
+wants people to join the community once, read the instructions, and invite their friends;
+community leaders in particular join to bring their own people in and to reach each
+other's.
+
+**What this decides:**
+
+1. **One destination.** `/go/community`, backed by the new server-only
+   `WHATSAPP_COMMUNITY_URL` variable, is the only WhatsApp link the site points at. One CTA
+   component, one label ("Join the community"), rendered by the header, the mobile sheet,
+   every page close, and the footer.
+2. **No per-chat joining from the site.** Every "Join chat" control was removed. The
+   `/go/<chat>` routes stay alive because those paths were printed and pasted before this
+   pass, but nothing on the site links to them, and a test fails if that ever changes.
+   Reversing this is a decision, not a component quietly regaining a button (Q#19).
+3. **Rooms are explained, not sold.** Two new content fields (`forYouIf`, `whyItExists`)
+   and an editorial three-cluster grouping. Room copy rewritten throughout.
+4. **The invite path is public and account-free.** New `/invite` page plus an invite panel
+   on the home page: a live-generated QR, the plain link, a native share, a ready-to-send
+   message, and the existing downloadable cards.
+5. **The visible copyable link carries no campaign parameters.** What is displayed is
+   exactly what is copied, because a member pastes it into a message by hand and four
+   `utm_` parameters read like an ad. The QR and the native share sheet keep their existing
+   campaign attribution, where it stays invisible. This narrows measurement slightly and
+   does so knowingly.
+6. **Rewards are stated as intent only.** The site says a way to credit people who bring
+   others in is being worked out, says plainly that nothing is counted or tracked yet, and
+   promises no mechanics, rates, or rewards. No points system was built, and M5/M10/M11 are
+   unmoved. The public wording itself is now Q#18.
+7. **The em-dash ban applies to user-facing copy.** Adopted from `taste-skill` rather than
+   excepted, enforced by test on the redesigned surfaces. It does not apply to repository
+   documentation, code comments, or commit messages.
+
+**Explicitly NOT decided by this entry:** palette (Q#9), typeface (Q#9), and group names
+(Q#10) remain provisional, and all copy remains provisional pending an owner voice pass; no
+database, migration, RLS policy, hosted project, analytics vendor, or private WhatsApp data
+was touched; M4, M5, and M6 are not advanced; the Founding Connectors program is unchanged;
+the site stays `noindex`; and **no WhatsApp invite link entered this repository** — the
+community link is read from hosting configuration at request time, exactly like the seven
+chat links.
+
+**Consequence the owner must act on:** until `WHATSAPP_COMMUNITY_URL` is set in hosting,
+the site's one call to action renders its honest unavailable state on every page.
+
+**Status:** Active.
+
+### 2026-08-16 — Design Intelligence integration (project connection record)
+
+**Decision:** Integrate this repository with the canonical
+[`design-intelligence`](https://github.com/andrewheldy/design-intelligence) repository by
+adding the required connection record at
+[`docs/DESIGN_INTELLIGENCE.md`](../DESIGN_INTELLIGENCE.md), pinned to commit
+`bf9b8b3b6997df3ab4d7958a9d1838d07c50470a` (registry v2, 2026-07-26), and to run design
+work here through its workflow: brief, then build, then the reviewers its routing selects.
+
+**Context:** The project had none of the four files that repository's integration contract
+requires (§3), which means it was **not integrated**, and an agent doing design work here
+was obliged to say so rather than proceed as if it were. The 2026-08-16 redesign was the
+first design task large enough to make that worth fixing properly.
+
+**What this decides:**
+
+1. **Loadout.** `taste-skill` is the single opinion skill for the public gateway, which is
+   a marketing surface and within that skill's own stated scope. `emil-design-skills` and
+   the internal `motion-intelligence` family cover motion; `a11y-specialist-skills` backs
+   the accessibility review. Never more than one opinion skill per task.
+2. **Nothing is installed, synchronized, vendored, or submoduled.** The canonical
+   repository is read over the network at the pinned ref. A human bumps the ref on
+   re-review. No registry content is copied into this repository.
+3. **Five standing exceptions** where this project's brand beats a skill directive: the
+   system font stack (no typeface licensed, Q#9), no icon-library dependency, light theme
+   only (palette unratified, Q#10), no stock or invented imagery on a site about real
+   people, and typographic explanatory sections as a consequence of that. Recorded in the
+   connection record §7 with review dates, so reviewers stop re-litigating them.
+4. **The accessibility floor is not overridable** by brand or by any skill directive, and
+   an accessibility failure is never recorded as a permanent exception.
+5. **Reusable lessons travel back by pull request**, staged first in
+   [`docs/04-design/design-findings.md`](../04-design/design-findings.md). This project
+   never commits to the canonical repository's `registry.yaml`, `agents/`, or `skills/`.
+
+**Explicitly NOT decided by this entry:** no design skill was installed into this
+repository; no third-party skill text was copied here; the pinned ref has not yet been
+confirmed by a human, which the connection record says out loud; and none of the exceptions
+change the accessibility floor.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here
