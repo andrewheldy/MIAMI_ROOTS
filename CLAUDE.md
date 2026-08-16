@@ -101,8 +101,16 @@ them load-bearing:
   already printed in the world, but no page may link to them. `tests/unit/gateway.test.tsx`
   enforces this; if you need to reverse it, that is an owner decision (Q#19), not a
   component change.
-- **`WHATSAPP_COMMUNITY_URL` is a credential**, exactly like the seven chat variables.
-  Server-only, validated against the approved hosts, never committed.
+- **The parent community destination is a build-time constant**, `MIAMI_ROOTS_COMMUNITY_URL`
+  in `src/content/join/community-link.ts` (owner decision 2026-08-17, reversing the
+  env-var design that was serving a "door is being rekeyed" page in production). It is the
+  one WhatsApp URL allowed in this repository. Change it there and nowhere else. The seven
+  per-chat `WHATSAPP_*_URL` variables are unchanged and are still credentials: server-only,
+  validated, never committed.
+- **Public CTAs still point at `/go/community`, never at `chat.whatsapp.com`.** The
+  redirect layer is what keeps printed QR codes and NFC cards working when the destination
+  changes, and it is where any future tracking goes. Enforced by
+  `tests/unit/gateway.test.tsx`.
 - **No em-dashes in user-facing copy.** Adopted from `taste-skill`, enforced by test on the
   gateway surfaces. Code comments and docs are unaffected.
 - **Never claim points, credit, or tracking that does not exist.** The rewards line states

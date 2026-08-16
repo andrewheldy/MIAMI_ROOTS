@@ -57,6 +57,15 @@ describe.each(Object.entries(pages))("%s page", (name, html) => {
     }
   });
 
+  it("enters the community through the Miami Roots route, never WhatsApp directly", () => {
+    // The destination behind /go/community became a build-time constant on
+    // 2026-08-17. That is not a licence to inline it here: a printed QR code or
+    // an NFC card outlives any single invite, so every public CTA keeps going
+    // through the route that can be repointed.
+    expect(html).toContain(`href="${COMMUNITY_GO_PATH}"`);
+    expect(html).not.toContain("chat.whatsapp.com");
+  });
+
   it("renders exactly one h1", () => {
     expect(html.match(/<h1[\s>]/g)?.length).toBe(1);
   });

@@ -50,5 +50,5 @@ Recorded in full in `docs/DESIGN_INTELLIGENCE.md` §7 as EX-1 to EX-5. Summary o
 ## Open questions
 
 - **Rewards.** The owner has said a points-for-invites program is likely but undecided. The site states intent in the softest honest form and promises no mechanics, no rates, and no rewards. Nothing is tracked or accrued. Escalates open question O#12 (see `docs/02-planning/open-questions.md`).
-- **The community invite URL is not configured.** The site reads it from `WHATSAPP_COMMUNITY_URL` at request time, per the standing rule that invite links never enter Git. Until the owner sets it in hosting, the primary action renders its honest unavailable state. This is a deployment step, not a code gap.
+- ~~**The community invite URL is not configured.**~~ Resolved 2026-08-17: the destination is a build-time constant and the route needs no environment variable. The unavailable state on that path is gone (decision log 2026-08-17).
 - **Voice.** All copy on this pass is still provisional pending the owner voice pass (Q#9/Q#10). It is closer to the owner's spoken brief than the previous copy, but it has not been read back by the owner.
