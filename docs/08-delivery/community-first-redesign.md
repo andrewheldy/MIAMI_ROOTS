@@ -38,10 +38,11 @@ Verbatim intent, recorded because every decision below traces to it:
 
 ### One door
 
-- `/go/community` is the single WhatsApp destination on the site, backed by the new
-  server-only `WHATSAPP_COMMUNITY_URL` variable and the existing host allowlist. The
-  registry lives in `src/content/join/community-link.ts` and, like the per-chat registry,
-  contains no URL.
+- `/go/community` is the single WhatsApp destination on the site. The registry lives in
+  `src/content/join/community-link.ts`. It shipped reading a server-only
+  `WHATSAPP_COMMUNITY_URL` variable; **that was reversed on 2026-08-17** in favor of a
+  build-time constant, because the variable was never set in hosting and the route was
+  serving its unavailable page in production. See the addendum at the end of this record.
 - One CTA component (`src/components/ui/join-action.tsx`), one label
   ("Join the community"), one destination, rendered by the header, the mobile sheet, every
   page close, and the footer. `src/config/navigation.ts` is the only place the label and
@@ -187,11 +188,8 @@ Two deliberate deviations from `taste-skill`, both recorded rather than hidden:
 
 ## What the owner still has to do
 
-1. **Set `WHATSAPP_COMMUNITY_URL` in hosting** to the parent WhatsApp Community invite. It
-   is the only thing standing between this build and a working join button. Until it is
-   set, the primary action renders its honest unavailable state on every page. The link
-   must never be committed to this repository (see
-   [`chat-link-management.md`](../05-operations/chat-link-management.md)).
+1. ~~**Set `WHATSAPP_COMMUNITY_URL` in hosting.**~~ Obsolete as of 2026-08-17: the route
+   redirects to a build-time constant and needs no variable. See the addendum below.
 2. **Read the copy back.** Every user-facing string on the redesigned surfaces is new and
    still provisional pending an owner voice pass (Q#9).
 3. **Answer Q#18**: is "later this year" true for the rewards program? It is public copy
@@ -201,6 +199,32 @@ Two deliberate deviations from `taste-skill`, both recorded rather than hidden:
 
 `docs/08-delivery/screenshots/community-first/`, captured from the production build at
 1440px and 375px, plus a 375px reduced-motion capture of the home page.
+
+## Addendum, 2026-08-17: the community redirect is static now
+
+**What went wrong.** Production intermittently served the "door is being rekeyed" page
+instead of opening WhatsApp. Not a bug in the code: `/go/community` read
+`WHATSAPP_COMMUNITY_URL` at request time, that variable was never set in hosting, and the
+route correctly rendered its honest unavailable state. The design was wrong for this
+particular link, and the failure was silent, environment-specific, and invisible in code
+review.
+
+**What changed.** The destination is now `MIAMI_ROOTS_COMMUNITY_URL`, a constant in
+`src/content/join/community-link.ts`. `/go/community` issues a server-side HTTP 307 to it
+and touches no environment variable. The community branch has no fallback render at all,
+because nothing on that path can be missing.
+
+**What deliberately did not change.**
+
+- `/go/community` is still the public URL on every CTA, card, and QR code. Nothing points
+  at `chat.whatsapp.com` directly, so the destination stays changeable in one place and
+  printed material keeps working. A test enforces it.
+- The seven per-chat links keep the environment-variable architecture, the host allowlist,
+  per-request resolution, and the unavailable state.
+- No UI, copy, layout, or share surface was touched.
+
+**Cost, accepted knowingly:** the invite is public in Git and its history, and rotating it
+is a code change plus a deploy. Full reasoning in the 2026-08-17 decision-log entry.
 
 ## Relationship to other documents
 

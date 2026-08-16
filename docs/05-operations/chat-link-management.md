@@ -42,21 +42,34 @@ and the leak-response runbook. The architectural design these operations rely on
 > (verify before paying; Miami Roots does not guarantee any transaction) — that is public
 > content, separate from these link-credential rules.
 
-> **The parent community link (2026-08-16).** The community-first redesign added an
-> eighth variable, `WHATSAPP_COMMUNITY_URL`, holding the invite to the parent WhatsApp
-> **Community** that contains every room. It sits behind `/go/community` and obeys every
-> rule on this page unchanged: server-only, validated against the approved WhatsApp hosts,
-> never committed, rotated in hosting config. Two operational consequences:
+> **The parent community link is an exception to the rules above (2026-08-17).** The
+> invite to the parent WhatsApp **Community** that contains every room is a **build-time
+> constant in code**: `MIAMI_ROOTS_COMMUNITY_URL` in `src/content/join/community-link.ts`,
+> served by `/go/community`. It is not an environment variable and not a credential in the
+> sense this page uses the word.
 >
-> 1. **It is now the site's single point of failure for joining.** If it is unset or
->    invalid, the site's one call to action shows its unavailable state on every page. It
->    is the first variable to check when "nobody can join".
-> 2. **Rotating it does not invalidate anything printed.** Members share
->    `miami-roots.vercel.app/join` (and QR codes encoding it), never the WhatsApp URL, so
->    a rotation is invisible to everyone holding a card, a flyer, or a saved screenshot.
+> Why the exception: it briefly was `WHATSAPP_COMMUNITY_URL`, and a deployment without
+> that variable set showed an "unavailable" page instead of opening the community. For the
+> site's single call to action, a value that can go missing in configuration is a worse
+> failure than a value that lives in Git. See the 2026-08-17 decision-log entry.
 >
-> The seven per-chat variables stay configured even though no page links to them any more,
-> because `/go/<chat>` paths were shared before the redesign and must keep resolving.
+> Operational consequences:
+>
+> 1. **Rotating it is a code change**, not a hosting-config change: edit the constant, open
+>    a pull request, merge, deploy. Budget minutes, not seconds. The old value stays in Git
+>    history and cannot be scrubbed from it, so treat any rotation as a change of address
+>    rather than as revocation of a secret. If the link is ever abused, reset it in WhatsApp
+>    first, exactly as step 1 of the runbook below says.
+> 2. **Rotating it still invalidates nothing printed.** Cards, flyers, and QR codes carry
+>    `/go/community` or `miami-roots.vercel.app/join`, never the WhatsApp URL, so a
+>    rotation is invisible to everyone holding one.
+> 3. **`/go/community` cannot fail from missing configuration.** There is no unavailable
+>    state on that path any more.
+>
+> The seven per-chat variables are unchanged and remain credentials under every rule on
+> this page: server-only, validated, never committed, rotated in hosting config. They stay
+> configured even though no page links to them any more, because `/go/<chat>` paths were
+> shared before the redesign and must keep resolving.
 
 ## Procedures
 

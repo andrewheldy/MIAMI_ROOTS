@@ -7,8 +7,8 @@ import { SafetyBadge } from "@/components/ui/safety-badge";
 import { getGroupBySlug } from "@/content/groups";
 import { getChatLinkByRedirectSlug } from "@/content/join/chat-links";
 import {
-  communityInvite,
   isCommunityRedirectSlug,
+  MIAMI_ROOTS_COMMUNITY_URL,
 } from "@/content/join/community-link";
 import { resolveChatDestination } from "@/lib/chat-redirect";
 
@@ -17,16 +17,23 @@ interface GoPageProps {
 }
 
 /**
- * Controlled redirect gate for WhatsApp links. The destination lives only in a
- * server environment variable, resolved per-request so admins can rotate an
- * invite link without a rebuild, hence `force-dynamic`, never prerendered.
+ * Controlled redirect gate for WhatsApp links. Two kinds pass through here, and
+ * they resolve their destination differently on purpose:
  *
- * Two kinds of link pass through here:
- *   - `/go/community` sends visitors to the parent WhatsApp Community. This is
- *     the site's one call to action and the only one the UI links to.
- *   - `/go/<chat>` still resolves every per-chat link, because those paths were
- *     printed on cards and pasted into messages before the 2026-08-16 redesign
- *     and must keep working. Nothing on the site points at them any more.
+ *   - `/go/community` sends visitors to the parent WhatsApp Community. Its
+ *     destination is a build-time constant (`MIAMI_ROOTS_COMMUNITY_URL`), so
+ *     this route depends on no environment variable, no runtime configuration,
+ *     and no deployment-specific setup. It cannot fail because something was
+ *     not set. This is the site's one call to action and the only one the UI
+ *     links to.
+ *   - `/go/<chat>` still resolves every per-chat link from its own server
+ *     environment variable, read per request so an admin can rotate a chat
+ *     invite without a rebuild. Those paths were printed on cards and pasted
+ *     into messages before the 2026-08-16 redesign and must keep working, even
+ *     though nothing on the site points at them any more.
+ *
+ * `force-dynamic` stays for the per-chat branch, which must read `process.env`
+ * on every request rather than baking a value in at build time.
  */
 export const dynamic = "force-dynamic";
 
@@ -63,22 +70,11 @@ function warnInvalid(label: string, envVar: string) {
 export default async function GoPage({ params }: GoPageProps) {
   const { slug } = await params;
 
+  // The community door. A server-side HTTP redirect (307, so the destination
+  // stays changeable) to a value known at build time. There is deliberately no
+  // unavailable state on this path: nothing about it can be missing.
   if (isCommunityRedirectSlug(slug)) {
-    const destination = resolveChatDestination(
-      process.env[communityInvite.envVar],
-    );
-    if (destination.ok) {
-      redirect(destination.url);
-    }
-    if (destination.reason === "invalid") {
-      warnInvalid(communityInvite.redirectSlug, communityInvite.envVar);
-    }
-    return (
-      <UnavailableShell
-        heading="The door is being rekeyed"
-        body="The invite link for the Miami Roots community is being refreshed right now. Try again shortly, or read what the community is about while you wait."
-      />
-    );
+    redirect(MIAMI_ROOTS_COMMUNITY_URL);
   }
 
   const chat = getChatLinkByRedirectSlug(slug);
@@ -118,8 +114,10 @@ export default async function GoPage({ params }: GoPageProps) {
 }
 
 /**
- * The honest unavailable state, shared by both link kinds. It never pretends a
- * link exists and always offers two real ways forward.
+ * The honest unavailable state for a per-chat link whose environment variable
+ * is unset or invalid. It never pretends a link exists and always offers two
+ * real ways forward. The community door cannot reach this: its destination is
+ * a build-time constant.
  */
 function UnavailableShell({
   heading,

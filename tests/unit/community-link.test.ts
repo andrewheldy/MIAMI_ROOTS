@@ -5,21 +5,41 @@ import {
   COMMUNITY_GO_PATH,
   communityInvite,
   isCommunityRedirectSlug,
+  MIAMI_ROOTS_COMMUNITY_URL,
 } from "@/content/join/community-link";
-import { APPROVED_REDIRECT_HOSTS } from "@/lib/chat-redirect";
+import { resolveChatDestination } from "@/lib/chat-redirect";
 
 /**
  * The parent community invite is the site's single destination, so the rules
  * that keep it safe are worth failing a build over.
+ *
+ * Since 2026-08-17 the destination is a build-time constant rather than an
+ * environment variable, which removes the failure mode that produced the "door
+ * is being rekeyed" page in production. What replaces the env-var validation is
+ * this file: the constant is checked against the same host allowlist the
+ * per-chat links pass through, at test time instead of request time.
  */
 describe("community invite link", () => {
-  it("contains no invite URL, only the name of an environment variable", () => {
-    const source = JSON.stringify(communityInvite);
-    expect(source).not.toMatch(/https?:\/\//);
-    for (const host of APPROVED_REDIRECT_HOSTS) {
-      expect(source).not.toContain(host);
-    }
-    expect(communityInvite.envVar).toBe("WHATSAPP_COMMUNITY_URL");
+  it("is an https URL on an approved WhatsApp host", () => {
+    const destination = resolveChatDestination(MIAMI_ROOTS_COMMUNITY_URL);
+    expect(destination).toEqual({ ok: true, url: MIAMI_ROOTS_COMMUNITY_URL });
+  });
+
+  it("is the canonical Miami Roots community invite", () => {
+    expect(MIAMI_ROOTS_COMMUNITY_URL).toBe(
+      "https://chat.whatsapp.com/CmU2plRQshq9h9k11B6ywS",
+    );
+  });
+
+  it("is written down exactly once, and the registry reuses it", () => {
+    expect(communityInvite.url).toBe(MIAMI_ROOTS_COMMUNITY_URL);
+  });
+
+  it("needs no environment variable", () => {
+    // The registry carries a destination, not the name of a variable that a
+    // deployment can forget to set.
+    expect(communityInvite).not.toHaveProperty("envVar");
+    expect(JSON.stringify(communityInvite)).not.toContain("WHATSAPP_");
   });
 
   it("keeps its public path stable, because it is printed and pasted", () => {
@@ -36,10 +56,5 @@ describe("community invite link", () => {
     expect(isCommunityRedirectSlug("community")).toBe(true);
     expect(isCommunityRedirectSlug("general-chat")).toBe(false);
     expect(isCommunityRedirectSlug("")).toBe(false);
-  });
-
-  it("reads its environment variable from the server-only namespace", () => {
-    // A NEXT_PUBLIC_ prefix would ship the invite link in the client bundle.
-    expect(communityInvite.envVar.startsWith("NEXT_PUBLIC_")).toBe(false);
   });
 });

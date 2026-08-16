@@ -579,6 +579,59 @@ change the accessibility floor.
 
 **Status:** Active.
 
+### 2026-08-17 — The parent community invite is a build-time constant, not an env var
+
+**Decision:** Move the parent WhatsApp Community destination out of the
+`WHATSAPP_COMMUNITY_URL` environment variable and into a constant in code
+(`MIAMI_ROOTS_COMMUNITY_URL` in `src/content/join/community-link.ts`). `/go/community` now
+issues a server-side HTTP 307 to that constant and depends on no environment variable, no
+runtime configuration, and no deployment-specific setup. Owner-directed.
+
+**Context:** Production was intermittently serving the "door is being rekeyed" page instead
+of opening the community. Root cause: the 2026-08-16 design read the destination from
+`WHATSAPP_COMMUNITY_URL` at request time, that variable was never set in hosting, and
+`resolveChatDestination` correctly returned `missing`, so the route rendered its honest
+unavailable state. The architecture worked exactly as designed; the design was wrong for
+this particular link.
+
+**What this decides:**
+
+1. **Reliability beats rotation speed for the front door.** The site has exactly one call
+   to action. A destination that can be absent from configuration is a worse failure mode
+   than a destination that lives in Git, because the failure is silent, environment-
+   specific, and invisible in code review.
+2. **The redirect layer stays.** `/go/community` remains the public URL on every card, QR
+   code, and CTA. Nothing points at `chat.whatsapp.com` directly, so the destination is
+   still changeable in one place, printed material still works after a change, and a
+   tracking hook can still be added to the route later. Enforced by
+   `tests/unit/gateway.test.tsx`.
+3. **307, not 308.** A permanent redirect would be cached by browsers and would outlive the
+   next change of destination.
+4. **No unavailable state on this path.** The community branch of `/go/[slug]` cannot fail
+   from missing configuration, so it has no fallback render at all.
+5. **The per-chat architecture is untouched.** The seven `WHATSAPP_*_URL` variables, the
+   host allowlist, the per-request resolution, and the unavailable state all remain exactly
+   as they were for `/go/<chat>`.
+6. **Validation moved from request time to test time.** The constant is run through the
+   same `resolveChatDestination` allowlist in `tests/unit/community-link.test.ts`, so a
+   typo or a hostile edit fails the build instead of redirecting somebody off-site.
+
+**What this costs, accepted knowingly:** the community invite is now public in this
+repository and in its history, and rotating it is a code change plus a deploy rather than a
+hosting-config edit. The link was already public on cards, flyers, QR codes, and in every
+member's WhatsApp, so this widens the audience rather than creating exposure. If the link
+is ever abused, the only step that actually stops joins is resetting it in WhatsApp, which
+was already true. This **reverses**, for this one link only, the standing rule recorded on
+2026-08-16 that `WHATSAPP_COMMUNITY_URL` is a credential.
+
+**Explicitly NOT decided by this entry:** the seven per-chat invite links remain credentials
+under every rule in `docs/05-operations/chat-link-management.md` and must never be
+committed; no UI, copy, QR code, or public URL changed; `myroots.dev` still is not verified
+as pointing at this deployment (Q#14), and this entry does not change what the share
+surfaces encode.
+
+**Status:** Active.
+
 ## Relationship to other documents
 
 - `docs/00-context/assumptions.md` — precursor to decisions recorded here
